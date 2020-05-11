@@ -1,0 +1,37 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "react", "react-hooks", "promise"],
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:promise/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "rules": {
+    "promise/prefer-await-to-then": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "no-alert": "warn",
+    "no-console": "warn",
+    "no-return-await": "error",
+    "no-useless-return": "error",
+    "no-bitwise": "warn",
+    "no-lonely-if": "warn",
+    "no-shadow": "error",
+    "sort-keys": "error",
+    "@typescript-eslint/camelcase": 0
+  },
+  "overrides": [
+    {
+      "files": ["**/*.tsx"],
+      "rules": {
+        "react/prop-types": "off"
+      }
+    }
+  ]
+}

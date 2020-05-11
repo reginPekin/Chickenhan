@@ -1,0 +1,28 @@
+{
+  "name": "@chickenhan/testPackage",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "privat": true,
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "@chickenhan/components": "1.0.0"
+  }
+}
