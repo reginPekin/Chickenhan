@@ -1,0 +1,6 @@
+.menuContainer {
+  height: 100%;
+  background-color: white;
+  display: flex;
+  flex-grow: 1;
+}

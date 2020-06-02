@@ -1,14 +1,14 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import { FirstComponent } from "@chickenhan/components/src/FirstComponent";
+import './style/index.css';
+
+// import { FirstComponent } from '@chickenhan/components/src/FirstComponent';
+import { App } from './components/App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <div>
-      <span>Hallo</span>
-      <FirstComponent />
-    </div>
+    <App />
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById('root'),
 );

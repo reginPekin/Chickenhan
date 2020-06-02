@@ -1,0 +1,7 @@
+.app {
+  display: flex;
+  background-color: white;
+  width: 100%;
+  justify-items: stretch;
+  height: 100%;
+}
