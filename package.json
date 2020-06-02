@@ -37,6 +37,6 @@
   },
   "scripts": {
     "start": "lerna run start --stream",
-    "watch": "tsc -b packages/storybook/tsconfig.json packages/app/tsconfig.json  --watch"
+    "watch": "tsc -b packages/components/tsconfig.json packages/app/tsconfig.json --watch"
   }
 }
