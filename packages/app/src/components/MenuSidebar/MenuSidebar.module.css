@@ -1,0 +1,15 @@
+.menuSidebar {
+  width: 64px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--light-grey);
+}
+
+.rightSlider {
+  position: absolute;
+  left: 0px;
+  height: 64px;
+  width: 5px;
+  background-color: var(--main-yellow);
+  border-radius: 0px 100px 100px;
+}

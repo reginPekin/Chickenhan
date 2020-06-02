@@ -23,8 +23,10 @@
     "no-bitwise": "warn",
     "no-lonely-if": "warn",
     "no-shadow": "error",
-    "sort-keys": "error",
-    "@typescript-eslint/camelcase": 0
+    "@typescript-eslint/camelcase": 0,
+    "prettier/prettier": ["error", {
+      "endOfLine":"auto"
+    }] // решает проблему с ошибкой Delete `␍` eslint
   },
   "overrides": [
     {
