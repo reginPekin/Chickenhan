@@ -10,10 +10,3 @@ export interface Chat {
   name: string;
   userCount?: number;
 }
-
-export interface Icon {
-  index: number;
-  description?: string;
-  name: string;
-  src: React.FC; // на деле svg комопнент
-}

@@ -1,30 +1,37 @@
 import React from 'react';
 
-import { Icon } from '../../types';
+import { MenuElement } from '../../../app/src/components/MenuSidebar/consts';
 
 import styles from './MenuIcon.module.css';
 
 interface MenuIconProps {
-  iconParams: Icon;
-  setChoosenTab: (tab: string) => any;
+  menuElement: MenuElement;
+  isActiveTab: boolean;
+  setChoosenTab: (tab: string) => void;
 }
 
 export const MenuIcon: React.FC<MenuIconProps> = ({
-  iconParams,
-  setChoosenTab = () => null,
+  menuElement,
+  isActiveTab,
+  setChoosenTab = (): void => undefined,
 }) => {
+  const Icon = menuElement.Icon;
+
   return (
     <div
       className={styles.iconSection}
-      onClick={() => {
-        setChoosenTab(iconParams.name);
+      onClick={(): void => {
+        setChoosenTab(menuElement.name);
       }}
     >
       <div className={styles.iconBlock}>
-        <iconParams.src />
+        <Icon
+          fill={isActiveTab ? '#ffbb00' : undefined}
+          stroke={isActiveTab ? '#ffbb00' : 'black'}
+        />
       </div>
       <span className={styles.descriptionArrow} />
-      <span className={styles.iconDescription}>{iconParams.description}</span>
+      <span className={styles.iconDescription}>{menuElement.description}</span>
     </div>
   );
 };

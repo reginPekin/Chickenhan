@@ -1,26 +1,25 @@
-import { Compass, ProfileIcon, ChatIcon } from '../Icons';
+import { DiscoverIcon, ProfileIcon, ChatIcon, IconProps } from '../Icons';
 
-export const menuElements = [
-  // {
-  //   name: 'chats',
-  //   src: 'chickenhan', // иконка Чикенхана, которая ведёт к чатам, описания не будет
-  // },
+export interface MenuElement {
+  description?: string;
+  name: string;
+  Icon: React.FC<IconProps>;
+}
+
+export const menuElements: MenuElement[] = [
   {
-    index: 0,
     description: 'Explore public chats',
     name: 'discover',
-    src: Compass,
+    Icon: DiscoverIcon,
   },
   {
-    index: 1,
     description: 'Home',
     name: 'chats',
-    src: ChatIcon,
+    Icon: ChatIcon,
   },
   {
-    index: 2,
     description: 'Profile', // в последствии можно писать имя пользователя
     name: 'profile',
-    src: ProfileIcon,
+    Icon: ProfileIcon,
   },
 ];
