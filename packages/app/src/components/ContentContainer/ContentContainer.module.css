@@ -1,0 +1,6 @@
+.contentContainer {
+  min-width: 500px;
+  background-color: white;
+  border-left: 1px solid var(--light-grey);
+  flex-grow: 1;
+}
