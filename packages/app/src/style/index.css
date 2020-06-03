@@ -4,6 +4,7 @@ body,
 element {
   --main-yellow: #ffbb00;
   --light-grey: #f2f3f5;
+  --hover-grey: #00000010
 }
 
 #root,

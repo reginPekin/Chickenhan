@@ -5,6 +5,61 @@ export interface IconProps {
   stroke?: string | undefined;
 }
 
+export const LogoIcon: React.FC = () => (
+  <svg width={40} height={40} viewBox="0 0 46 52" fill="none">
+    <path
+      d="M18.3965 7.59629L13.968 4.27489"
+      stroke="black"
+      strokeWidth={2}
+      strokeMiterlimit={10}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M21.0536 6.48919L19.2822 2.72499"
+      stroke="black"
+      strokeWidth={2}
+      strokeMiterlimit={10}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M24.5964 7.15339L24.8178 1.39639"
+      stroke="black"
+      strokeWidth={2}
+      strokeMiterlimit={10}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M38.989 43.91C50 35 40.7604 26.196 40.7604 26.196C40.7604 13.1084 30.7284 8.7234 25.4882 7.3256C23.5585 6.8109 21.5249 6.8173 19.6082 7.3786C4.14177 11.9076 5.33247 26.196 5.33247 26.196C-3.00003 36 6.43957 43.4671 6.43957 43.4671C6.43957 43.4671 23.0464 58.0812 38.989 43.91Z"
+      fill="#FCEA2B"
+      stroke="black"
+      strokeWidth={2}
+      strokeMiterlimit={10}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M15.9608 27.4246C17.6176 27.4246 18.9608 26.0814 18.9608 24.4246C18.9608 22.7677 17.6176 21.4246 15.9608 21.4246C14.3039 21.4246 12.9608 22.7677 12.9608 24.4246C12.9608 26.0814 14.3039 27.4246 15.9608 27.4246Z"
+      fill="black"
+    />
+    <path
+      d="M31 27C32.6569 27 34 25.6569 34 24C34 22.3431 32.6569 21 31 21C29.3431 21 28 22.3431 28 24C28 25.6569 29.3431 27 31 27Z"
+      fill="black"
+    />
+    <path
+      d="M23.7052 30.8074C23.7052 30.8074 34.1798 30.2925 23.7052 40.0761C23.7052 40.076 13.2306 30.8074 23.7052 30.8074Z"
+      fill="#F1B31C"
+      stroke="black"
+      strokeWidth={2}
+      strokeMiterlimit={10}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 export const DiscoverIcon: React.FC<IconProps> = ({
   fill = 'black',
   stroke = 'black',

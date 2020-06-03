@@ -13,6 +13,10 @@
   cursor: pointer;
 }
 
+.iconSection:hover {
+  background-color: var(--hover-grey);
+}
+
 .iconSection:hover .iconDescription {
   display: inline;
 }
