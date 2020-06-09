@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "privat": true,
+  "private": true,
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",

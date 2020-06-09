@@ -1,10 +1,19 @@
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&family=Open+Sans:wght@600&display=swap');
+}
+
 #root,
 html,
 body,
 element {
   --main-yellow: #ffbb00;
   --light-grey: #f2f3f5;
-  --hover-grey: #00000010
+  --hover-grey: #00000010;
+  --black-40: #999;
+  --black-50: #7f7f7f;;
 }
 
 #root,
@@ -14,6 +23,6 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
-  font-family: "Work Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 15px;
 }
