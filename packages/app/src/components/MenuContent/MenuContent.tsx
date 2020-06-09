@@ -8,11 +8,11 @@ import { Header } from '@chickenhan/components/src/Header';
 import styles from './MenuContent.module.css';
 import { MenuState } from '../MenuSidebar/consts';
 
-interface MenContentProps {
+interface MenuContentProps {
   choosenTab: MenuState;
 }
 
-export const MenuContent: React.FC<MenContentProps> = ({ choosenTab }) => {
+export const MenuContent: React.FC<MenuContentProps> = ({ choosenTab }) => {
   // бизнес логика и интерфейс, что, где и как?
   function setLabel(): string {
     switch (choosenTab) {
