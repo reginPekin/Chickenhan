@@ -2,5 +2,6 @@
   height: 100%;
   background-color: white;
   display: flex;
-  flex-grow: 1;
+  max-width: 364px;
+  min-width: 364px;
 }
