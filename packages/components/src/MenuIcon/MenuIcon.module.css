@@ -25,6 +25,11 @@
   display: inline;
 }
 
+.description {
+  display: flex;
+  align-items: center;
+}
+
 .descriptionArrow {
   position: absolute;
   display: none;
