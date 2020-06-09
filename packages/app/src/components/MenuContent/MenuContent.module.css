@@ -1,5 +1,15 @@
+.mainSection {
+  height: 100%;
+}
+
 .menuContent {
-  max-width: 350px;
+  max-width: 300px;
   display: flex;
   flex-direction: column;
+  width: 100%;
+}
+
+.scrolledChats {
+  overflow-y: scroll;
+  /* height: 100%; */
 }
