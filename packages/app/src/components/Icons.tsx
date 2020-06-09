@@ -60,6 +60,32 @@ export const LogoIcon: React.FC = () => (
   </svg>
 );
 
+export const AddChatIcon: React.FC<IconProps> = ({ fill = 'none' }) => {
+  return (
+    <svg width={24} height={24} viewBox="0 0 93 93">
+      <rect
+        x={1.5}
+        y={1.5}
+        width={90}
+        height={90}
+        rx={18.5}
+        fill={fill}
+        stroke="black"
+        strokeWidth={5}
+      />
+      <path d="M47 18L47 78" stroke="black" strokeWidth={5} />
+      <line
+        x1={17}
+        y1={48.5}
+        x2={77}
+        y2={48.5}
+        stroke="black"
+        strokeWidth={5}
+      />
+    </svg>
+  );
+};
+
 export const DiscoverIcon: React.FC<IconProps> = ({
   fill = 'black',
   stroke = 'black',
