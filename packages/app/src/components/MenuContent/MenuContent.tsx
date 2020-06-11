@@ -31,7 +31,7 @@ export const MenuContent: React.FC<MenuContentProps> = ({ choosenTab }) => {
 
   return (
     <section className={styles.mainSection}>
-      <Header label={setLabel()} />
+      <Header label={setLabel()} choosenTab={choosenTab} />
       <section className={styles.scrolledChats}>
         <div className={styles.menuContent}>
           {chats.map((chat, key) => (
