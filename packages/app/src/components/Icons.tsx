@@ -3,6 +3,8 @@ import React from 'react';
 export interface IconProps {
   fill?: string | undefined;
   stroke?: string | undefined;
+  width?: number;
+  height?: number;
 }
 
 export const LogoIcon: React.FC = () => (
@@ -138,6 +140,27 @@ export const ChatIcon: React.FC<IconProps> = ({
         fill={fill}
         stroke={stroke}
         strokeWidth={5}
+      />
+    </svg>
+  );
+};
+
+export const SearchIcon: React.FC<IconProps> = ({
+  stroke = '#C4C4C4',
+  width = 48,
+  height = 48,
+}) => {
+  return (
+    <svg width={width} height={height} viewBox="0 0 48 50">
+      <circle cx={16.5} cy={16.5} r={14.5} stroke={stroke} strokeWidth={4} />
+      <rect
+        x={25.6964}
+        y={28.9453}
+        width={4.654}
+        height={27.1723}
+        rx={2.327}
+        transform="rotate(-41.3881 25.6964 28.9453)"
+        fill={stroke}
       />
     </svg>
   );
