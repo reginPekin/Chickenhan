@@ -1,20 +1,26 @@
 {
   "name": "@chickenhan/components",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@storybook/addon-actions": "^5.3.18",
     "@storybook/addon-links": "^5.3.18",
     "@storybook/addons": "^5.3.18",
+    "@storybook/preset-create-react-app": "^3.0.0",
     "@storybook/react": "^5.3.18",
-    "babel-loader": "^8.1.0"
+    "@types/storybook__react": "^5.2.1",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-react-css-modules": "^5.2.6",
+    "css-loader": "^3.5.3",
+    "style-loader": "^1.2.1"
   },
   "scripts": {
     "sync": "cp ../sdk/types.ts types.ts",
-    "storybook": "sync && start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 public",
     "build-storybook": "build-storybook"
+  },
+  "dependencies": {
+    "react-scripts": "^3.4.1"
   }
 }

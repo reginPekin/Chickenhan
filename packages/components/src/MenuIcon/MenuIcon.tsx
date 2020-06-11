@@ -1,6 +1,11 @@
 import React from 'react';
 
-import { MenuElement } from '../../../app/src/components/MenuSidebar/consts';
+// import { MenuElement } from '../../../app/src/components/MenuSidebar/consts';
+export interface MenuElement {
+  description?: string;
+  name: string;
+  Icon: React.FC<any>;
+}
 
 import styles from './MenuIcon.module.css';
 

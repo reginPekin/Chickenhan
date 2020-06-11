@@ -1,4 +1,4 @@
-import { User, Chat } from './types';
+import { User, Chat } from '../types';
 
 // export const MOCK_USER_1: User = {
 //   // объект с околоюзерами
