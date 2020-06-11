@@ -1,18 +1,11 @@
 {
   "name": "chickenhan",
-  "main": "packages/app/src/index.tsx",
   "version": "1.0.0",
   "private": true,
   "repository": "https://github.com/reginPekin/Chickenhan.git",
   "author": "reginPekin",
-  "license": "MIT",
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ],
-    "nohoist": [
-      "**/babel-loader"
-    ]
+  "workspaces": { 
+    "packages": [ "packages/*" ]
   },
   "dependencies": {
     "classnames": "^2.2.6",
@@ -37,8 +30,12 @@
     "react-app-rewired": "2.1.6",
     "typescript": "^3.8.3"
   },
+  "peerDependencies": {
+    "@chickenhan/components": "0.0.1"
+  },
+  
   "scripts": {
     "start": "lerna run start --stream",
-    "watch": "tsc -b packages/components/tsconfig.json packages/app/tsconfig.json --watch"
+    "watch": "tsc -b packages/components/tsconfig.json packages/sdk/tsconfig.json --watch"
   }
 }

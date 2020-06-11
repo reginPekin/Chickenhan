@@ -2,10 +2,14 @@ import React from 'react';
 
 import { chats } from './consts';
 
+// import { ChatLine } from '@chickenhan/components/lib/ChatLine/ChatLine';
+// import { MOCK_CHAT_1 } from '@chickenhan/components/lib/__mocks__';
+
 import { ChatLine } from '@chickenhan/components/src/ChatLine';
 import { Header } from '@chickenhan/components/src/Header';
 
 import styles from './MenuContent.module.css';
+
 import { MenuState } from '../MenuSidebar/consts';
 
 interface MenuContentProps {
@@ -34,6 +38,7 @@ export const MenuContent: React.FC<MenuContentProps> = ({ choosenTab }) => {
       <Header label={setLabel()} choosenTab={choosenTab} />
       <section className={styles.scrolledChats}>
         <div className={styles.menuContent}>
+          {/* <ChatLine chat={MOCK_CHAT_1} /> */}
           {chats.map((chat, key) => (
             <ChatLine key={key} chat={chat} />
           ))}
@@ -41,4 +46,3 @@ export const MenuContent: React.FC<MenuContentProps> = ({ choosenTab }) => {
       </section>
     </section>
   );
-};

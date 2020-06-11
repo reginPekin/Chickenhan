@@ -1,8 +1,9 @@
-import React, { createContext } from 'react';
+import React from 'react';
 // import { Chat } from '../../types';
 import cx from 'classnames';
 
 import { Chat } from '../../../app/src/components/MenuContent/consts';
+// import { Chat } from '../types';
 import { Avatar } from '../Avatar';
 
 import styles from './ChatLine.module.css';
