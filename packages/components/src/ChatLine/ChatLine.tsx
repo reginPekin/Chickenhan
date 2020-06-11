@@ -17,23 +17,28 @@ export const ChatLine: React.FC<ChatLineProps> = ({ chat }) => {
     return <span className={styles.userCount}>{chat.userCount} участник</span>; // язык и падежи
   }
 
-  function renderMessageSection(): React.ReactNode {
+  if (chat.isDialog)
     return (
-      <div className={styles.messageSection}>
-        <span
-          className={cx(
-            styles.lastMessage,
-            chat.type === 'dialog'
-              ? styles.dialogLastMessage
-              : styles.chatLastMessage,
-          )}
-        >
-          {chat.lastMessage}
-        </span>
-        {renderUserCount()}
-      </div>
+      <section className={styles.chatLine}>
+        <div className={styles.avatar}>
+          <Avatar url={chat.avatar} chatType={chat.type} />
+          {chat.isDialog.isOnline && <div className={styles.onlineCircle} />}
+        </div>
+        <div className={styles.chatInfo}>
+          <div className={styles.headInfo}>
+            <span className={styles.name}>{chat.isDialog.login}</span>
+            <span className={styles.lastDateMessage}>
+              {chat.lastDateMessage}
+            </span>
+          </div>
+          <div className={styles.messageSection}>
+            <span className={cx(styles.lastMessage, styles.dialogLastMessage)}>
+              {chat.lastMessage}
+            </span>
+          </div>
+        </div>
+      </section>
     );
-  }
 
   return (
     <section className={styles.chatLine}>
@@ -45,7 +50,12 @@ export const ChatLine: React.FC<ChatLineProps> = ({ chat }) => {
           <span className={styles.name}>{chat.name}</span>
           <span className={styles.lastDateMessage}>{chat.lastDateMessage}</span>
         </div>
-        {renderMessageSection()}
+        <div className={styles.messageSection}>
+          <span className={cx(styles.lastMessage, styles.chatLastMessage)}>
+            {chat.lastMessage}
+          </span>
+          {renderUserCount()}
+        </div>
       </div>
     </section>
   );

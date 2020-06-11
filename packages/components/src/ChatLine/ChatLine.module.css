@@ -12,6 +12,18 @@
 
 .avatar {
   padding: 0 12px;
+  position: relative;
+}
+
+.onlineCircle {
+  background-color: var(--main-yellow);
+  border-radius: 50%;
+  border: 3px solid white;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: 35px;
+  right: 10px;
 }
 
 .chatInfo {
