@@ -1,7 +1,7 @@
 export interface User {
   id: string;
   login: string;
-  isOnline: string; // на бэкэ online
+  isOnline: boolean; // на бэкэ online
   avatar?: string;
 }
 
