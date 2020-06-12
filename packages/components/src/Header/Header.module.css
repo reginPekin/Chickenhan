@@ -27,3 +27,12 @@
   width: 100%;
   outline: none;
 }
+
+.deleteButton {
+  display: flex;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  padding: 0;
+  background: none;
+}

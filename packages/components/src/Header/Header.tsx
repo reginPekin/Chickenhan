@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 
 // import { SearchIcon } from '../../../app/src/components/Icons';
 
@@ -13,9 +13,9 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ label, choosenTab }) => {
-  // const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const [searchValue, setSearchValue] = useState<string>('');
 
-  // console.log(searchInputRef.current?.value, 'value');
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
 
   function isSearched(): boolean {
     switch (choosenTab) {
@@ -40,9 +40,17 @@ export const Header: React.FC<HeaderProps> = ({ label, choosenTab }) => {
         <input
           className={styles.searchInput}
           placeholder="Find chat"
-          // ref={searchInputRef}
+          ref={searchInputRef}
+          onChange={(event): void => setSearchValue(event?.target?.value)}
         />
-        <button style={{ display: 'none' }}>
+        <button
+          onClick={(): void => {
+            if (searchInputRef.current) searchInputRef.current.value = '';
+            setSearchValue('');
+          }}
+          style={{ visibility: searchValue ? 'visible' : 'hidden' }}
+          className={styles.deleteButton}
+        >
           <DeleteIcon />
         </button>
       </section>
