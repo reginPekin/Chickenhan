@@ -2,7 +2,6 @@
   position: relative;
   display: flex;
   align-items: center;
-  background-color: pink;
 }
 
 .iconBlock {
@@ -44,6 +43,7 @@
 
 .iconDescription {
   position: absolute;
+  z-index: 3;
   display: none;
   left: 76px;
   padding: 5px;

@@ -36,8 +36,8 @@ export const SearchIcon: React.FC<IconProps> = ({
 };
 
 export const DeleteIcon: React.FC<IconProps> = ({
-  width = 24,
-  height = 24,
+  width = 18,
+  height = 18,
   fill = '#C4C4C4',
 }) => (
   <svg width={width} height={height} viewBox="0 0 64 64">

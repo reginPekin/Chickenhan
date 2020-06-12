@@ -46,3 +46,4 @@ export const MenuContent: React.FC<MenuContentProps> = ({ choosenTab }) => {
       </section>
     </section>
   );
+};
