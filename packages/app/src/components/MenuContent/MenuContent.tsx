@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { MOCK_CHATS_1 } from '@chickenhan/components/src/__mocks__';
 
@@ -34,8 +35,14 @@ export const MenuContent: React.FC<MenuContentProps> = ({ choosenTab }) => {
       <MenuHeader label={setLabel()} choosenTab={choosenTab} />
       <section className={styles.scrolledChats}>
         <div className={styles.menuContent}>
-          {chats.map((chat, key) => (
-            <ChatLine key={key} chat={chat} />
+          {chats.map(chat => (
+            <Link
+              key={chat.id}
+              to={`/${chat.id}`}
+              style={{ textDecoration: 'none', color: 'black' }}
+            >
+              <ChatLine chat={chat} />
+            </Link>
           ))}
         </div>
       </section>

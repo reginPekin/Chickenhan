@@ -4,13 +4,17 @@
   "private": true,
   "repository": "https://github.com/reginPekin/Chickenhan.git",
   "author": "reginPekin",
-  "workspaces": { 
-    "packages": [ "packages/*" ]
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
   },
   "dependencies": {
+    "@types/react-router-dom": "^5.1.5",
     "classnames": "^2.2.6",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.2.0"
   },
   "devDependencies": {
@@ -33,7 +37,6 @@
   "peerDependencies": {
     "@chickenhan/components": "0.0.1"
   },
-  
   "scripts": {
     "start": "lerna run start --stream",
     "watch": "tsc -b packages/components/tsconfig.json packages/sdk/tsconfig.json --watch"
