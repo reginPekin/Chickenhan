@@ -4,7 +4,7 @@ import { Avatar } from '@chickenhan/components/src/Avatar';
 
 import styles from './ChatHeader.module.css';
 
-import { Chat, ChatType } from '../types';
+import { Chat } from '../types';
 
 import { MoreIcon } from '../Icons';
 
@@ -13,17 +13,22 @@ interface ChatHeader {
 }
 
 export const ChatHeader: React.FC<ChatHeader> = ({ chat }) => {
-  function renderUserCount(
-    type: ChatType,
-    userCount: number | undefined,
-  ): number | 'личные сообщения' {
-    if (type === 'dialog') return 'личные сообщения';
-    return userCount;
+  function extractUserCount(): string {
+    if (chat.type === 'dialog' && chat.opponent) {
+      return 'личные сообщения';
+    }
+    return chat.userCount.toString();
   }
 
-  function renderChatName(name: string): string {
-    if (name.length > 40) return `${name.slice(0, 40)}...`;
-    return name;
+  function extractChatName(): string {
+    if (chat.type === 'dialog' && chat.opponent) {
+      return chat.opponent.login;
+    }
+
+    if (chat.name.length > 40) {
+      return `${chat.name.slice(0, 40)}...`;
+    }
+    return chat.name;
   }
 
   return (
@@ -36,8 +41,8 @@ export const ChatHeader: React.FC<ChatHeader> = ({ chat }) => {
           style={{ paddingRight: '16px' }}
         />
         <div className={styles.infoSection}>
-          <span className={styles.name}>{renderChatName(chat.name)}</span>
-          <span>{renderUserCount(chat.type, chat.userCount)}</span>
+          <span className={styles.name}>{extractChatName()}</span>
+          <span>{extractUserCount()}</span>
         </div>
         <MoreIcon />
       </section>
