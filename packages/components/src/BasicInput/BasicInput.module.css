@@ -1,0 +1,16 @@
+.inputSection {
+  display: flex;
+  align-items: center;
+  margin: 16px;
+  padding: 8px 24px 8px 20px;
+  background-color: var(--light-grey);
+  border-radius: 8px;
+}
+
+.input {
+  padding: 0 10px;
+  border: none;
+  background-color: var(--light-grey);
+  width: 100%;
+  outline: none;
+}
