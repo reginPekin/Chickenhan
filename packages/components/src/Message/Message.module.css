@@ -1,16 +1,7 @@
-.message {
-  display: flex;
-  flex-direction: column;
-}
-
-.messageInfo {
-  padding: 0 16px;
-}
-
 .messageArticle {
   display: flex;
-  padding-top: 4px;
-  padding-bottom: 4px;
+  flex-direction: column;
+  padding: 4px 16px;
 }
 
 .textInfo {
@@ -29,8 +20,7 @@
 
 .onlineCircle {
   border-radius: 50%;
-  /* background-color: var(--main-yellow); */
-  background-color: salmon;
+  background-color: var(--main-yellow);
   margin-left: 2px;
   width: 7px;
   height: 7px;
@@ -38,4 +28,25 @@
 
 .date {
   margin-left: 4px;
+}
+
+.messageText {
+  line-height: 1.2;
+}
+
+.messageFile {
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.pictureSection {
+  height: 100%;
+  width: 100%;
+  max-width: 200px;
+}
+
+.picture {
+  border-radius: 8px;
+  height: auto;
+  width: 100%;
 }
