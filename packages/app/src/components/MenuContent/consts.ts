@@ -6,7 +6,7 @@ interface Opponent {
 export type ChatType = 'dialog' | 'public' | 'private';
 
 export interface Chat {
-  isDialog?: Opponent;
+  opponent?: Opponent;
   id: string;
   lastMessage?: string;
   lastDateMessage?: string;
@@ -21,7 +21,7 @@ export interface Chat {
 
 export const chats: Chat[] = [
   {
-    isDialog: {
+    opponent: {
       isOnline: true,
       login: 'Dialog 1',
     },

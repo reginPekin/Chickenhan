@@ -34,7 +34,7 @@ interface Author {
   userId: string;
   name: string;
   avatar: string;
-  online: boolean;
+  isOnline: boolean;
 }
 
 export interface Message {

@@ -16,19 +16,21 @@ interface MessageProps {
 }
 
 export const Message: React.FC<MessageProps> = ({ message }) => {
-  function renderAuthor() {
-    <div className={styles.nameAndDate}>
-      <span>{message.author.name}</span>
-      <span
-        style={{ display: message.author.online ? 'block' : 'none' }}
-        className={styles.onlineCircle}
-      />
-      <time className={styles.date}>{parseTime(message.date)}</time>
-    </div>
+  function renderAuthor(): JSX.Element {
+    return (
+      <div className={styles.nameAndDate}>
+        <span>{message.author.name}</span>
+        <span
+          style={{ display: message.author.isOnline ? 'block' : 'none' }}
+          className={styles.onlineCircle}
+        />
+        <time className={styles.date}>{parseTime(message.date)}</time>
+      </div>
+    );
   }
 
-  function renderPictures() {
-    return(
+  function renderPictures(): JSX.Element {
+    return (
       <article className={styles.picturesArray}>
         {message.pictures?.map(picture => (
           <div
@@ -39,14 +41,14 @@ export const Message: React.FC<MessageProps> = ({ message }) => {
           </div>
         ))}
       </article>
-    )
+    );
   }
 
   return (
     <article className={styles.messageArticle}>
       <Avatar url={message.author.avatar} width={40} />
       <div className={styles.textInfo}>
-        {renderAuthor}
+        {renderAuthor()}
         <span className={styles.messageText}>{message.text}</span>
         {renderPictures()}
       </div>

@@ -1,7 +1,6 @@
 .messageArticle {
   display: flex;
-  flex-direction: column;
-  padding: 4px 16px;
+  padding: 8px 16px;
 }
 
 .textInfo {
@@ -15,7 +14,8 @@
 .nameAndDate {
   display: flex;
   align-items: baseline;
-  line-height: 1.5;
+  line-height: 16px;
+  margin-bottom: 5px;
 }
 
 .onlineCircle {
@@ -31,7 +31,7 @@
 }
 
 .messageText {
-  line-height: 1.2;
+  line-height: 1.4;
 }
 
 .messageFile {

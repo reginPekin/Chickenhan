@@ -2,8 +2,7 @@ import React from 'react';
 // import { Chat } from '../../types';
 import cx from 'classnames';
 
-import { Chat } from '../../../app/src/components/MenuContent/consts';
-// import { Chat } from '../types';
+import { Chat } from '../types';
 import { Avatar } from '../Avatar';
 
 import styles from './ChatLine.module.css';
@@ -18,16 +17,16 @@ export const ChatLine: React.FC<ChatLineProps> = ({ chat }) => {
     return <span className={styles.userCount}>{chat.userCount} участник</span>; // язык и падежи
   }
 
-  if (chat.isDialog)
+  if (chat.opponent)
     return (
       <section className={styles.chatLine}>
         <div className={styles.avatar}>
           <Avatar url={chat.avatar} chatType={chat.type} />
-          {chat.isDialog.isOnline && <div className={styles.onlineCircle} />}
+          {chat.opponent.isOnline && <div className={styles.onlineCircle} />}
         </div>
         <div className={styles.chatInfo}>
           <div className={styles.headInfo}>
-            <span className={styles.name}>{chat.isDialog.login}</span>
+            <span className={styles.name}>{chat.opponent.login}</span>
             <span className={styles.lastDateMessage}>
               {chat.lastDateMessage}
             </span>
