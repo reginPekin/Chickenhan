@@ -1,0 +1,41 @@
+.message {
+  display: flex;
+  flex-direction: column;
+}
+
+.messageInfo {
+  padding: 0 16px;
+}
+
+.messageArticle {
+  display: flex;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.textInfo {
+  display: flex;
+  flex-direction: column;
+  word-break: break-word;
+  margin: 0 0 0 12px;
+  padding-right: 26px;
+}
+
+.nameAndDate {
+  display: flex;
+  align-items: baseline;
+  line-height: 1.5;
+}
+
+.onlineCircle {
+  border-radius: 50%;
+  /* background-color: var(--main-yellow); */
+  background-color: salmon;
+  margin-left: 2px;
+  width: 7px;
+  height: 7px;
+}
+
+.date {
+  margin-left: 4px;
+}
