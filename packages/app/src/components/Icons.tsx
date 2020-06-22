@@ -62,106 +62,99 @@ export const LogoIcon: React.FC = () => (
   </svg>
 );
 
-export const AddChatIcon: React.FC<IconProps> = ({ fill = 'none' }) => {
-  return (
-    <svg width={24} height={24} viewBox="0 0 93 93">
-      <rect
-        x={1.5}
-        y={1.5}
-        width={90}
-        height={90}
-        rx={18.5}
-        fill={fill}
-        stroke="black"
-        strokeWidth={5}
-      />
-      <path d="M47 18L47 78" stroke="black" strokeWidth={5} />
-      <line
-        x1={17}
-        y1={48.5}
-        x2={77}
-        y2={48.5}
-        stroke="black"
-        strokeWidth={5}
-      />
-    </svg>
-  );
-};
+export const AddChatIcon: React.FC<IconProps> = ({ fill = 'none' }) => (
+  <svg width={24} height={24} viewBox="0 0 93 93">
+    <rect
+      x={1.5}
+      y={1.5}
+      width={90}
+      height={90}
+      rx={18.5}
+      fill={fill}
+      stroke="black"
+      strokeWidth={5}
+    />
+    <path d="M47 18L47 78" stroke="black" strokeWidth={5} />
+    <line x1={17} y1={48.5} x2={77} y2={48.5} stroke="black" strokeWidth={5} />
+  </svg>
+);
 
 export const DiscoverIcon: React.FC<IconProps> = ({
   fill = 'black',
   stroke = 'black',
-}) => {
-  return (
-    <svg width={24} height={24} viewBox="0 0 64 64" fill="none">
-      <circle cx={32} cy={32} r={30.5} stroke={stroke} strokeWidth={3} />
-      <path
-        d="M25.6113 23.3411L11.8406 44.656L36.564 41.2587L50.6621 20.9254L25.6113 23.3411Z"
-        fill={fill}
-        stroke={stroke}
-      />
-      <circle cx={31.5} cy={31.5} r={3.5} fill="white" />
-    </svg>
-  );
-};
+}) => (
+  <svg width={24} height={24} viewBox="0 0 64 64" fill="none">
+    <circle cx={32} cy={32} r={30.5} stroke={stroke} strokeWidth={3} />
+    <path
+      d="M25.6113 23.3411L11.8406 44.656L36.564 41.2587L50.6621 20.9254L25.6113 23.3411Z"
+      fill={fill}
+      stroke={stroke}
+    />
+    <circle cx={31.5} cy={31.5} r={3.5} fill="white" />
+  </svg>
+);
 
 export const ProfileIcon: React.FC<IconProps> = ({
   fill = 'none',
   stroke = 'black',
-}) => {
-  return (
-    <svg width={24} height={24} viewBox="0 0 89 88">
-      <path
-        d="M44 45C4.80002 45 -0.333311 72.6667 2.00002 86.5H86.5C88.6667 72.6667 83.2 45 44 45Z"
-        fill={fill}
-        stroke={stroke}
-        strokeWidth={5}
-      />
-      <circle
-        cx={44}
-        cy={19}
-        r={17.5}
-        fill={fill}
-        stroke={stroke}
-        strokeWidth={5}
-      />
-    </svg>
-  );
-};
+}) => (
+  <svg width={24} height={24} viewBox="0 0 89 88">
+    <path
+      d="M44 45C4.80002 45 -0.333311 72.6667 2.00002 86.5H86.5C88.6667 72.6667 83.2 45 44 45Z"
+      fill={fill}
+      stroke={stroke}
+      strokeWidth={5}
+    />
+    <circle
+      cx={44}
+      cy={19}
+      r={17.5}
+      fill={fill}
+      stroke={stroke}
+      strokeWidth={5}
+    />
+  </svg>
+);
 
 export const ChatIcon: React.FC<IconProps> = ({
   fill = 'none',
   stroke = 'black',
-}) => {
-  return (
-    <svg width={24} height={24} viewBox="0 0 151 138" fill="none">
-      <path
-        d="M31.9284 107L28.6553 133.903C28.4228 135.712 30.5343 136.863 31.9284 135.687L65 107M12 107H139C144.523 107 149 102.523 149 97V12C149 6.47715 144.523 2 139 2H12C6.47715 2 2 6.47715 2 12V97C2 102.523 6.47715 107 12 107Z"
-        fill={fill}
-        stroke={stroke}
-        strokeWidth={5}
-      />
-    </svg>
-  );
-};
+}) => (
+  <svg width={24} height={24} viewBox="0 0 151 138" fill="none">
+    <path
+      d="M31.9284 107L28.6553 133.903C28.4228 135.712 30.5343 136.863 31.9284 135.687L65 107M12 107H139C144.523 107 149 102.523 149 97V12C149 6.47715 144.523 2 139 2H12C6.47715 2 2 6.47715 2 12V97C2 102.523 6.47715 107 12 107Z"
+      fill={fill}
+      stroke={stroke}
+      strokeWidth={5}
+    />
+  </svg>
+);
 
 export const SearchIcon: React.FC<IconProps> = ({
   stroke = '#C4C4C4',
   width = 48,
   height = 48,
-}) => {
-  return (
-    <svg width={width} height={height} viewBox="0 0 48 50">
-      <circle cx={16.5} cy={16.5} r={14.5} stroke={stroke} strokeWidth={4} />
-      <rect
-        x={25.6964}
-        y={28.9453}
-        width={4.654}
-        height={27.1723}
-        rx={2.327}
-        transform="rotate(-41.3881 25.6964 28.9453)"
-        fill={stroke}
-      />
-    </svg>
-  );
-};
+}) => (
+  <svg width={width} height={height} viewBox="0 0 48 50">
+    <circle cx={16.5} cy={16.5} r={14.5} stroke={stroke} strokeWidth={4} />
+    <rect
+      x={25.6964}
+      y={28.9453}
+      width={4.654}
+      height={27.1723}
+      rx={2.327}
+      transform="rotate(-41.3881 25.6964 28.9453)"
+      fill={stroke}
+    />
+  </svg>
+);
+
+export const SendMessageIcon: React.FC = () => (
+  <svg width={24} height={24} viewBox="0 0 29 30" fill="none">
+    <path
+      d="M26.683 13.2345L4.41607 1.38275C2.70751 0.473352 0.832336 2.27919 1.67675 4.02079L7 15L1.67675 25.9792C0.832335 27.7208 2.70751 29.5266 4.41607 28.6173L26.683 16.7655C28.0967 16.013 28.0967 13.987 26.683 13.2345Z"
+      stroke="#FFC224"
+      strokeWidth={4}
+    />
+  </svg>
+);
