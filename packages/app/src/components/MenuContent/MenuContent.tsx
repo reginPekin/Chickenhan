@@ -1,12 +1,9 @@
 import React from 'react';
 
-import { chats } from './consts';
-
-// import { ChatLine } from '@chickenhan/components/lib/ChatLine/ChatLine';
-// import { MOCK_CHAT_1 } from '@chickenhan/components/lib/__mocks__';
+import { MOCK_CHATS_1 } from '@chickenhan/components/src/__mocks__';
 
 import { ChatLine } from '@chickenhan/components/src/ChatLine';
-import { Header } from '@chickenhan/components/src/Header';
+import { MenuHeader } from '@chickenhan/components/src/MenuHeader';
 
 import styles from './MenuContent.module.css';
 
@@ -26,19 +23,17 @@ export const MenuContent: React.FC<MenuContentProps> = ({ choosenTab }) => {
         return 'Chats';
       case 'profile':
         return 'Profile';
-      case 'newChat':
-        return 'Add new chat';
       default:
         return 'Chats';
     }
   }
 
+  const chats = MOCK_CHATS_1;
   return (
     <section className={styles.mainSection}>
-      <Header label={setLabel()} choosenTab={choosenTab} />
+      <MenuHeader label={setLabel()} choosenTab={choosenTab} />
       <section className={styles.scrolledChats}>
         <div className={styles.menuContent}>
-          {/* <ChatLine chat={MOCK_CHAT_1} /> */}
           {chats.map((chat, key) => (
             <ChatLine key={key} chat={chat} />
           ))}

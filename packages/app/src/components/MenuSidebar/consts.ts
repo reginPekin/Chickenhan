@@ -1,12 +1,6 @@
-import {
-  DiscoverIcon,
-  ProfileIcon,
-  ChatIcon,
-  IconProps,
-  AddChatIcon,
-} from '../Icons';
+import { DiscoverIcon, ProfileIcon, ChatIcon, IconProps } from '../Icons';
 
-export type MenuState = 'discover' | 'chats' | 'profile' | 'newChat';
+export type MenuState = 'discover' | 'chats' | 'profile';
 export interface MenuElement {
   description?: string;
   name: MenuState;
@@ -28,10 +22,5 @@ export const menuElements: MenuElement[] = [
     description: 'Profile', // в последствии можно писать имя пользователя
     name: 'profile',
     Icon: ProfileIcon,
-  },
-  {
-    description: 'Create',
-    name: 'newChat',
-    Icon: AddChatIcon,
   },
 ];

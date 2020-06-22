@@ -1,20 +1,33 @@
 import React from 'react';
 
 import styles from './Avatar.module.css';
-import { MenuState } from '../../../app/src/components/MenuSidebar/consts';
 
 interface AvatarProps {
   url: string;
-  chatType: string;
+  chatType?: string;
+  width?: number;
+  style?: React.CSSProperties;
 }
 
-export const Avatar: React.FC<AvatarProps> = ({ url, chatType }) => {
+export const Avatar: React.FC<AvatarProps> = ({
+  url,
+  chatType = 'dialog',
+  width = 48,
+  style = {},
+}) => {
   return (
-    <div className={styles.avatarSection}>
+    <div
+      className={styles.avatarSection}
+      style={{
+        width: width,
+        height: width,
+        ...style,
+      }}
+    >
       <img
         src={url}
-        height={48}
-        width={48}
+        height={width}
+        width={width}
         style={{
           borderRadius: chatType === 'dialog' ? '50%' : '30%',
         }}
