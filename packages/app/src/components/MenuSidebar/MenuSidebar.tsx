@@ -19,7 +19,7 @@ export const MenuSidebar: React.FC<MenuSiderProps> = ({
   const index: number = menuElements.findIndex(tab => tab.name === choosenTab);
 
   return (
-    <main className={styles.menuSidebar}>
+    <nav className={styles.menuSidebar}>
       <div
         className={styles.logoSection}
         onClick={(): void => {
@@ -42,6 +42,6 @@ export const MenuSidebar: React.FC<MenuSiderProps> = ({
           />
         ))}
       </section>
-    </main>
+    </nav>
   );
 };
