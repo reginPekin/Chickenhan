@@ -6,21 +6,21 @@ export interface User {
 }
 
 interface Opponent {
-  login: string;
   isOnline: boolean; // на бэкэ online
+  login: string;
 }
 
 export type ChatType = 'dialog' | 'public' | 'private';
 export interface Chat {
-  isDialog?: Opponent;
+  opponent?: Opponent;
   id: string;
+  name: string;
+  userCount: number;
   lastMessage?: string;
   lastDateMessage?: string;
   avatar: string;
   type: ChatType;
   // parameters below exists just for public & private types
-  name?: string;
-  userCount?: number;
 }
 
 interface Picture {
