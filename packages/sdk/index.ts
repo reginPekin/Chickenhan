@@ -1,4 +1,4 @@
-// connect with axios
+// connect with axioss
 
 export const getTenorGifs = async (): Promise<void> => {
   const response = await fetch('https://api.example.com/items');
