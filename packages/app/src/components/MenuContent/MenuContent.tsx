@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { MOCK_CHATS_1 } from '@chickenhan/components/src/__mocks__';
@@ -15,6 +15,7 @@ interface MenuContentProps {
 }
 
 export const MenuContent: React.FC<MenuContentProps> = ({ choosenTab }) => {
+  const [choosenChat, setChoosenChat] = useState<string>('');
   // бизнес логика и интерфейс, что, где и как?
   function setLabel(): string {
     switch (choosenTab) {
@@ -39,9 +40,21 @@ export const MenuContent: React.FC<MenuContentProps> = ({ choosenTab }) => {
             <Link
               key={chat.id}
               to={`/${chat.id}`}
-              style={{ textDecoration: 'none', color: 'black' }}
+              style={{
+                textDecoration: 'none',
+                color: 'black',
+              }}
             >
-              <ChatLine chat={chat} />
+              <div
+                className={styles.link}
+                style={{
+                  backgroundColor:
+                    choosenChat === chat.id ? 'var(--light-grey)' : 'white',
+                }}
+                onClick={(): void => setChoosenChat(chat.id)}
+              >
+                <ChatLine chat={chat} />
+              </div>
             </Link>
           ))}
         </div>

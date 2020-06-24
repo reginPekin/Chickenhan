@@ -9,6 +9,11 @@
   width: 100%;
 }
 
+.link {
+  margin: 0 8px;
+  border-radius: 8px;
+}
+
 .scrolledChats {
   overflow-y: scroll;
   /* height: 100%; */
