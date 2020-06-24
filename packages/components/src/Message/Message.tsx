@@ -8,6 +8,7 @@ import { Message as TypeMessage } from '../types';
 import { Avatar } from '../Avatar';
 
 import { parseTime } from '../utils';
+import { MoreIcon } from '../Icons';
 
 import styles from './Message.module.css';
 
@@ -51,6 +52,9 @@ export const Message: React.FC<MessageProps> = ({ message }) => {
         {renderAuthor()}
         <span className={styles.messageText}>{message.text}</span>
         {renderPictures()}
+        <aside className={styles.moreInfo}>
+          <MoreIcon />
+        </aside>
       </div>
     </article>
   );
