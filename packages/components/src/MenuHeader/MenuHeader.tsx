@@ -14,7 +14,7 @@ interface HeaderProps {
 }
 
 export const MenuHeader: React.FC<HeaderProps> = ({ label, choosenTab }) => {
-  const [searchValue, setSearchValue] = useState<string>('');
+  const [isSearchedValue, setIsSearchedValue] = useState<boolean>(false);
 
   const searchInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -30,26 +30,32 @@ export const MenuHeader: React.FC<HeaderProps> = ({ label, choosenTab }) => {
     if (!isSearched()) return null;
 
     return (
-      <BasicInput
-        placeholder="Find a chat..."
-        onSubmit={(): null => null} // пока ничего нет
-        onChange={(value): void => setSearchValue(value)}
-        inputRef={searchInputRef}
-        inputSectionStyle={{ marginTop: 0 }}
-        renderLeftElements={(): JSX.Element => <SearchIcon />}
-        renderRightElements={(): JSX.Element => (
-          <button
-            onClick={(): void => {
-              if (searchInputRef.current) searchInputRef.current.value = '';
-              setSearchValue('');
-            }}
-            style={{ visibility: searchValue ? 'visible' : 'hidden' }}
-            className={styles.iconButton}
-          >
-            <DeleteIcon />
-          </button>
-        )}
-      />
+      <section className={styles.searchSection}>
+        <SearchIcon className={styles.searchIcon} />
+        <BasicInput
+          ref={searchInputRef}
+          placeholder="Find a chat..."
+          onChange={(event): void => {
+            if (event.target.value && !isSearchedValue) {
+              setIsSearchedValue(true);
+            }
+            if (!event.target.value && isSearchedValue) {
+              setIsSearchedValue(false);
+            }
+          }}
+          onSubmit={(): void => undefined}
+        />
+        <DeleteIcon
+          className={styles.deleteIcon}
+          style={{ display: isSearchedValue ? 'block' : 'none' }}
+          onClick={(): void => {
+            if (searchInputRef.current) {
+              searchInputRef.current.value = '';
+            }
+            setIsSearchedValue(false);
+          }}
+        />
+      </section>
     );
   }
 
@@ -57,12 +63,7 @@ export const MenuHeader: React.FC<HeaderProps> = ({ label, choosenTab }) => {
     <header className={styles.header}>
       <div className={styles.label}>
         <span>{label}</span>
-        <button
-          style={{ display: isChat() ? 'flex' : 'none' }}
-          className={styles.iconButton}
-        >
-          <AddChatIcon />
-        </button>
+        <AddChatIcon style={{ display: isChat() ? 'flex' : 'none' }} />
       </div>
       {renderSearchInput()}
     </header>

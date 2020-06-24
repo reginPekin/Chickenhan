@@ -15,27 +15,26 @@
 
 .searchSection {
   display: flex;
+  position: relative;
   align-items: center;
   margin: 16px;
-  padding: 8px 24px 8px 20px;
+  padding: 0 32px;
   background-color: var(--light-grey);
   border-radius: 8px;
   margin-top: 0;
 }
 
-.searchInput {
-  padding: 0 10px;
-  border: none;
-  background-color: var(--light-grey);
-  width: 100%;
-  outline: none;
+.searchIcon {
+  position: absolute;
+  left: 10px;
+  width: 18px;
+  height: 18px
 }
 
-.iconButton {
-  display: flex;
+.deleteIcon {
+  position: absolute;
   cursor: pointer;
-  outline: none;
-  border: none;
-  padding: 0;
-  background: none;
+  right: 10px;
+  width: 18px;
+  height: 18px
 }

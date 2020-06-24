@@ -4,11 +4,14 @@
   align-items: center;
 }
 
-.sendInput {
-  outline: none;
-  padding: 8px 16px;
-  font-size: 15px;
-  line-height: 24px;
+.inputSection {
+  width: 100%;
+  display: flex;
+  position: relative;
+  align-items: center;
+  padding: 0 32px;
+  border-radius: 8px;
+  background-color: var(--light-grey);
 }
 
 .sendMessageButton {

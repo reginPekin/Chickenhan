@@ -9,11 +9,9 @@ import { SendMessageIcon } from '../Icons';
 export const WriteBox: React.FC = () => {
   return (
     <footer className={styles.footer}>
-      <BasicInput
-        placeholder="Write a message..."
-        onSubmit={(): void => undefined}
-        inputSectionStyle={{ margin: 0, width: '100%' }}
-      />
+      <section className={styles.inputSection}>
+        <BasicInput placeholder="Write a message..." />
+      </section>
       <button className={styles.sendMessageButton}>
         <SendMessageIcon />
       </button>
