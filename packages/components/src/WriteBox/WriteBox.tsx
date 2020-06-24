@@ -12,9 +12,7 @@ export const WriteBox: React.FC = () => {
       <section className={styles.inputSection}>
         <BasicInput placeholder="Write a message..." />
       </section>
-      <button className={styles.sendMessageButton}>
-        <SendMessageIcon />
-      </button>
+      <SendMessageIcon className={styles.sendMessageIcon} />
     </footer>
   );
 };

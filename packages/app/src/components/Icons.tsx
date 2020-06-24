@@ -5,9 +5,10 @@ export interface IconProps {
   stroke?: string | undefined;
   width?: number;
   height?: number;
+  className?: string;
 }
 
-export const LogoIcon: React.FC = () => (
+export const LogoIcon: React.FC<IconProps> = () => (
   <svg width={40} height={40} viewBox="0 0 46 52" fill="none">
     <path
       d="M18.3965 7.59629L13.968 4.27489"
@@ -62,23 +63,6 @@ export const LogoIcon: React.FC = () => (
   </svg>
 );
 
-export const AddChatIcon: React.FC<IconProps> = ({ fill = 'none' }) => (
-  <svg width={24} height={24} viewBox="0 0 93 93">
-    <rect
-      x={1.5}
-      y={1.5}
-      width={90}
-      height={90}
-      rx={18.5}
-      fill={fill}
-      stroke="black"
-      strokeWidth={5}
-    />
-    <path d="M47 18L47 78" stroke="black" strokeWidth={5} />
-    <line x1={17} y1={48.5} x2={77} y2={48.5} stroke="black" strokeWidth={5} />
-  </svg>
-);
-
 export const DiscoverIcon: React.FC<IconProps> = ({
   fill = 'black',
   stroke = 'black',
@@ -126,35 +110,6 @@ export const ChatIcon: React.FC<IconProps> = ({
       fill={fill}
       stroke={stroke}
       strokeWidth={5}
-    />
-  </svg>
-);
-
-export const SearchIcon: React.FC<IconProps> = ({
-  stroke = '#C4C4C4',
-  width = 48,
-  height = 48,
-}) => (
-  <svg width={width} height={height} viewBox="0 0 48 50">
-    <circle cx={16.5} cy={16.5} r={14.5} stroke={stroke} strokeWidth={4} />
-    <rect
-      x={25.6964}
-      y={28.9453}
-      width={4.654}
-      height={27.1723}
-      rx={2.327}
-      transform="rotate(-41.3881 25.6964 28.9453)"
-      fill={stroke}
-    />
-  </svg>
-);
-
-export const SendMessageIcon: React.FC = () => (
-  <svg width={24} height={24} viewBox="0 0 29 30" fill="none">
-    <path
-      d="M26.683 13.2345L4.41607 1.38275C2.70751 0.473352 0.832336 2.27919 1.67675 4.02079L7 15L1.67675 25.9792C0.832335 27.7208 2.70751 29.5266 4.41607 28.6173L26.683 16.7655C28.0967 16.013 28.0967 13.987 26.683 13.2345Z"
-      stroke="#FFC224"
-      strokeWidth={4}
     />
   </svg>
 );

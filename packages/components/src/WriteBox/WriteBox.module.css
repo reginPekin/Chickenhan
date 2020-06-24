@@ -14,7 +14,7 @@
   background-color: var(--light-grey);
 }
 
-.sendMessageButton {
+.sendMessageIcon {
   margin: 5px;
   cursor: pointer;
   border: none;
