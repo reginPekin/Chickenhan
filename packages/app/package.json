@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@chickenhan/components": "1.0.0"
+    "@chickenhan/components": "1.0.0",
+    "@chickenhan/sdk": "1.0.0"
   },
   "scripts": {
     "start": "react-app-rewired start",

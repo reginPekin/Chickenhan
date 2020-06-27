@@ -21,6 +21,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@chickenhan/sdk": "1.0.0",
     "react-scripts": "^3.4.1"
   }
 }

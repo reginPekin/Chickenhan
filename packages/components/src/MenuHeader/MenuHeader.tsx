@@ -8,6 +8,8 @@ import { BasicInput } from '../BasicInput';
 
 import { SearchIcon, DeleteIcon, AddChatIcon } from '../Icons';
 
+import { getTenorGifs } from '@chickenhan/sdk/lib';
+
 interface HeaderProps {
   label: string;
   choosenTab: MenuState;
@@ -49,6 +51,7 @@ export const MenuHeader: React.FC<HeaderProps> = ({ label, choosenTab }) => {
           className={styles.deleteIcon}
           style={{ display: isSearchedValue ? 'block' : 'none' }}
           onClick={(): void => {
+            getTenorGifs();
             if (searchInputRef.current) {
               searchInputRef.current.value = '';
             }
