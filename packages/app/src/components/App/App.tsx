@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import styles from './App.module.css';
 
@@ -7,9 +8,11 @@ import { MenuContainer } from '../MenuContainer';
 
 export const App: React.FC = () => {
   return (
-    <div className={styles.app}>
-      <MenuContainer />
-      <ContentContainer />
-    </div>
+    <Router>
+      <div className={styles.app}>
+        <MenuContainer />
+        <ContentContainer />
+      </div>
+    </Router>
   );
 };

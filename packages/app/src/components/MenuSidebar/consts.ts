@@ -1,8 +1,9 @@
 import { DiscoverIcon, ProfileIcon, ChatIcon, IconProps } from '../Icons';
 
+export type MenuState = 'discover' | 'chats' | 'profile';
 export interface MenuElement {
   description?: string;
-  name: string;
+  name: MenuState;
   Icon: React.FC<IconProps>;
 }
 

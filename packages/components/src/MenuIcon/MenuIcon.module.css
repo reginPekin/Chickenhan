@@ -13,12 +13,21 @@
   cursor: pointer;
 }
 
+.iconSection:hover {
+  background-color: var(--hover-grey);
+}
+
 .iconSection:hover .iconDescription {
   display: inline;
 }
 
 .iconSection:hover .descriptionArrow {
   display: inline;
+}
+
+.description {
+  display: flex;
+  align-items: center;
 }
 
 .descriptionArrow {
@@ -28,16 +37,17 @@
 	width: 0;
 	height: 0;
 	border-top: 5px solid transparent;
-	border-right: 8px solid var(--light-grey);
+	border-right: 8px solid var(--main-yellow);
 	border-bottom: 5px solid transparent;
 }
 
 .iconDescription {
   position: absolute;
+  z-index: 3;
   display: none;
   left: 76px;
   padding: 5px;
-  background-color: var(--light-grey);
+  background-color: var(--main-yellow);
   border-radius: 5px;
   white-space: nowrap;
 }

@@ -1,0 +1,40 @@
+.header {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px 12px 20px;
+  font-weight: 700;
+  line-height: 32px;
+  font-size: 24px;
+}
+
+.searchSection {
+  display: flex;
+  position: relative;
+  align-items: center;
+  margin: 16px;
+  padding: 0 32px;
+  background-color: var(--light-grey);
+  border-radius: 8px;
+  margin-top: 0;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 10px;
+  width: 18px;
+  height: 18px
+}
+
+.deleteIcon {
+  position: absolute;
+  cursor: pointer;
+  right: 10px;
+  width: 18px;
+  height: 18px
+}

@@ -1,0 +1,22 @@
+.footer {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.inputSection {
+  width: 100%;
+  display: flex;
+  position: relative;
+  align-items: center;
+  padding: 0 32px;
+  border-radius: 8px;
+  background-color: var(--light-grey);
+}
+
+.sendMessageIcon {
+  margin: 5px;
+  cursor: pointer;
+  border: none;
+  background:none;
+}

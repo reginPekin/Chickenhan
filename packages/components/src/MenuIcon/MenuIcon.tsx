@@ -1,13 +1,16 @@
 import React from 'react';
 
-import { MenuElement } from '../../../app/src/components/MenuSidebar/consts';
+import {
+  MenuElement,
+  MenuState,
+} from '../../../app/src/components/MenuSidebar/consts';
 
 import styles from './MenuIcon.module.css';
 
 interface MenuIconProps {
   menuElement: MenuElement;
   isActiveTab: boolean;
-  setChoosenTab: (tab: string) => void;
+  setChoosenTab: (tab: MenuState) => void;
 }
 
 export const MenuIcon: React.FC<MenuIconProps> = ({
@@ -16,6 +19,18 @@ export const MenuIcon: React.FC<MenuIconProps> = ({
   setChoosenTab = (): void => undefined,
 }) => {
   const Icon = menuElement.Icon;
+
+  function renderDecription(): React.ReactNode {
+    if (!menuElement.description) return null;
+    return (
+      <div className={styles.description}>
+        <span className={styles.descriptionArrow} />
+        <span className={styles.iconDescription}>
+          {menuElement.description}
+        </span>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -26,12 +41,11 @@ export const MenuIcon: React.FC<MenuIconProps> = ({
     >
       <div className={styles.iconBlock}>
         <Icon
-          fill={isActiveTab ? '#ffbb00' : undefined}
-          stroke={isActiveTab ? '#ffbb00' : 'black'}
+          fill={isActiveTab ? `var(--main-yellow)` : undefined}
+          stroke={isActiveTab ? `var(--main-yellow)` : 'black'}
         />
       </div>
-      <span className={styles.descriptionArrow} />
-      <span className={styles.iconDescription}>{menuElement.description}</span>
+      {renderDecription()}
     </div>
   );
 };

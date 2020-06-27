@@ -1,0 +1,81 @@
+.chatLine {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.chatLine:hover {
+  background-color: var(--hover-grey);
+}
+
+.avatar {
+  padding: 0 12px;
+  position: relative;
+}
+
+.onlineCircle {
+  background-color: var(--main-yellow);
+  border-radius: 50%;
+  border: 3px solid white;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: 35px;
+  right: 10px;
+}
+
+.chatInfo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex-grow: 2;
+  width: 100%;
+  padding: 12px 12px 12px 0;
+  border-bottom: 1px solid rgba(0,0,0,.05);
+}
+
+.headInfo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.messageSection {
+  height: 42px;
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 10px;
+}
+
+.lastMessage {
+  padding-top: 2px;
+  line-height: 20px;
+  overflow: hidden;
+  color: var(--black-50)
+}
+
+.dialogLastMessage {
+  white-space: normal;
+}
+
+.chatLastMessage {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lastDateMessage {
+  color: var(--black-40);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.userCount {
+  color: var(--black-40);
+  font-size: 13px;
+}

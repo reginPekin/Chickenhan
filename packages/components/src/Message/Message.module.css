@@ -1,0 +1,67 @@
+.messageArticle {
+  position: relative;
+  display: flex;
+  padding: 8px 16px;
+  padding-right: 72px;
+}
+
+.textInfo {
+  display: flex;
+  flex-direction: column;
+  word-break: break-word;
+  margin: 0 0 0 12px;
+  padding-right: 26px;
+}
+
+.nameAndDate {
+  display: flex;
+  align-items: baseline;
+  line-height: 16px;
+  margin-bottom: 5px;
+}
+
+.onlineCircle {
+  border-radius: 50%;
+  background-color: var(--main-yellow);
+  margin-left: 2px;
+  width: 7px;
+  height: 7px;
+}
+
+.date {
+  margin-left: 4px;
+}
+
+.messageText {
+  line-height: 1.4;
+}
+
+.moreInfo{    
+  position: absolute;
+  right: 12px;
+  top: 0;
+  height: 100%;
+  display: none;
+}
+
+.messageArticle:hover .moreInfo {
+  display: flex;
+  align-items: center;
+}
+
+.messageFile {
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.pictureSection {
+  height: 100%;
+  width: 100%;
+  max-width: 200px;
+}
+
+.picture {
+  border-radius: 8px;
+  height: auto;
+  width: 100%;
+}

@@ -1,19 +1,25 @@
 {
   "compilerOptions": {
-    "target": "ES2016",
-    "lib": ["dom", "dom.iterable", "esnext", "es2016"],
+    "jsx": "preserve",
+    "rootDir": "./src",
+    "outDir": "./lib",
+    "composite": true,
+
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "jsx": "preserve",
-    "isolatedModules": true,
+    "emitDeclarationOnly": true,
+    "isolatedModules": false,
     "esModuleInterop": true
   },
-  "exclude": ["node_modules"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "exclude": [
+    "node_modules",
+    "*.stories.tsx",
+    "lib"
+  ],
+  "include": [
+    "src",
+    "src/**/*.json"]
 }
