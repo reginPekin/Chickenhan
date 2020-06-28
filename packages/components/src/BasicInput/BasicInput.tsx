@@ -6,6 +6,8 @@ import styles from './BasicInput.module.css';
 interface BasicInputProps {
   onSubmit?: () => void;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
 
   ref?: React.Ref<HTMLInputElement>;
   placeholder?: string;
@@ -20,6 +22,8 @@ export const BasicInput: React.ForwardRefExoticComponent<BasicInputProps> = Reac
     {
       onSubmit = (): void => undefined,
       onChange = (): void => undefined,
+      onFocus = (): void => undefined,
+      onBlur = (): void => undefined,
       placeholder = '',
       style = {},
     },
@@ -35,6 +39,8 @@ export const BasicInput: React.ForwardRefExoticComponent<BasicInputProps> = Reac
       <input
         type="text"
         onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
         onKeyDown={eventHandler}
         className={styles.input}
         placeholder={placeholder}
