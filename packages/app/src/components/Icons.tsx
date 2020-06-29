@@ -6,6 +6,7 @@ export interface IconProps {
   width?: number;
   height?: number;
   className?: string;
+  onClick?: () => void;
 }
 
 export const LogoIcon: React.FC<IconProps> = () => (
@@ -110,6 +111,21 @@ export const ChatIcon: React.FC<IconProps> = ({
       fill={fill}
       stroke={stroke}
       strokeWidth={5}
+    />
+  </svg>
+);
+
+export const DeleteIcon: React.FC<IconProps> = props => (
+  <svg viewBox="0 0 64 64" {...props}>
+    <path
+      d="M63.381 63.381C62.5557 64.2063 61.2177 64.2063 60.3924 63.381L0.61898 3.60764C-0.206319 2.78235 -0.20632 1.44427 0.618978 0.618974C1.44428 -0.206325 2.78235 -0.206324 3.60765 0.618974L63.381 60.3923C64.2063 61.2176 64.2063 62.5557 63.381 63.381Z"
+      fill={props.fill || '#C4C4C4'}
+      strokeWidth={4}
+    />
+    <path
+      d="M0.618974 63.381C-0.206325 62.5557 -0.206325 61.2177 0.618974 60.3924L60.3924 0.618985C61.2177 -0.206313 62.5557 -0.206315 63.381 0.618983C64.2063 1.44428 64.2063 2.78235 63.381 3.60765L3.60764 63.381C2.78235 64.2063 1.44427 64.2063 0.618974 63.381Z"
+      fill={props.fill || '#C4C4C4'}
+      strokeWidth={4}
     />
   </svg>
 );
