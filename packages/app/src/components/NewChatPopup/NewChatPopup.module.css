@@ -1,0 +1,40 @@
+.newChat {
+    position: fixed;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+}
+
+.popupContent {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.deleteIcon {
+    width: 18px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 20px;
+    cursor: pointer;
+}
+
+.basicButton {
+    border: none;
+    outline: none;
+    background-color: var(--main-yellow);
+    border-radius: 8px;
+    padding: 14px 24px;
+    cursor: pointer;
+}
+
+.inputElements {
+    margin-top: 16px;
+    width: 100%;
+}
