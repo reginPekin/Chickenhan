@@ -1,0 +1,46 @@
+.select {
+    width: 100%;
+    position: relative;
+    background-color: var(--light-grey);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.selectSection {
+    display: flex;
+    flex-direction: column;
+    padding: 14px 18px;
+}
+
+.selecTitle {
+    font-size: 13px;
+    color: var(--main-yellow);
+}
+
+.dropDownSelect {
+    -webkit-box-shadow: -4px 2px 11px -6px rgba(0,0,0,0.75);
+    -moz-box-shadow: -4px 2px 11px -6px rgba(0,0,0,0.75);
+    box-shadow: -4px 2px 11px -6px rgba(0,0,0,0.75);
+    position: absolute;
+    z-index: 5;
+    width: 100%;
+    flex-direction: column;
+    margin-top: 10px;
+    background-color: var(--main-yellow);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.option:hover {
+    background-color: #ffffff63;
+}
+
+.option {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 18px;
+}
+
+.description {
+    font-size: 13px;
+}
