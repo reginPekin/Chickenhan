@@ -13,9 +13,14 @@ import { getTenorGifs } from '@chickenhan/sdk/lib';
 interface HeaderProps {
   label: string;
   choosenTab: MenuState;
+  setIsPopupOpen: (value: boolean) => void;
 }
 
-export const MenuHeader: React.FC<HeaderProps> = ({ label, choosenTab }) => {
+export const MenuHeader: React.FC<HeaderProps> = ({
+  label,
+  choosenTab,
+  setIsPopupOpen,
+}) => {
   const [isSearchedValue, setIsSearchedValue] = useState<boolean>(false);
 
   const searchInputRef = useRef<HTMLInputElement | null>(null);
@@ -66,7 +71,13 @@ export const MenuHeader: React.FC<HeaderProps> = ({ label, choosenTab }) => {
     <header className={styles.header}>
       <div className={styles.label}>
         <span>{label}</span>
-        <AddChatIcon style={{ display: isChat() ? 'flex' : 'none' }} />
+        <AddChatIcon
+          className={styles.addChatIcon}
+          style={{ display: isChat() ? 'flex' : 'none' }}
+          onClick={(): void => {
+            setIsPopupOpen(true);
+          }}
+        />
       </div>
       {renderSearchInput()}
     </header>
