@@ -12,18 +12,15 @@ export interface IconProps {
   onClick?: () => void;
 }
 
-export const AddChatIcon: React.FC<IconProps> = ({
-  fill = 'none',
-  style = {},
-}) => (
-  <svg width={24} height={24} viewBox="0 0 93 93" style={style}>
+export const AddChatIcon: React.FC<IconProps> = props => (
+  <svg width={24} height={24} viewBox="0 0 93 93" {...props}>
     <rect
       x={1.5}
       y={1.5}
       width={90}
       height={90}
       rx={18.5}
-      fill={fill}
+      fill={props.fill || 'none'}
       stroke="black"
       strokeWidth={5}
     />
