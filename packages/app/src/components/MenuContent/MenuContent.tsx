@@ -12,9 +12,13 @@ import { MenuState } from '../MenuSidebar/consts';
 
 interface MenuContentProps {
   choosenTab: MenuState;
+  setIsPopupOpen: (value: boolean) => void;
 }
 
-export const MenuContent: React.FC<MenuContentProps> = ({ choosenTab }) => {
+export const MenuContent: React.FC<MenuContentProps> = ({
+  choosenTab,
+  setIsPopupOpen,
+}) => {
   const [choosenChat, setChoosenChat] = useState<string>('');
   // бизнес логика и интерфейс, что, где и как?
   function setLabel(): string {
@@ -33,7 +37,11 @@ export const MenuContent: React.FC<MenuContentProps> = ({ choosenTab }) => {
   const chats = MOCK_CHATS_1;
   return (
     <section className={styles.mainSection}>
-      <MenuHeader label={setLabel()} choosenTab={choosenTab} />
+      <MenuHeader
+        label={setLabel()}
+        choosenTab={choosenTab}
+        setIsPopupOpen={setIsPopupOpen}
+      />
       <section className={styles.scrolledChats}>
         <div className={styles.menuContent}>
           {chats.map(chat => (
