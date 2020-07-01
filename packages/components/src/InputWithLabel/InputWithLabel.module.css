@@ -12,15 +12,13 @@
 
 .label {
   position: absolute;
-  bottom: 12px;
+  bottom: 16px;
   font-size: 15px;
   padding: 0 18px;
-  transition: all 0.15s ease;
+  transition: all 0.25s ease;
 }
 
 .focusedLabel {
-  position: absolute;
   top: 8px;
   font-size: 13px;
-  transition: all 0.15s ease;
 }

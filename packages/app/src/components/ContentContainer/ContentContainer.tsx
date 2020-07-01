@@ -33,7 +33,7 @@ export const ContentContainer: React.FC = () => {
 
   return (
     <Switch>
-      <Route exact path="/">
+      <Route path="/">
         <span>HI</span>
       </Route>
       <Route path="/:chatId">
