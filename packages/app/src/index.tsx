@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import './style/index.css';
+import '@chickenhan/components/src/__styles__/global.css';
 
-// import { FirstComponent } from '@chickenhan/components/src/FirstComponent';
 import { App } from './components/App';
 
 ReactDOM.render(

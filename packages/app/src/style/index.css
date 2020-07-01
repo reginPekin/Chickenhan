@@ -7,17 +7,6 @@
 
 #root,
 html,
-body,
-element {
-  --main-yellow: #ffbb00;
-  --light-grey: #f2f3f5;
-  --hover-grey: #00000010;
-  --black-40: #999;
-  --black-50: #7f7f7f;
-}
-
-#root,
-html,
 body {
   width: 100%;
   height: 100%;
