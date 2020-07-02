@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import './style/index.css';
 import '@chickenhan/components/src/__styles__/global.css';
+import '@chickenhan/components/src/__styles__/reset.css';
 
 import { App } from './components/App';
 
