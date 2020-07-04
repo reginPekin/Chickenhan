@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Route, Switch } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import styles from './ContentContainer.module.css';
 
@@ -12,33 +12,29 @@ import {
   MOCK_CHATS_1,
 } from '@chickenhan/components/src/__mocks__';
 
+interface ChatConteinerProps {
+  chatId: string;
+}
+
 export const ContentContainer: React.FC = () => {
-  const ChatContaner: React.FC = () => {
-    const { chatId } = useParams();
+  const { chatId } = useParams();
 
-    const filteredChat = MOCK_CHATS_1.filter(chat => chat.id === chatId)[0];
+  if (!chatId) return <span>HI man</span>;
+  return <ChatContaner chatId={chatId} />;
+};
 
-    return (
-      <main className={styles.contentContainer}>
-        <ChatHeader chat={filteredChat} />
-        <section className={styles.contentSection}>
-          {MOCK_MESSAGES_ARRAY_1.map(message => (
-            <Message message={message} key={message.messageId} />
-          ))}
-        </section>
-        <WriteBox />
-      </main>
-    );
-  };
+const ChatContaner: React.FC<ChatConteinerProps> = ({ chatId }) => {
+  const filteredChat = MOCK_CHATS_1.filter(chat => chat.id === chatId)[0];
 
   return (
-    <Switch>
-      <Route path="/">
-        <span>HI</span>
-      </Route>
-      <Route path="/:chatId">
-        <ChatContaner />
-      </Route>
-    </Switch>
+    <main className={styles.contentContainer}>
+      <ChatHeader chat={filteredChat} />
+      <section className={styles.contentSection}>
+        {MOCK_MESSAGES_ARRAY_1.map(message => (
+          <Message message={message} key={message.messageId} />
+        ))}
+      </section>
+      <WriteBox />
+    </main>
   );
 };
