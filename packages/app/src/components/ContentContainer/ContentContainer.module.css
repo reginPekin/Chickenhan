@@ -1,7 +1,7 @@
 .contentContainer {
   display: flex;
   flex-direction: column;
-  min-width: 500px;
+  /* min-width: 500px; */
   background-color: white;
   border-left: 1px solid var(--light-grey);
   flex-grow: 1;
