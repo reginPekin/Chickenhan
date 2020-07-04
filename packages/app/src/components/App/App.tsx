@@ -4,12 +4,11 @@ import {
   Route,
   Switch,
   useLocation,
-  useParams,
 } from 'react-router-dom';
 
 import styles from './App.module.css';
 
-import { Login } from '../Login';
+import { LoginPage } from '../LoginPage';
 import { ContentContainer } from '../ContentContainer';
 import { MenuContainer } from '../MenuContainer';
 import { NewChatPopup } from '../NewChatPopup';
@@ -32,7 +31,7 @@ function ModalSwith(): ReactElement {
       </Route>
 
       <Route exact path="/login">
-        <Login />
+        <LoginPage />
       </Route>
 
       <Route>
