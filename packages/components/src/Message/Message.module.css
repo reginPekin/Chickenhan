@@ -34,6 +34,8 @@
 
 .messageText {
   line-height: 1.4;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
 }
 
 .moreInfo{    

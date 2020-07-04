@@ -38,7 +38,7 @@ export const ChatHeader: React.FC<ChatHeader> = ({ chat }) => {
           chatType={chat.type}
           url={chat.avatar}
           width={40}
-          style={{ paddingRight: '16px' }}
+          style={{ marginRight: '16px' }}
         />
         <div className={styles.infoSection}>
           <span className={styles.name}>{extractChatName()}</span>

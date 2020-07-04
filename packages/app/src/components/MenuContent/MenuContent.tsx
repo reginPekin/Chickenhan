@@ -47,7 +47,7 @@ export const MenuContent: React.FC<MenuContentProps> = ({
           {chats.map(chat => (
             <Link
               key={chat.id}
-              to={`/${chat.id}`}
+              to={`/chat/${chat.id}`}
               style={{
                 textDecoration: 'none',
                 color: 'black',
