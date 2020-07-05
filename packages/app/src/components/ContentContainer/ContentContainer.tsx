@@ -26,6 +26,8 @@ export const ContentContainer: React.FC = () => {
 const ChatContaner: React.FC<ChatConteinerProps> = ({ chatId }) => {
   const filteredChat = MOCK_CHATS_1.filter(chat => chat.id === chatId)[0];
 
+  if (!filteredChat) return <div>NO CHAT</div>;
+
   return (
     <main className={styles.contentContainer}>
       <ChatHeader chat={filteredChat} />
