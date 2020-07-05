@@ -20,7 +20,7 @@ export const MenuContent: React.FC<MenuContentProps> = ({
   setIsPopupOpen,
 }) => {
   const [choosenChat, setChoosenChat] = useState<string>('');
-  // бизнес логика и интерфейс, что, где и как?
+
   function setLabel(): string {
     switch (choosenTab) {
       case 'discover':
