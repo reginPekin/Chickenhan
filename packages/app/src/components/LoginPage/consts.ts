@@ -1,4 +1,4 @@
-import { IconProps, GoogleIcon, FacebookIcon, EmailIcon } from '../Icons';
+import { IconProps, EmailIcon } from '../Icons';
 
 export interface LoginBlock {
   Icon: React.FC<IconProps>;
@@ -6,14 +6,6 @@ export interface LoginBlock {
 }
 
 export const loginBlocks: LoginBlock[] = [
-  {
-    Icon: GoogleIcon,
-    name: 'Google',
-  },
-  {
-    Icon: FacebookIcon,
-    name: 'Facebook',
-  },
   {
     Icon: EmailIcon,
     name: 'email',

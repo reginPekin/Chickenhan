@@ -12,7 +12,6 @@
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject"
   },
-
   "browserslist": {
     "production": [
       ">0.2%",
@@ -24,5 +23,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-facebook-login": "^4.1.1",
+    "react-google-login": "^5.1.20"
   }
 }
