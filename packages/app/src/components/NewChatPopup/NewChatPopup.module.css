@@ -19,6 +19,10 @@
     align-items: center;
 }
 
+.popupTitle {
+    margin-bottom: 25px;
+}
+
 .deleteIcon {
     width: 18px;
     position: absolute;

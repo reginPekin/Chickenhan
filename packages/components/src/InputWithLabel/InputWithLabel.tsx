@@ -37,7 +37,6 @@ export const InputWithLabel: React.FC<InputWithLabelProps> = ({
       <div className={styles.basicInput}>
         <BasicInput ref={inputRef} onFocus={onFocus} onBlur={onBlur} />
       </div>
-
       <span
         onClick={(): void => {
           if (!isFocused) inputRef.current?.focus();

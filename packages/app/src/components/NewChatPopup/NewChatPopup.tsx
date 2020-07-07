@@ -45,7 +45,7 @@ export const NewChatPopup: React.FC<PopupProps> = ({
         onClick={(): void => setIsPopupOpen(false)}
       />
       <section className={styles.popupContent}>
-        <h1>New chat</h1>
+        <h1 className={styles.popupTitle}>New chat</h1>
         <InputWithLabel
           placeholder="Name"
           isRequired={isRequired}
