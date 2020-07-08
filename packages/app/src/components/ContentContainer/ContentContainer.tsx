@@ -7,6 +7,8 @@ import { ChatHeader } from '@chickenhan/components/src/ChatHeader';
 import { WriteBox } from '@chickenhan/components/src/WriteBox';
 import { Message } from '@chickenhan/components/src/Message';
 
+import { useStore } from '../../store';
+
 import {
   MOCK_MESSAGES_ARRAY_1,
   MOCK_CHATS_1,
@@ -24,6 +26,10 @@ export const ContentContainer: React.FC = () => {
 };
 
 const ChatContaner: React.FC<ChatConteinerProps> = ({ chatId }) => {
+  const store = useStore();
+
+  const [state, setState] = store.user.useState();
+
   const filteredChat = MOCK_CHATS_1.filter(chat => chat.id === chatId)[0];
 
   if (!filteredChat) return <div>NO CHAT</div>;

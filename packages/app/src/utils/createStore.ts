@@ -3,7 +3,7 @@ import React from 'react';
 type Listener<T> = (val: T) => void;
 type Unsubscriber = () => void;
 
-export class Observable<T> {
+class Observable<T> {
   private listeners: Listener<T>[] = [];
 
   constructor(private value: T) {}
