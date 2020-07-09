@@ -5,5 +5,7 @@ import { InputWithLabel } from './InputWithLabel';
 import { storiesOf } from '@storybook/react';
 
 storiesOf('InputWithLabel', module).add('Simple label', () => (
-  <InputWithLabel placeholder="Name" />
+  <div style={{ margin: '20px' }}>
+    <InputWithLabel placeholder="Name" />
+  </div>
 ));

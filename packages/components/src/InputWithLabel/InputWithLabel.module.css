@@ -4,6 +4,7 @@
 }
 
 .basicInput {
+  height: 55px;
   border-radius: 8px;
   padding: 18px;
   padding-bottom: 0;
@@ -19,6 +20,6 @@
 }
 
 .focusedLabel {
-  top: 8px;
+  bottom: 28px;
   font-size: 13px;
 }
