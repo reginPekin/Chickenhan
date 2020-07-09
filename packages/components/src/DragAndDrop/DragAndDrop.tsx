@@ -5,8 +5,8 @@ import styles from './DragAndDrop.module.css';
 import cx from 'classnames';
 
 interface DragAndDropProps {
-  children?: React.FC;
-  setFiles?: (files: File[]) => void;
+  children?: JSX.Element;
+  setFiles: (file: File[]) => void;
 }
 
 interface ReducerState {
@@ -97,7 +97,8 @@ export const DragAndDrop: React.FC<DragAndDropProps> = ({
   return (
     <section
       className={cx(styles.dragDropZone, {
-        [styles.insideDragDrea]: data.inDropZone,
+        // вторая проверка нужна, потому что при выходе из DropZone data.inDropZone не обнуляется, не знаю почему
+        [styles.insideDragDrea]: data.inDropZone && data.dropDepth > 0,
       })}
       onDrop={(event): void => handleDrop(event)}
       onDragOver={(event): void => handleDragOver(event)}
