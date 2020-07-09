@@ -2,38 +2,51 @@ import React, { useRef, useState, useEffect } from 'react';
 
 import styles from './ImageLoader.module.css';
 
-export const ImageLoader: React.FC = () => {
-  const [previewUrl, setPreviewUrl] = useState<string | ArrayBuffer | null>();
+import { handleFile } from '../utils';
+
+interface ImageLoaderProps {
+  files?: File[];
+  setFiles?: (file: File[]) => void;
+
+  children?: JSX.Element;
+  loadedImgStyle?: React.CSSProperties;
+}
+
+export const ImageLoader: React.FC<ImageLoaderProps> = ({
+  files = [],
+  setFiles = (): void => undefined,
+
+  children,
+  loadedImgStyle = {},
+}) => {
+  const [previewUrl, setPreviewUrl] = useState<string | ArrayBuffer | null>(
+    null,
+  );
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleFile = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    if (!event || !event.target || !event.target.files) {
+  useEffect(() => {
+    if (files.length > 0) {
+      handleFile(files, file => setPreviewUrl(file));
       return;
     }
+    setPreviewUrl(null);
+  }, [files]);
 
-    const files: File[] = Array.prototype.slice.call(event.target.files);
+  // не получается здесь тип задать
+  function renderLoadedImage(): any {
+    if (!previewUrl) return children;
 
-    for (const file of files) {
-      const reader = new FileReader();
-
-      reader.onload = async (): Promise<void> => {
-        const b64image = reader.result;
-
-        const img = new Image();
-        img.src = `${b64image}`;
-
-        const form = new FormData();
-        form.append('photo', file);
-
-        setPreviewUrl(reader.result);
-      };
-
-      reader.onabort = () => console.log('file reading was aborted');
-      reader.onerror = () => console.log('file reading has failed');
-      reader.readAsDataURL(file);
-    }
-  };
+    return (
+      <div style={loadedImgStyle}>
+        <img
+          height="100%"
+          src={previewUrl as string}
+          className={styles.loadedImg}
+        />
+      </div>
+    );
+  }
 
   return (
     <section>
@@ -42,16 +55,20 @@ export const ImageLoader: React.FC = () => {
         ref={inputRef}
         type="file"
         accept="image/png, image/jpeg"
-        onChange={handleFile}
+        onChange={(event): void => {
+          if (event && event.target && event.target.files) {
+            setFiles(Array.prototype.slice.call(event.target.files));
+            handleFile(event.target.files, file => setPreviewUrl(file));
+          }
+        }}
         className={styles.input}
       />
-      <img src={previewUrl as string} />
-      <span
+      <div
         onClick={(): void => inputRef.current?.click()}
         className={styles.clicker}
       >
-        I am clicker
-      </span>
+        {renderLoadedImage()}
+      </div>
     </section>
   );
 };
