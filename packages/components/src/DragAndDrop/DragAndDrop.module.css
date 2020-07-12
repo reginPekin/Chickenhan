@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: center;
     background: none;
+    overflow-y: scroll;
   }
 
   .insideDragDrea {

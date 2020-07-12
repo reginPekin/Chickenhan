@@ -1,6 +1,6 @@
 .newChat {
     position: fixed;
-    z-index: 4;
+    z-index: 999;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,7 +36,7 @@
     border: none;
     outline: none;
     background-color: var(--main-yellow);
-    border-radius: 8px;
+    border-radius: 4px;
     padding: 14px 24px;
     cursor: pointer;
 }

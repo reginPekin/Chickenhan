@@ -1,8 +1,12 @@
 import { User, Chat, Message } from '../types';
 
-// export const MOCK_USER_1: User = {
-//   // объект с околоюзерами
-// };
+export const MOCK_USER_1: User = {
+  // объект с околоюзерами
+  id: '23423423',
+  login: 'Begin',
+  isOnline: true,
+  avatar: `https://imgtest.mir24.tv/uploaded/images/crops/2018/September/870x489_0x47_detail_crop_af43017eebc9b37984240ffb3877c8aef3aa8f499eaf279991aa312a36b83f25.jpg`,
+};
 
 export const MOCK_CHAT_1: Chat = {
   avatar:
@@ -63,6 +67,34 @@ export const MOCK_CHATS_1: Chat[] = [
     lastMessage: "HI, I'm squirrel",
     lastDateMessage: '11 december',
     userCount: 321,
+  },
+];
+
+export const MOCK_CHATS_DISCOVER: Chat[] = [
+  {
+    opponent: {
+      isOnline: true,
+      login: 'Dialog 01',
+    },
+    name: '',
+    id: '122276',
+    avatar: `https://pustunchik.ua/uploads/school/cache/9a7adb79dd800aa15c3cc0e482e004c8.jpg`,
+    type: 'dialog',
+    lastMessage:
+      "HI, I'm squirrel. My name is Jongy-Bongy I'm squirrel. My name is Jongy-Bongy HI, I'm squirrel. My name is Jongy-Bongy I'm squirrel. My name is Jongy-Bongy",
+    lastDateMessage: '21 may', //UTC формат,
+    userCount: 0,
+  },
+  {
+    name: 'Chat 02',
+    type: 'private',
+    id: '2412653',
+    avatar:
+      'https://avatars.mds.yandex.net/get-zen_doc/1877958/pub_5e3925bf76fc5150e0790c0d_5e39283753de5721ccf79a4e/scale_1200',
+    lastMessage:
+      "HI, I'm squirrelHI, I'm squirrelHI, I'm squirrelHI, I'm squirrelHI, I'm squirrelHI, I'm squirrel",
+    lastDateMessage: '12 june',
+    userCount: 12321,
   },
 ];
 

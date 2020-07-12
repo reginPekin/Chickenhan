@@ -51,7 +51,6 @@ export const handleFile = (
 
       const form = new FormData();
       form.append('photo', file);
-
       setFileUrl(reader.result);
     };
 

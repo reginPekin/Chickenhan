@@ -5,7 +5,7 @@
 
 .basicInput {
   height: 55px;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 18px;
   padding-bottom: 0;
   background-color: var(--light-grey);

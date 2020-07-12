@@ -2,7 +2,7 @@
     width: 100%;
     position: relative;
     background-color: var(--light-grey);
-    border-radius: 8px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
@@ -28,7 +28,7 @@
     flex-direction: column;
     margin-top: 10px;
     background-color: var(--main-yellow);
-    border-radius: 8px;
+    border-radius: 4px;
     cursor: pointer;
 }
 

@@ -7,6 +7,8 @@ import cx from 'classnames';
 interface DragAndDropProps {
   children?: JSX.Element;
   setFiles: (file: File[]) => void;
+
+  dropEvent?: () => void;
 }
 
 interface ReducerState {
@@ -25,6 +27,7 @@ interface ReducerAction {
 export const DragAndDrop: React.FC<DragAndDropProps> = ({
   children = undefined,
   setFiles = (): void => undefined,
+  dropEvent = (): void => undefined,
 }) => {
   const reducerInitialState = { dropDepth: 0, inDropZone: false, fileList: [] };
 
@@ -47,6 +50,7 @@ export const DragAndDrop: React.FC<DragAndDropProps> = ({
     }
   };
   const [data, dispatch] = useReducer(reducer, reducerInitialState);
+  console.log(data.fileList);
 
   function handleDragEnter(event: React.DragEvent): void {
     event.preventDefault();
@@ -79,6 +83,7 @@ export const DragAndDrop: React.FC<DragAndDropProps> = ({
     let files = [...(event.dataTransfer.files as any)];
 
     if (files && files.length > 0) {
+      dropEvent();
       const existingFiles = data.fileList.map(file => file.name);
       files = files.filter(file => !existingFiles.includes(file.name));
 
