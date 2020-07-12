@@ -28,7 +28,7 @@ const AvatarLoaderIcon: React.FC<IconProps> = props => (
 
 storiesOf('ImageLoader', module).add('Simple image loader', () => (
   <section style={{ margin: '20px' }}>
-    <ImageLoader loadedImgStyle={{ height: '150px', maxHeight: '150px' }}>
+    <ImageLoader>
       <AvatarLoaderIcon width={92} height={92} />
     </ImageLoader>
   </section>

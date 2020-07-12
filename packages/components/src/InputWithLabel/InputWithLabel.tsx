@@ -28,7 +28,7 @@ export const InputWithLabel: React.FC<InputWithLabelProps> = ({
   const isOnTop = isFocused || inputRef.current?.value;
 
   useEffect(() => {
-    if (inputRef && inputRef.current) {
+    if (inputRef?.current) {
       inputRef.current.value = '';
     }
   }, [isReseted]);

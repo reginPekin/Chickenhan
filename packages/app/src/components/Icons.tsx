@@ -132,8 +132,8 @@ export const DeleteIcon: React.FC<IconProps> = props => (
 
 export const AvatarLoaderIcon: React.FC<IconProps> = props => (
   <svg
-    width={props.width || 100}
-    height={props.height || 100}
+    width={props.width || 96}
+    height={props.height || 96}
     viewBox="0 0 94 94"
     fill="none"
   >

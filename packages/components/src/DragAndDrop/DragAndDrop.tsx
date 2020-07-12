@@ -5,7 +5,7 @@ import styles from './DragAndDrop.module.css';
 import cx from 'classnames';
 
 interface DragAndDropProps {
-  children?: JSX.Element;
+  children?: React.ReactNode | React.ReactNode[];
   setFiles: (file: File[]) => void;
 
   dropEvent?: () => void;
