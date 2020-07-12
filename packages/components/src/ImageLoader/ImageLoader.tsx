@@ -2,6 +2,8 @@ import React, { useRef, useState, useEffect } from 'react';
 
 import styles from './ImageLoader.module.css';
 
+import { Avatar } from '../Avatar';
+
 import { handleFile } from '../utils';
 
 interface ImageLoaderProps {
@@ -33,24 +35,14 @@ export const ImageLoader: React.FC<ImageLoaderProps> = ({
     setPreviewUrl(null);
   }, [files]);
 
-  // не получается здесь тип задать
-  function renderLoadedImage(): any {
+  function renderLoadedImage(): React.ReactNode {
     if (!previewUrl) return children;
 
-    return (
-      <div style={loadedImgStyle}>
-        <img
-          height="100%"
-          src={previewUrl as string}
-          className={styles.loadedImg}
-        />
-      </div>
-    );
+    return <Avatar url={String(previewUrl)} width={96} />;
   }
 
   return (
     <section>
-      <div />
       <input
         ref={inputRef}
         type="file"
