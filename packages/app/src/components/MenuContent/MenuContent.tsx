@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { MOCK_CHATS_1 } from '@chickenhan/components/src/__mocks__';
+import {
+  MOCK_CHATS_1,
+  MOCK_CHATS_DISCOVER,
+  MOCK_USER_1,
+} from '@chickenhan/components/src/__mocks__';
 
 import { ChatLine } from '@chickenhan/components/src/ChatLine';
 import { MenuHeader } from '@chickenhan/components/src/MenuHeader';
+import { Avatar } from '@chickenhan/components/src/Avatar';
 
 import styles from './MenuContent.module.css';
 
@@ -20,7 +25,7 @@ export const MenuContent: React.FC<MenuContentProps> = ({
   setIsPopupOpen,
 }) => {
   const [choosenChat, setChoosenChat] = useState<string>('');
-  // бизнес логика и интерфейс, что, где и как?
+
   function setLabel(): string {
     switch (choosenTab) {
       case 'discover':
@@ -34,39 +39,74 @@ export const MenuContent: React.FC<MenuContentProps> = ({
     }
   }
 
-  const chats = MOCK_CHATS_1;
+  function renderContentSection(): JSX.Element {
+    const chats = choosenTab === 'chats' ? MOCK_CHATS_1 : MOCK_CHATS_DISCOVER;
+    // switch
+    if (choosenTab === 'profile') {
+      return <ProfileMenu />;
+    }
+
+    return (
+      <section>
+        {chats.map(chat => (
+          <Link
+            key={chat.id}
+            to={`/chat/${chat.id}`}
+            style={{
+              textDecoration: 'none',
+              color: 'black',
+            }}
+          >
+            <div
+              className={styles.link}
+              style={{
+                backgroundColor:
+                  choosenChat === chat.id ? 'var(--light-grey)' : 'white',
+              }}
+              onClick={(): void => setChoosenChat(chat.id)}
+            >
+              <ChatLine chat={chat} />
+            </div>
+          </Link>
+        ))}
+      </section>
+    );
+  }
+
   return (
-    <section className={styles.mainSection}>
+    <aside className={styles.mainSection}>
       <MenuHeader
         label={setLabel()}
         choosenTab={choosenTab}
         setIsPopupOpen={setIsPopupOpen}
       />
       <section className={styles.scrolledChats}>
-        <div className={styles.menuContent}>
-          {chats.map(chat => (
-            <Link
-              key={chat.id}
-              to={`/chat/${chat.id}`}
-              style={{
-                textDecoration: 'none',
-                color: 'black',
-              }}
-            >
-              <div
-                className={styles.link}
-                style={{
-                  backgroundColor:
-                    choosenChat === chat.id ? 'var(--light-grey)' : 'white',
-                }}
-                onClick={(): void => setChoosenChat(chat.id)}
-              >
-                <ChatLine chat={chat} />
-              </div>
-            </Link>
-          ))}
-        </div>
+        <div className={styles.menuContent}>{renderContentSection()}</div>
       </section>
+    </aside>
+  );
+};
+
+const ProfileMenu: React.FC = () => {
+  return (
+    <section className={styles.profile}>
+      <div className={styles.avatar}>
+        <Avatar url={MOCK_USER_1.avatar} width={96} />
+        <span className={styles.name}>{MOCK_USER_1.login}</span>
+      </div>
+      <nav className={styles.menu}>
+        <section className={styles.navSection}>
+          <div className={styles.menuLabel}>User</div>
+          <div className={styles.menuItem}>Edit profile</div>
+        </section>
+
+        <section className={styles.navSection}>
+          <div className={styles.menuLabel}>The main</div>
+          <div className={styles.menuItem}>Write to developer</div>
+          {/* <div className={styles.menuItem}>Mode</div> */}
+          <div className={styles.menuItem}>Sign out</div>
+        </section>
+      </nav>
     </section>
   );
 };
