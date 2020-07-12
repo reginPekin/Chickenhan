@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import {
   MOCK_CHATS_1,
@@ -7,9 +6,9 @@ import {
   MOCK_USER_1,
 } from '@chickenhan/components/src/__mocks__';
 
-import { ChatLine } from '@chickenhan/components/src/ChatLine';
 import { MenuHeader } from '@chickenhan/components/src/MenuHeader';
 import { Avatar } from '@chickenhan/components/src/Avatar';
+import { ChatList } from '@chickenhan/components/src/ChatList';
 
 import styles from './MenuContent.module.css';
 
@@ -40,37 +39,34 @@ export const MenuContent: React.FC<MenuContentProps> = ({
   }
 
   function renderContentSection(): JSX.Element {
-    const chats = choosenTab === 'chats' ? MOCK_CHATS_1 : MOCK_CHATS_DISCOVER;
-    // switch
-    if (choosenTab === 'profile') {
-      return <ProfileMenu />;
+    switch (choosenTab) {
+      case 'discover':
+        return (
+          <ChatList
+            chats={MOCK_CHATS_DISCOVER}
+            choosenChat={choosenChat}
+            setChoosenChat={(id): void => setChoosenChat(id)}
+          />
+        );
+      case 'chats':
+        return (
+          <ChatList
+            chats={MOCK_CHATS_1}
+            choosenChat={choosenChat}
+            setChoosenChat={(id): void => setChoosenChat(id)}
+          />
+        );
+      case 'profile':
+        return <ProfileMenu />;
+      default:
+        return (
+          <ChatList
+            chats={MOCK_CHATS_1}
+            choosenChat={choosenChat}
+            setChoosenChat={(id): void => setChoosenChat(id)}
+          />
+        );
     }
-
-    return (
-      <section>
-        {chats.map(chat => (
-          <Link
-            key={chat.id}
-            to={`/chat/${chat.id}`}
-            style={{
-              textDecoration: 'none',
-              color: 'black',
-            }}
-          >
-            <div
-              className={styles.link}
-              style={{
-                backgroundColor:
-                  choosenChat === chat.id ? 'var(--light-grey)' : 'white',
-              }}
-              onClick={(): void => setChoosenChat(chat.id)}
-            >
-              <ChatLine chat={chat} />
-            </div>
-          </Link>
-        ))}
-      </section>
-    );
   }
 
   return (
