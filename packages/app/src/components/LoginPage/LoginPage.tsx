@@ -13,8 +13,6 @@ import { loginBlocks, LoginBlock } from './consts';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { GoogleLogin } from 'react-google-login';
 
-import { FACEBOOK_APP_ID, GOOGLE_CLIENT_ID } from '../ignoredConsts';
-
 import { GoogleIcon, FacebookIcon } from '../Icons';
 
 interface LoginBlockProps {
@@ -94,7 +92,7 @@ export const FacebookButton: React.FC<ButtonProps> = ({ children }) => {
 
   return (
     <FacebookLogin
-      appId={FACEBOOK_APP_ID}
+      appId={process.env.REACT_APP_FACEBOOK_APP_ID}
       autoLoad
       fields="name,email,picture"
       callback={responseFacebook}
@@ -122,7 +120,7 @@ export const GoogleButton: React.FC<ButtonProps> = ({ children }) => {
       render={(renderProps: any): JSX.Element => (
         <div onClick={renderProps.onClick}>{children}</div>
       )}
-      clientId={GOOGLE_CLIENT_ID}
+      clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID || ''}
       onSuccess={(response): void => login(response)}
       onFailure={(): void => handleLoginFailure()}
       isSignedIn={true}
