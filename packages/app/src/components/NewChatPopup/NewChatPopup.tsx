@@ -38,7 +38,7 @@ export const NewChatPopup: React.FC<PopupProps> = ({
   return (
     <main
       className={styles.newChat}
-      style={{ display: isPopupOpen ? 'flex' : 'none' }}
+      // style={{ display: isPopupOpen ? 'flex' : 'none' }}
     >
       <DeleteIcon
         className={styles.deleteIcon}

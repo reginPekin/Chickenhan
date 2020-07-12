@@ -7,6 +7,8 @@ import styles from './MenuSidebar.module.css';
 
 import { menuElements, MenuState } from './consts';
 
+import { useStore } from '../../store';
+
 interface MenuSiderProps {
   choosenTab: MenuState;
   setChoosenTab: (tab: MenuState) => void;
@@ -16,10 +18,14 @@ export const MenuSidebar: React.FC<MenuSiderProps> = ({
   choosenTab,
   setChoosenTab,
 }) => {
+  const store = useStore();
+  const name = store.user.useSelector(user => user.name);
+
   const index: number = menuElements.findIndex(tab => tab.name === choosenTab);
 
   return (
     <nav className={styles.menuSidebar}>
+      {/* {name} */}
       <div
         className={styles.logoSection}
         onClick={(): void => {
