@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import cx from 'classnames';
 
@@ -8,6 +8,8 @@ import { InputWithLabel } from '@chickenhan/components/src/InputWithLabel';
 import { Select } from '@chickenhan/components/src/Select';
 import { ImageLoader } from '@chickenhan/components/src/ImageLoader';
 import { DragAndDrop } from '@chickenhan/components/src/DragAndDrop';
+
+import { handleFile } from '@chickenhan/components/src/utils';
 
 import { DeleteIcon, AvatarLoaderIcon } from '../Icons';
 
@@ -21,12 +23,20 @@ export const NewChatPopup: React.FC<PopupProps> = ({
   setIsPopupOpen,
 }) => {
   // добавить аватарку по умолчанию
-  const [chatAvatar, setChatAvatar] = useState<File[]>([]); // нужен лишь первый элемент chatAvatar[0]
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+
+  const [chatAvatar, setChatAvatar] = useState<string | ArrayBuffer | null>(
+    null,
+  );
   const [chatType, setChatType] = useState<string>('public');
   const [chatName, setChatName] = useState<string>('');
 
   const [isRequired, setIsRequired] = useState<boolean>(false);
   const [isReseted, setIsReseted] = useState<boolean>(false);
+
+  useEffect(() => {
+    handleFile(uploadedFiles, fileUrl => setChatAvatar(fileUrl));
+  }, [uploadedFiles]);
 
   const options = [
     {
@@ -46,7 +56,7 @@ export const NewChatPopup: React.FC<PopupProps> = ({
     setIsReseted(true);
     setIsRequired(false);
 
-    setChatAvatar([]);
+    setChatAvatar(null);
     setChatName('');
   }
 
@@ -62,13 +72,12 @@ export const NewChatPopup: React.FC<PopupProps> = ({
           resetNewChatInfo();
         }}
       />
-      <DragAndDrop setFiles={(file): void => setChatAvatar(file)}>
+      <DragAndDrop setFiles={(file): void => setUploadedFiles(file)}>
         <section className={styles.popupContent}>
           <h1 className={styles.popupTitle}>New chat</h1>
           <ImageLoader
-            files={chatAvatar}
-            setFiles={(file): void => setChatAvatar(file)}
-            loadedImgStyle={{ height: '120px', maxHeight: '120px' }}
+            files={uploadedFiles}
+            onFileLoaded={(file): void => setUploadedFiles(file)}
           >
             <AvatarLoaderIcon />
           </ImageLoader>
