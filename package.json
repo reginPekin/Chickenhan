@@ -40,5 +40,8 @@
   "scripts": {
     "start": "lerna run start --stream",
     "watch": "tsc -b packages/components/tsconfig.json packages/sdk/tsconfig.json --watch"
+  },
+  "scarfSettings": {
+    "enabled": false
   }
 }
