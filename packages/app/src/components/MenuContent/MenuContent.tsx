@@ -15,18 +15,18 @@ import styles from './MenuContent.module.css';
 import { MenuState } from '../MenuSidebar/consts';
 
 interface MenuContentProps {
-  choosenTab: MenuState;
+  chosenTab: MenuState;
   setIsPopupOpen: (value: boolean) => void;
 }
 
 export const MenuContent: React.FC<MenuContentProps> = ({
-  choosenTab,
+  chosenTab,
   setIsPopupOpen,
 }) => {
-  const [choosenChat, setChoosenChat] = useState<string>('');
+  const [chosenChat, setchosenChat] = useState<string>('');
 
   function setLabel(): string {
-    switch (choosenTab) {
+    switch (chosenTab) {
       case 'discover':
         return 'Discover';
       case 'chats':
@@ -39,21 +39,21 @@ export const MenuContent: React.FC<MenuContentProps> = ({
   }
 
   function renderContentSection(): JSX.Element {
-    switch (choosenTab) {
+    switch (chosenTab) {
       case 'discover':
         return (
           <ChatList
             chats={MOCK_CHATS_DISCOVER}
-            choosenChat={choosenChat}
-            setChoosenChat={(id): void => setChoosenChat(id)}
+            chosenChat={chosenChat}
+            setchosenChat={(id): void => setchosenChat(id)}
           />
         );
       case 'chats':
         return (
           <ChatList
             chats={MOCK_CHATS_1}
-            choosenChat={choosenChat}
-            setChoosenChat={(id): void => setChoosenChat(id)}
+            chosenChat={chosenChat}
+            setchosenChat={(id): void => setchosenChat(id)}
           />
         );
       case 'profile':
@@ -62,8 +62,8 @@ export const MenuContent: React.FC<MenuContentProps> = ({
         return (
           <ChatList
             chats={MOCK_CHATS_1}
-            choosenChat={choosenChat}
-            setChoosenChat={(id): void => setChoosenChat(id)}
+            chosenChat={chosenChat}
+            setchosenChat={(id): void => setchosenChat(id)}
           />
         );
     }
@@ -73,7 +73,7 @@ export const MenuContent: React.FC<MenuContentProps> = ({
     <aside className={styles.mainSection}>
       <MenuHeader
         label={setLabel()}
-        choosenTab={choosenTab}
+        chosenTab={chosenTab}
         setIsPopupOpen={setIsPopupOpen}
       />
       <section className={styles.scrolledChats}>

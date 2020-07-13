@@ -10,13 +10,13 @@ import styles from './MenuIcon.module.css';
 interface MenuIconProps {
   menuElement: MenuElement;
   isActiveTab: boolean;
-  setChoosenTab: (tab: MenuState) => void;
+  setchosenTab: (tab: MenuState) => void;
 }
 
 export const MenuIcon: React.FC<MenuIconProps> = ({
   menuElement,
   isActiveTab,
-  setChoosenTab = (): void => undefined,
+  setchosenTab = (): void => undefined,
 }) => {
   const Icon = menuElement.Icon;
 
@@ -36,7 +36,7 @@ export const MenuIcon: React.FC<MenuIconProps> = ({
     <div
       className={styles.iconSection}
       onClick={(): void => {
-        setChoosenTab(menuElement.name);
+        setchosenTab(menuElement.name);
       }}
     >
       <div className={styles.iconBlock}>

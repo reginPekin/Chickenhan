@@ -8,22 +8,22 @@ import styles from './MenuSidebar.module.css';
 import { menuElements, MenuState } from './consts';
 
 interface MenuSiderProps {
-  choosenTab: MenuState;
-  setChoosenTab: (tab: MenuState) => void;
+  chosenTab: MenuState;
+  setchosenTab: (tab: MenuState) => void;
 }
 
 export const MenuSidebar: React.FC<MenuSiderProps> = ({
-  choosenTab,
-  setChoosenTab,
+  chosenTab,
+  setchosenTab,
 }) => {
-  const index: number = menuElements.findIndex(tab => tab.name === choosenTab);
+  const index: number = menuElements.findIndex(tab => tab.name === chosenTab);
 
   return (
     <nav className={styles.menuSidebar}>
       <div
         className={styles.logoSection}
         onClick={(): void => {
-          setChoosenTab('chats');
+          setchosenTab('chats');
         }}
       >
         <LogoIcon />
@@ -37,8 +37,8 @@ export const MenuSidebar: React.FC<MenuSiderProps> = ({
           <MenuIcon
             key={key}
             menuElement={menuElement}
-            isActiveTab={choosenTab === menuElement.name}
-            setChoosenTab={(tab): void => setChoosenTab(tab)}
+            isActiveTab={chosenTab === menuElement.name}
+            setchosenTab={(tab): void => setchosenTab(tab)}
           />
         ))}
       </section>

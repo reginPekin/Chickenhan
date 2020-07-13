@@ -29,13 +29,13 @@ export const Select: React.FC<SelectProps> = ({
 
   const selectRef = useRef<HTMLDivElement | null>(null);
 
-  const [choosenOption, setChoosenOption] = useState<Option>(defaultValue[0]);
+  const [chosenOption, setchosenOption] = useState<Option>(defaultValue[0]);
   const [isOpened, setIsOpened] = useState<boolean>(false);
 
   useOnClickOutside(selectRef, () => setIsOpened(false));
 
   useEffect(() => {
-    setChoosenOption(defaultValue[0]);
+    setchosenOption(defaultValue[0]);
     setSelectedOption(defaultValue[0].value);
   }, [isReseted]);
 
@@ -46,7 +46,7 @@ export const Select: React.FC<SelectProps> = ({
         onClick={(): void => setIsOpened(!isOpened)}
       >
         <span className={styles.selecTitle}>{title}</span>
-        <span>{choosenOption.label}</span>
+        <span>{chosenOption.label}</span>
       </div>
       <section
         className={styles.dropDownSelect}
@@ -58,7 +58,7 @@ export const Select: React.FC<SelectProps> = ({
             className={styles.option}
             onClick={(): void => {
               setIsOpened(false);
-              setChoosenOption(option);
+              setchosenOption(option);
               setSelectedOption(option.value);
             }}
           >

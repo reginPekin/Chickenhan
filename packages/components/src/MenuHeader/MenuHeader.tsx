@@ -12,13 +12,13 @@ import { getTenorGifs } from '@chickenhan/sdk/lib';
 
 interface HeaderProps {
   label: string;
-  choosenTab: MenuState;
+  chosenTab: MenuState;
   setIsPopupOpen: (value: boolean) => void;
 }
 
 export const MenuHeader: React.FC<HeaderProps> = ({
   label,
-  choosenTab,
+  chosenTab,
   setIsPopupOpen,
 }) => {
   const [isSearchedValue, setIsSearchedValue] = useState<boolean>(false);
@@ -26,11 +26,11 @@ export const MenuHeader: React.FC<HeaderProps> = ({
   const searchInputRef = useRef<HTMLInputElement | null>(null);
 
   function isChat(): boolean {
-    return choosenTab === 'chats' || choosenTab === 'discover';
+    return chosenTab === 'chats' || chosenTab === 'discover';
   }
 
   function isSearched(): boolean {
-    return choosenTab === 'chats' || choosenTab === 'discover';
+    return chosenTab === 'chats' || chosenTab === 'discover';
   }
 
   function renderSearchInput(): React.ReactNode {
