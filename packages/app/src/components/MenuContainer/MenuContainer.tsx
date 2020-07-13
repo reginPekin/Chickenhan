@@ -12,15 +12,15 @@ interface MenuContainerProps {
 export const MenuContainer: React.FC<MenuContainerProps> = ({
   setIsPopupOpen,
 }) => {
-  const [choosenTab, setChoosenTab] = useState<MenuState>('chats');
+  const [chosenTab, setchosenTab] = useState<MenuState>('chats');
 
   return (
     <div className={styles.menuContainer}>
       <MenuSidebar
-        choosenTab={choosenTab}
-        setChoosenTab={(tab): void => setChoosenTab(tab)}
+        chosenTab={chosenTab}
+        setСhosenTab={(tab): void => setchosenTab(tab)}
       />
-      <MenuContent setIsPopupOpen={setIsPopupOpen} choosenTab={choosenTab} />
+      <MenuContent setIsPopupOpen={setIsPopupOpen} chosenTab={chosenTab} />
     </div>
   );
 };

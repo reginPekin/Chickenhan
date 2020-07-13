@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 import styles from './InputWithLabel.module.css';
 
@@ -8,13 +8,17 @@ import { BasicInput } from '../BasicInput';
 
 interface InputWithLabelProps {
   placeholder: string;
+  isReseted?: boolean;
   isRequired?: boolean;
+  setValue?: (value: string) => void;
   setIsRequired?: (value: boolean) => void;
 }
 
 export const InputWithLabel: React.FC<InputWithLabelProps> = ({
   placeholder,
+  isReseted = false,
   isRequired = false,
+  setValue = (): void => undefined,
   setIsRequired = (): void => undefined,
 }) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
@@ -22,6 +26,12 @@ export const InputWithLabel: React.FC<InputWithLabelProps> = ({
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const isOnTop = isFocused || inputRef.current?.value;
+
+  useEffect(() => {
+    if (inputRef?.current) {
+      inputRef.current.value = '';
+    }
+  }, [isReseted]);
 
   function onFocus(): void {
     if (!isFocused) setIsFocused(true);
@@ -35,7 +45,12 @@ export const InputWithLabel: React.FC<InputWithLabelProps> = ({
   return (
     <section className={styles.input}>
       <div className={styles.basicInput}>
-        <BasicInput ref={inputRef} onFocus={onFocus} onBlur={onBlur} />
+        <BasicInput
+          ref={inputRef}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          onChange={(event): void => setValue(event.target.value)}
+        />
       </div>
 
       <span

@@ -1,28 +1,32 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 
-import { MOCK_CHATS_1 } from '@chickenhan/components/src/__mocks__';
+import {
+  MOCK_CHATS_1,
+  MOCK_CHATS_DISCOVER,
+  MOCK_USER_1,
+} from '@chickenhan/components/src/__mocks__';
 
-import { ChatLine } from '@chickenhan/components/src/ChatLine';
 import { MenuHeader } from '@chickenhan/components/src/MenuHeader';
+import { Avatar } from '@chickenhan/components/src/Avatar';
+import { ChatList } from '@chickenhan/components/src/ChatList';
 
 import styles from './MenuContent.module.css';
 
 import { MenuState } from '../MenuSidebar/consts';
 
 interface MenuContentProps {
-  choosenTab: MenuState;
+  chosenTab: MenuState;
   setIsPopupOpen: (value: boolean) => void;
 }
 
 export const MenuContent: React.FC<MenuContentProps> = ({
-  choosenTab,
+  chosenTab,
   setIsPopupOpen,
 }) => {
-  const [choosenChat, setChoosenChat] = useState<string>('');
+  const [chosenChat, setСhosenChat] = useState<string>('');
 
   function setLabel(): string {
-    switch (choosenTab) {
+    switch (chosenTab) {
       case 'discover':
         return 'Discover';
       case 'chats':
@@ -34,39 +38,71 @@ export const MenuContent: React.FC<MenuContentProps> = ({
     }
   }
 
-  const chats = MOCK_CHATS_1;
+  function renderContentSection(): JSX.Element {
+    switch (chosenTab) {
+      case 'discover':
+        return (
+          <ChatList
+            chats={MOCK_CHATS_DISCOVER}
+            chosenChat={chosenChat}
+            setChosenChat={(id): void => setСhosenChat(id)}
+          />
+        );
+      case 'chats':
+        return (
+          <ChatList
+            chats={MOCK_CHATS_1}
+            chosenChat={chosenChat}
+            setChosenChat={(id): void => setСhosenChat(id)}
+          />
+        );
+      case 'profile':
+        return <ProfileMenu />;
+      default:
+        return (
+          <ChatList
+            chats={MOCK_CHATS_1}
+            chosenChat={chosenChat}
+            setChosenChat={(id): void => setСhosenChat(id)}
+          />
+        );
+    }
+  }
+
   return (
-    <section className={styles.mainSection}>
+    <aside className={styles.mainSection}>
       <MenuHeader
         label={setLabel()}
-        choosenTab={choosenTab}
+        chosenTab={chosenTab}
         setIsPopupOpen={setIsPopupOpen}
       />
       <section className={styles.scrolledChats}>
-        <div className={styles.menuContent}>
-          {chats.map(chat => (
-            <Link
-              key={chat.id}
-              to={`/chat/${chat.id}`}
-              style={{
-                textDecoration: 'none',
-                color: 'black',
-              }}
-            >
-              <div
-                className={styles.link}
-                style={{
-                  backgroundColor:
-                    choosenChat === chat.id ? 'var(--light-grey)' : 'white',
-                }}
-                onClick={(): void => setChoosenChat(chat.id)}
-              >
-                <ChatLine chat={chat} />
-              </div>
-            </Link>
-          ))}
-        </div>
+        <div className={styles.menuContent}>{renderContentSection()}</div>
       </section>
+    </aside>
+  );
+};
+
+const ProfileMenu: React.FC = () => {
+  return (
+    <section className={styles.profile}>
+      <div className={styles.avatar}>
+        <Avatar url={MOCK_USER_1.avatar} width={96} />
+        <span className={styles.name}>{MOCK_USER_1.login}</span>
+      </div>
+      <nav className={styles.menu}>
+        <section className={styles.navSection}>
+          <div className={styles.menuLabel}>User</div>
+          <div className={styles.menuItem}>Edit profile</div>
+        </section>
+
+        <section className={styles.navSection}>
+          <div className={styles.menuLabel}>The main</div>
+          <div className={styles.menuItem}>Write to developer</div>
+          {/* <div className={styles.menuItem}>Mode</div> */}
+          <div className={styles.menuItem}>Sign out</div>
+        </section>
+      </nav>
     </section>
   );
 };

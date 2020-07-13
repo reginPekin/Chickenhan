@@ -15,6 +15,7 @@
 
 .iconSection:hover {
   background-color: var(--hover-grey);
+  transition: background-color 0.1s ease-in;
 }
 
 .iconSection:hover .iconDescription {

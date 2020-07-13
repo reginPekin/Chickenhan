@@ -10,18 +10,18 @@ import { menuElements, MenuState } from './consts';
 import { useStore } from '../../store';
 
 interface MenuSiderProps {
-  choosenTab: MenuState;
-  setChoosenTab: (tab: MenuState) => void;
+  chosenTab: MenuState;
+  setСhosenTab: (tab: MenuState) => void;
 }
 
 export const MenuSidebar: React.FC<MenuSiderProps> = ({
-  choosenTab,
-  setChoosenTab,
+  chosenTab,
+  setСhosenTab,
 }) => {
+  const index: number = menuElements.findIndex(tab => tab.name === chosenTab);
   const store = useStore();
-  const name = store.user.useSelector(user => user.name);
 
-  const index: number = menuElements.findIndex(tab => tab.name === choosenTab);
+  const name = store.user.useSelector(user => user.name);
 
   return (
     <nav className={styles.menuSidebar}>
@@ -29,7 +29,7 @@ export const MenuSidebar: React.FC<MenuSiderProps> = ({
       <div
         className={styles.logoSection}
         onClick={(): void => {
-          setChoosenTab('chats');
+          setСhosenTab('chats');
         }}
       >
         <LogoIcon />
@@ -43,8 +43,8 @@ export const MenuSidebar: React.FC<MenuSiderProps> = ({
           <MenuIcon
             key={key}
             menuElement={menuElement}
-            isActiveTab={choosenTab === menuElement.name}
-            setChoosenTab={(tab): void => setChoosenTab(tab)}
+            isActiveTab={chosenTab === menuElement.name}
+            setchosenTab={(tab): void => setСhosenTab(tab)}
           />
         ))}
       </section>

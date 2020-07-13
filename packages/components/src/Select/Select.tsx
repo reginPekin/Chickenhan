@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import styles from './Select.module.css';
 
@@ -15,22 +15,29 @@ interface SelectProps {
   options: Option[];
   title: string;
 
+  isReseted?: boolean;
   setSelectedOption?: (value: string) => void;
 }
 
 export const Select: React.FC<SelectProps> = ({
   title,
   options,
+  isReseted = false,
   setSelectedOption = (): void => undefined,
 }) => {
   const defaultValue = options.filter(option => option.selected);
 
-  const selectRef = useRef(null);
+  const selectRef = useRef<HTMLDivElement | null>(null);
 
-  const [choosenOption, setChoosenOption] = useState<Option>(defaultValue[0]);
+  const [chosenOption, setchosenOption] = useState<Option>(defaultValue[0]);
   const [isOpened, setIsOpened] = useState<boolean>(false);
 
   useOnClickOutside(selectRef, () => setIsOpened(false));
+
+  useEffect(() => {
+    setchosenOption(defaultValue[0]);
+    setSelectedOption(defaultValue[0].value);
+  }, [isReseted]);
 
   return (
     <section className={styles.select} ref={selectRef}>
@@ -39,7 +46,7 @@ export const Select: React.FC<SelectProps> = ({
         onClick={(): void => setIsOpened(!isOpened)}
       >
         <span className={styles.selecTitle}>{title}</span>
-        <span>{choosenOption.label}</span>
+        <span>{chosenOption.label}</span>
       </div>
       <section
         className={styles.dropDownSelect}
@@ -51,7 +58,7 @@ export const Select: React.FC<SelectProps> = ({
             className={styles.option}
             onClick={(): void => {
               setIsOpened(false);
-              setChoosenOption(option);
+              setchosenOption(option);
               setSelectedOption(option.value);
             }}
           >

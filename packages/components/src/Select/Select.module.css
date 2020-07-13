@@ -2,14 +2,15 @@
     width: 100%;
     position: relative;
     background-color: var(--light-grey);
-    border-radius: 8px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
 .selectSection {
+    height: 55px;
     display: flex;
     flex-direction: column;
-    padding: 14px 18px;
+    padding: 10px 18px;
 }
 
 .selecTitle {
@@ -27,7 +28,7 @@
     flex-direction: column;
     margin-top: 10px;
     background-color: var(--main-yellow);
-    border-radius: 8px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
