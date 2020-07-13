@@ -12,6 +12,8 @@ import { DragAndDrop } from '@chickenhan/components/src/DragAndDrop';
 
 import { handleFile } from '@chickenhan/components/src/utils';
 
+import { useStore } from '../../store';
+
 import {
   MOCK_MESSAGES_ARRAY_1,
   MOCK_CHATS_1,
@@ -46,6 +48,12 @@ const ChatContaner: React.FC<ChatConteinerProps> = ({ chatId }) => {
   handleFile(loadedImg, fileUrl => setLoadedImgUrl(fileUrl));
 
   const filteredChat = allChats.filter(chat => chat.id === chatId)[0];
+
+  const store = useStore();
+
+  const [state, setState] = store.user.useState();
+
+  if (!filteredChat) return <div>NO CHAT</div>;
 
   return (
     <main className={styles.contentContainer}>

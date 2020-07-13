@@ -18,7 +18,7 @@ export const MenuContainer: React.FC<MenuContainerProps> = ({
     <div className={styles.menuContainer}>
       <MenuSidebar
         chosenTab={chosenTab}
-        setchosenTab={(tab): void => setchosenTab(tab)}
+        setСhosenTab={(tab): void => setchosenTab(tab)}
       />
       <MenuContent setIsPopupOpen={setIsPopupOpen} chosenTab={chosenTab} />
     </div>

@@ -23,7 +23,7 @@ export const MenuContent: React.FC<MenuContentProps> = ({
   chosenTab,
   setIsPopupOpen,
 }) => {
-  const [chosenChat, setchosenChat] = useState<string>('');
+  const [chosenChat, setСhosenChat] = useState<string>('');
 
   function setLabel(): string {
     switch (chosenTab) {
@@ -45,7 +45,7 @@ export const MenuContent: React.FC<MenuContentProps> = ({
           <ChatList
             chats={MOCK_CHATS_DISCOVER}
             chosenChat={chosenChat}
-            setchosenChat={(id): void => setchosenChat(id)}
+            setChosenChat={(id): void => setСhosenChat(id)}
           />
         );
       case 'chats':
@@ -53,7 +53,7 @@ export const MenuContent: React.FC<MenuContentProps> = ({
           <ChatList
             chats={MOCK_CHATS_1}
             chosenChat={chosenChat}
-            setchosenChat={(id): void => setchosenChat(id)}
+            setChosenChat={(id): void => setСhosenChat(id)}
           />
         );
       case 'profile':
@@ -63,7 +63,7 @@ export const MenuContent: React.FC<MenuContentProps> = ({
           <ChatList
             chats={MOCK_CHATS_1}
             chosenChat={chosenChat}
-            setchosenChat={(id): void => setchosenChat(id)}
+            setChosenChat={(id): void => setСhosenChat(id)}
           />
         );
     }

@@ -11,13 +11,13 @@ import { Chat } from '../types';
 interface ChatListProps {
   chats: Chat[];
   chosenChat: string;
-  setchosenChat: (value: string) => void;
+  setChosenChat: (value: string) => void;
 }
 
 export const ChatList: React.FC<ChatListProps> = ({
   chats,
   chosenChat,
-  setchosenChat,
+  setChosenChat,
 }) => {
   return (
     <section>
@@ -36,7 +36,7 @@ export const ChatList: React.FC<ChatListProps> = ({
               backgroundColor:
                 chosenChat === chat.id ? 'var(--light-grey)' : 'white',
             }}
-            onClick={(): void => setchosenChat(chat.id)}
+            onClick={(): void => setChosenChat(chat.id)}
           >
             <ChatLine chat={chat} />
           </div>
