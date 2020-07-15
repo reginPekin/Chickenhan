@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useCallback } from 'react';
 
 import styles from './DragAndDrop.module.css';
 
@@ -8,6 +8,7 @@ interface DragAndDropProps {
   children?: React.ReactNode | React.ReactNode[];
   setFiles: (file: File[]) => void;
 
+  filesAmount?: number;
   dropEvent?: () => void;
 }
 
@@ -27,6 +28,8 @@ interface ReducerAction {
 export const DragAndDrop: React.FC<DragAndDropProps> = ({
   children = undefined,
   setFiles = (): void => undefined,
+
+  filesAmount = 10,
   dropEvent = (): void => undefined,
 }) => {
   const reducerInitialState = { dropDepth: 0, inDropZone: false, fileList: [] };
@@ -43,14 +46,13 @@ export const DragAndDrop: React.FC<DragAndDropProps> = ({
       case 'ADD_FILE_TO_LIST':
         return {
           ...state,
-          fileList: state.fileList.concat(action.files as any),
+          fileList: action.files as any,
         };
       default:
         return state;
     }
   };
   const [data, dispatch] = useReducer(reducer, reducerInitialState);
-  console.log(data.fileList);
 
   function handleDragEnter(event: React.DragEvent): void {
     event.preventDefault();
@@ -80,13 +82,16 @@ export const DragAndDrop: React.FC<DragAndDropProps> = ({
     event.preventDefault();
     event.stopPropagation();
 
-    let files = [...(event.dataTransfer.files as any)];
+    // restrict droped files amount
+    const files = [...(event.dataTransfer.files as any)].slice(0, filesAmount);
 
     if (files && files.length > 0) {
       dropEvent();
-      const existingFiles = data.fileList.map(file => file.name);
-      files = files.filter(file => !existingFiles.includes(file.name));
+      // передавать только дропнувшие файлы, не надо запоминать их все здесь
+      // const existingFiles = data.fileList.map(file => file.name);
+      // files = files.filter(file => !existingFiles.includes(file.name));
 
+      // стоит ли проверять на равенство загружаемого массива с уже имеющимся, чтобы лишний раз не рендерить родителя?
       dispatch({ type: 'ADD_FILE_TO_LIST', files });
       event.dataTransfer.clearData();
       dispatch({ type: 'SET_DROP_DEPTH', dropDepth: 0 });
