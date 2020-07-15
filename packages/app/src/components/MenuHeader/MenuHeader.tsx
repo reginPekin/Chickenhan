@@ -2,25 +2,28 @@ import React, { useRef, useState } from 'react';
 
 import styles from './MenuHeader.module.css';
 
-import { MenuState } from '../../../app/src/components/MenuSidebar/consts';
+import { MenuState } from '../MenuSidebar/consts';
 
-import { BasicInput } from '../BasicInput';
+import { BasicInput } from '@chickenhan/components/src/BasicInput';
 
-import { SearchIcon, DeleteIcon, AddChatIcon } from '../Icons';
+import {
+  SearchIcon,
+  DeleteIcon,
+  AddChatIcon,
+} from '@chickenhan/components/src/Icons';
 
 import { getTenorGifs } from '@chickenhan/sdk/lib';
+
+import { useStore } from '../../store';
 
 interface HeaderProps {
   label: string;
   chosenTab: MenuState;
-  setIsPopupOpen: (value: boolean) => void;
 }
 
-export const MenuHeader: React.FC<HeaderProps> = ({
-  label,
-  chosenTab,
-  setIsPopupOpen,
-}) => {
+export const MenuHeader: React.FC<HeaderProps> = ({ label, chosenTab }) => {
+  const store = useStore();
+
   const [isSearchedValue, setIsSearchedValue] = useState<boolean>(false);
 
   const searchInputRef = useRef<HTMLInputElement | null>(null);
@@ -75,7 +78,7 @@ export const MenuHeader: React.FC<HeaderProps> = ({
           className={styles.addChatIcon}
           style={{ display: isChat() ? 'flex' : 'none' }}
           onClick={(): void => {
-            setIsPopupOpen(true);
+            store.local.update({ isNewChatPopupOpen: true });
           }}
         />
       </div>
