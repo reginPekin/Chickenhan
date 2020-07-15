@@ -21,15 +21,13 @@ export const MenuSidebar: React.FC<MenuSiderProps> = ({
   const index: number = menuElements.findIndex(tab => tab.name === chosenTab);
   const store = useStore();
 
-  const name = store.user.useSelector(user => user.name);
-
   return (
     <nav className={styles.menuSidebar}>
-      {/* {name} */}
       <div
         className={styles.logoSection}
         onClick={(): void => {
           setСhosenTab('chats');
+          store.local.update({ isProfileOpen: false });
         }}
       >
         <LogoIcon />
@@ -45,6 +43,12 @@ export const MenuSidebar: React.FC<MenuSiderProps> = ({
             menuElement={menuElement}
             isActiveTab={chosenTab === menuElement.name}
             setchosenTab={(tab): void => setСhosenTab(tab)}
+            openProfile={(): void =>
+              store.local.update({ isProfileOpen: true })
+            }
+            closeProfile={(): void =>
+              store.local.update({ isProfileOpen: false })
+            }
           />
         ))}
       </section>
