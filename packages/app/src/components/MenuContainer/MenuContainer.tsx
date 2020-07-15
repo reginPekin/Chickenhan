@@ -5,13 +5,7 @@ import { MenuSidebar } from '../MenuSidebar';
 import { MenuContent } from '../MenuContent';
 import { MenuState } from '../MenuSidebar/consts';
 
-interface MenuContainerProps {
-  setIsPopupOpen: (value: boolean) => void;
-}
-
-export const MenuContainer: React.FC<MenuContainerProps> = ({
-  setIsPopupOpen,
-}) => {
+export const MenuContainer: React.FC = () => {
   const [chosenTab, setchosenTab] = useState<MenuState>('chats');
 
   return (
@@ -20,7 +14,7 @@ export const MenuContainer: React.FC<MenuContainerProps> = ({
         chosenTab={chosenTab}
         setСhosenTab={(tab): void => setchosenTab(tab)}
       />
-      <MenuContent setIsPopupOpen={setIsPopupOpen} chosenTab={chosenTab} />
+      <MenuContent chosenTab={chosenTab} />
     </div>
   );
 };

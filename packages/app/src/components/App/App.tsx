@@ -42,18 +42,11 @@ function ModalSwith(): ReactElement {
 }
 
 const Home: React.FC = () => {
-  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
-
   return (
     <main className={styles.app}>
-      <NewChatPopup
-        isPopupOpen={isPopupOpen}
-        setIsPopupOpen={(value): void => setIsPopupOpen(value)}
-      />
+      <NewChatPopup />
       <div className={styles.main}>
-        <MenuContainer
-          setIsPopupOpen={(value): void => setIsPopupOpen(value)}
-        />
+        <MenuContainer />
         <ContentContainer />
       </div>
     </main>

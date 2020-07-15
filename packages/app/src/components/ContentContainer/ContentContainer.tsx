@@ -12,8 +12,6 @@ import { DragAndDrop } from '@chickenhan/components/src/DragAndDrop';
 
 import { handleFile } from '@chickenhan/components/src/utils';
 
-import { useStore } from '../../store';
-
 import {
   MOCK_MESSAGES_ARRAY_1,
   MOCK_CHATS_1,
@@ -49,10 +47,6 @@ const ChatContaner: React.FC<ChatConteinerProps> = ({ chatId }) => {
 
   const filteredChat = allChats.filter(chat => chat.id === chatId)[0];
 
-  const store = useStore();
-
-  const [state, setState] = store.user.useState();
-
   if (!filteredChat) return <div>NO CHAT</div>;
 
   return (
@@ -60,16 +54,16 @@ const ChatContaner: React.FC<ChatConteinerProps> = ({ chatId }) => {
       <ProfilePopup />
       <ImagePopup loadedImgUrl={loadedImgUrl} isOpen={isOpen} />
       <ChatHeader chat={filteredChat} />
-      <DragAndDrop
+      {/* <DragAndDrop
         setFiles={(file): void => setLoadedImg(file)}
         dropEvent={(): void => setIsOpen(true)}
-      >
-        <section className={styles.contentSection}>
-          {MOCK_MESSAGES_ARRAY_1.map(message => (
-            <Message message={message} key={message.messageId} />
-          ))}
-        </section>
-      </DragAndDrop>
+      > */}
+      <section className={styles.contentSection}>
+        {MOCK_MESSAGES_ARRAY_1.map(message => (
+          <Message message={message} key={message.messageId} />
+        ))}
+      </section>
+      {/* </DragAndDrop> */}
       <WriteBox />
     </main>
   );
