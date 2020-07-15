@@ -136,6 +136,7 @@ export const AvatarLoaderIcon: React.FC<IconProps> = props => (
     height={props.height || 96}
     viewBox="0 0 94 94"
     fill="none"
+    {...props}
   >
     <circle cx={47} cy={47} r={45.5} stroke="#FFC224" strokeWidth={3} />
     <circle cx={46.5} cy={43.5} r={15} stroke="#FFC224" strokeWidth={3} />

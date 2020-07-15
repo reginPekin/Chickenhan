@@ -31,6 +31,7 @@ export const Avatar: React.FC<AvatarProps> = ({
         style={{
           borderRadius: chatType === 'dialog' ? '50%' : '30%',
         }}
+        className={styles.img}
       />
     </div>
   );

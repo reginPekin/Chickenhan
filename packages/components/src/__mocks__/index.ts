@@ -96,6 +96,15 @@ export const MOCK_CHATS_DISCOVER: Chat[] = [
     lastDateMessage: '12 june',
     userCount: 12321,
   },
+  {
+    avatar: 'https://delovoymir.biz/res/images/uploaded/columns/7259.jpg',
+    name: `Chicken chat`,
+    type: 'public',
+    id: '00000000000',
+    lastMessage: 'Wow, you are cool <3',
+    lastDateMessage: '11 december',
+    userCount: 23000010101012,
+  },
 ];
 
 export const MOCK_MESSAGES_ARRAY_1: Message[] = [

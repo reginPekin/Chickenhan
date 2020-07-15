@@ -8,6 +8,7 @@ import { handleFile } from '../utils';
 
 interface ImageLoaderProps {
   files?: File[];
+  isReseted?: boolean;
   onFileLoaded?: (file: File[]) => void;
 
   children?: JSX.Element;
@@ -16,6 +17,7 @@ interface ImageLoaderProps {
 
 export const ImageLoader: React.FC<ImageLoaderProps> = ({
   files = [],
+  isReseted = false,
   onFileLoaded = (): void => undefined,
 
   children,
@@ -26,6 +28,10 @@ export const ImageLoader: React.FC<ImageLoaderProps> = ({
   );
 
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (isReseted) setPreviewUrl(null);
+  }, [isReseted]);
 
   useEffect(() => {
     if (files.length > 0) {
