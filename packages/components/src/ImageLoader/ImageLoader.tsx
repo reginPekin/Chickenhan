@@ -48,7 +48,7 @@ export const ImageLoader: React.FC<ImageLoaderProps> = ({
         type="file"
         accept="image/png, image/jpeg"
         onChange={(event): void => {
-          if (event?.target?.files) {
+          if (event?.target?.files && event.target.files.length > 0) {
             onFileLoaded(Array.prototype.slice.call(event.target.files));
             handleFile(event.target.files, file => setPreviewUrl(file));
           }
