@@ -15,30 +15,27 @@ interface SelectProps {
   options: Option[];
   title: string;
 
-  isReseted?: boolean;
   setSelectedOption?: (value: string) => void;
 }
 
 export const Select: React.FC<SelectProps> = ({
   title,
   options,
-  isReseted = false,
   setSelectedOption = (): void => undefined,
 }) => {
   const defaultValue = options.filter(option => option.selected);
 
   const selectRef = useRef<HTMLDivElement | null>(null);
 
-  const [chosenOption, setchosenOption] = useState<Option>(defaultValue[0]);
+  const [chosenOption, setChosenOption] = useState<Option>(defaultValue[0]);
   const [isOpened, setIsOpened] = useState<boolean>(false);
 
   useOnClickOutside(selectRef, () => setIsOpened(false));
 
   useEffect(() => {
-    setchosenOption(defaultValue[0]);
+    setChosenOption(defaultValue[0]);
     setSelectedOption(defaultValue[0].value);
-  }, [isReseted]);
-
+  }, []);
   return (
     <section className={styles.select} ref={selectRef}>
       <div
@@ -58,7 +55,7 @@ export const Select: React.FC<SelectProps> = ({
             className={styles.option}
             onClick={(): void => {
               setIsOpened(false);
-              setchosenOption(option);
+              setChosenOption(option);
               setSelectedOption(option.value);
             }}
           >

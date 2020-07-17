@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import cx from 'classnames';
 
@@ -13,15 +13,16 @@ import { handleFile } from '@chickenhan/components/src/utils';
 
 import { DeleteIcon, AvatarLoaderIcon } from '../Icons';
 
-interface PopupProps {
-  isPopupOpen: boolean;
-  setIsPopupOpen: (value: boolean) => void;
-}
+import { useStore } from '../../store';
 
-export const NewChatPopup: React.FC<PopupProps> = ({
-  isPopupOpen,
-  setIsPopupOpen,
-}) => {
+export const NewChatPopup: React.FC = () => {
+  const inputWithLabelRef = useRef<HTMLInputElement | null>(null);
+
+  const store = useStore();
+
+  const isPopupOpen = store.local.useSelector(
+    local => local.isNewChatPopupOpen,
+  );
   // добавить аватарку по умолчанию
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
@@ -29,14 +30,17 @@ export const NewChatPopup: React.FC<PopupProps> = ({
     null,
   );
   const [chatType, setChatType] = useState<string>('public');
-  const [chatName, setChatName] = useState<string>('');
 
-  const [isRequired, setIsRequired] = useState<boolean>(false);
-  const [isReseted, setIsReseted] = useState<boolean>(false);
+  // замененяет currentInputWithLabelRef
+  // const [chatName, setChatName] = useState<string>('');
 
   useEffect(() => {
     handleFile(uploadedFiles, fileUrl => setChatAvatar(fileUrl));
   }, [uploadedFiles]);
+
+  if (!isPopupOpen) {
+    return null;
+  }
 
   const options = [
     {
@@ -52,46 +56,34 @@ export const NewChatPopup: React.FC<PopupProps> = ({
     },
   ];
 
-  function resetNewChatInfo(): void {
-    setIsReseted(true);
-    setIsRequired(false);
-
-    setChatAvatar(null);
-    setChatName('');
-  }
-
   return (
-    <main
-      className={styles.newChat}
-      style={{ display: isPopupOpen ? 'flex' : 'none' }}
-    >
+    <main className={styles.newChat}>
       <DeleteIcon
         className={styles.deleteIcon}
         onClick={(): void => {
-          setIsPopupOpen(false);
-          resetNewChatInfo();
+          store.local.update({ isNewChatPopupOpen: false });
+          setUploadedFiles([]);
         }}
       />
-      <DragAndDrop setFiles={(file): void => setUploadedFiles(file)}>
+
+      <DragAndDrop
+        setFiles={(file): void => setUploadedFiles(file)}
+        filesAmount={1}
+      >
         <section className={styles.popupContent}>
           <h1 className={styles.popupTitle}>New chat</h1>
           <ImageLoader
             files={uploadedFiles}
             onFileLoaded={(file): void => setUploadedFiles(file)}
           >
-            <AvatarLoaderIcon />
+            <AvatarLoaderIcon className={styles.avatarLoaderIcon} />
           </ImageLoader>
 
           <section className={styles.inputElements}>
             <InputWithLabel
               placeholder="Name"
-              isReseted={isReseted}
-              isRequired={isRequired}
-              setValue={(value: string): void => setChatName(value)}
-              setIsRequired={(value: boolean): void => {
-                setIsRequired(value);
-                setIsReseted(false);
-              }}
+              ref={inputWithLabelRef}
+              focusRef={(): void => inputWithLabelRef.current?.focus()}
             />
           </section>
 
@@ -99,14 +91,13 @@ export const NewChatPopup: React.FC<PopupProps> = ({
             <Select
               title="Chat type"
               options={options}
-              isReseted={isReseted}
               setSelectedOption={(value: string): void => setChatType(value)}
             />
           </section>
 
           <button
             className={cx(styles.basicButton, styles.inputElements)}
-            onClick={(): void => undefined}
+            onClick={(): void => console.log(inputWithLabelRef.current?.value)}
           >
             Next
           </button>
