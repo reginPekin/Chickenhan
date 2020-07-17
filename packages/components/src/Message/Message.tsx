@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import React from 'react';
 
 import cx from 'classnames';
@@ -16,7 +15,7 @@ interface MessageProps {
   message: TypeMessage;
 }
 
-export const Message: React.FC<MessageProps> = ({ message }) => {
+export const Message: React.FC<MessageProps> = React.memo(({ message }) => {
   function renderAuthor(): JSX.Element {
     return (
       <div className={styles.nameAndDate}>
@@ -58,4 +57,4 @@ export const Message: React.FC<MessageProps> = ({ message }) => {
       </div>
     </article>
   );
-};
+});

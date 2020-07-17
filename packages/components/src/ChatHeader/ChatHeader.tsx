@@ -12,7 +12,7 @@ interface ChatHeader {
   chat: Chat;
 }
 
-export const ChatHeader: React.FC<ChatHeader> = ({ chat }) => {
+export const ChatHeader: React.FC<ChatHeader> = React.memo(({ chat }) => {
   function extractUserCount(): string {
     if (chat.type === 'dialog' && chat.opponent) {
       return 'личные сообщения';
@@ -48,4 +48,4 @@ export const ChatHeader: React.FC<ChatHeader> = ({ chat }) => {
       </section>
     </header>
   );
-};
+});

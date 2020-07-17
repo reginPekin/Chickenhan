@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Chat } from '../../types';
+
 import cx from 'classnames';
 
 import { Chat } from '../types';
@@ -11,7 +11,7 @@ interface ChatLineProps {
   chat: Chat;
 }
 
-export const ChatLine: React.FC<ChatLineProps> = ({ chat }) => {
+export const ChatLine: React.FC<ChatLineProps> = React.memo(({ chat }) => {
   function renderUserCount(): React.ReactNode {
     if (!chat.userCount) return null;
     return <span className={styles.userCount}>{chat.userCount} участник</span>; // язык и падежи
@@ -59,4 +59,4 @@ export const ChatLine: React.FC<ChatLineProps> = ({ chat }) => {
       </div>
     </section>
   );
-};
+});

@@ -18,8 +18,6 @@ interface MenuContentProps {
 }
 
 export const MenuContent: React.FC<MenuContentProps> = ({ chosenTab }) => {
-  const [chosenChat, setСhosenChat] = useState<string>('');
-
   function setLabel(): string {
     switch (chosenTab) {
       case 'discover':
@@ -36,31 +34,13 @@ export const MenuContent: React.FC<MenuContentProps> = ({ chosenTab }) => {
   function renderContentSection(): JSX.Element {
     switch (chosenTab) {
       case 'discover':
-        return (
-          <ChatList
-            chats={MOCK_CHATS_DISCOVER}
-            chosenChat={chosenChat}
-            setChosenChat={(id): void => setСhosenChat(id)}
-          />
-        );
+        return <ChatList chats={MOCK_CHATS_DISCOVER} />;
       case 'chats':
-        return (
-          <ChatList
-            chats={MOCK_CHATS_1}
-            chosenChat={chosenChat}
-            setChosenChat={(id): void => setСhosenChat(id)}
-          />
-        );
+        return <ChatList chats={MOCK_CHATS_1} />;
       case 'profile':
         return <ProfileMenu />;
       default:
-        return (
-          <ChatList
-            chats={MOCK_CHATS_1}
-            chosenChat={chosenChat}
-            setChosenChat={(id): void => setСhosenChat(id)}
-          />
-        );
+        return <ChatList chats={MOCK_CHATS_1} />;
     }
   }
 

@@ -9,7 +9,7 @@ export interface IconProps {
   onClick?: () => void;
 }
 
-export const LogoIcon: React.FC<IconProps> = () => (
+export const LogoIcon: React.FC<IconProps> = React.memo(() => (
   <svg width={40} height={40} viewBox="0 0 46 52" fill="none">
     <path
       d="M18.3965 7.59629L13.968 4.27489"
@@ -62,60 +62,57 @@ export const LogoIcon: React.FC<IconProps> = () => (
       strokeLinejoin="round"
     />
   </svg>
+));
+
+export const DiscoverIcon: React.FC<IconProps> = React.memo(
+  ({ fill = 'black', stroke = 'black' }) => (
+    <svg width={24} height={24} viewBox="0 0 64 64" fill="none">
+      <circle cx={32} cy={32} r={30.5} stroke={stroke} strokeWidth={3} />
+      <path
+        d="M25.6113 23.3411L11.8406 44.656L36.564 41.2587L50.6621 20.9254L25.6113 23.3411Z"
+        fill={fill}
+        stroke={stroke}
+      />
+      <circle cx={31.5} cy={31.5} r={3.5} fill="white" />
+    </svg>
+  ),
 );
 
-export const DiscoverIcon: React.FC<IconProps> = ({
-  fill = 'black',
-  stroke = 'black',
-}) => (
-  <svg width={24} height={24} viewBox="0 0 64 64" fill="none">
-    <circle cx={32} cy={32} r={30.5} stroke={stroke} strokeWidth={3} />
-    <path
-      d="M25.6113 23.3411L11.8406 44.656L36.564 41.2587L50.6621 20.9254L25.6113 23.3411Z"
-      fill={fill}
-      stroke={stroke}
-    />
-    <circle cx={31.5} cy={31.5} r={3.5} fill="white" />
-  </svg>
+export const ProfileIcon: React.FC<IconProps> = React.memo(
+  ({ fill = 'none', stroke = 'black' }) => (
+    <svg width={24} height={24} viewBox="0 0 89 88">
+      <path
+        d="M44 45C4.80002 45 -0.333311 72.6667 2.00002 86.5H86.5C88.6667 72.6667 83.2 45 44 45Z"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth={5}
+      />
+      <circle
+        cx={44}
+        cy={19}
+        r={17.5}
+        fill={fill}
+        stroke={stroke}
+        strokeWidth={5}
+      />
+    </svg>
+  ),
 );
 
-export const ProfileIcon: React.FC<IconProps> = ({
-  fill = 'none',
-  stroke = 'black',
-}) => (
-  <svg width={24} height={24} viewBox="0 0 89 88">
-    <path
-      d="M44 45C4.80002 45 -0.333311 72.6667 2.00002 86.5H86.5C88.6667 72.6667 83.2 45 44 45Z"
-      fill={fill}
-      stroke={stroke}
-      strokeWidth={5}
-    />
-    <circle
-      cx={44}
-      cy={19}
-      r={17.5}
-      fill={fill}
-      stroke={stroke}
-      strokeWidth={5}
-    />
-  </svg>
+export const ChatIcon: React.FC<IconProps> = React.memo(
+  ({ fill = 'none', stroke = 'black' }) => (
+    <svg width={24} height={24} viewBox="0 0 151 138" fill="none">
+      <path
+        d="M31.9284 107L28.6553 133.903C28.4228 135.712 30.5343 136.863 31.9284 135.687L65 107M12 107H139C144.523 107 149 102.523 149 97V12C149 6.47715 144.523 2 139 2H12C6.47715 2 2 6.47715 2 12V97C2 102.523 6.47715 107 12 107Z"
+        fill={fill}
+        stroke={stroke}
+        strokeWidth={5}
+      />
+    </svg>
+  ),
 );
 
-export const ChatIcon: React.FC<IconProps> = ({
-  fill = 'none',
-  stroke = 'black',
-}) => (
-  <svg width={24} height={24} viewBox="0 0 151 138" fill="none">
-    <path
-      d="M31.9284 107L28.6553 133.903C28.4228 135.712 30.5343 136.863 31.9284 135.687L65 107M12 107H139C144.523 107 149 102.523 149 97V12C149 6.47715 144.523 2 139 2H12C6.47715 2 2 6.47715 2 12V97C2 102.523 6.47715 107 12 107Z"
-      fill={fill}
-      stroke={stroke}
-      strokeWidth={5}
-    />
-  </svg>
-);
-
-export const DeleteIcon: React.FC<IconProps> = props => (
+export const DeleteIcon: React.FC<IconProps> = React.memo(props => (
   <svg viewBox="0 0 64 64" {...props}>
     <path
       d="M63.381 63.381C62.5557 64.2063 61.2177 64.2063 60.3924 63.381L0.61898 3.60764C-0.206319 2.78235 -0.20632 1.44427 0.618978 0.618974C1.44428 -0.206325 2.78235 -0.206324 3.60765 0.618974L63.381 60.3923C64.2063 61.2176 64.2063 62.5557 63.381 63.381Z"
@@ -128,9 +125,9 @@ export const DeleteIcon: React.FC<IconProps> = props => (
       strokeWidth={4}
     />
   </svg>
-);
+));
 
-export const AvatarLoaderIcon: React.FC<IconProps> = props => (
+export const AvatarLoaderIcon: React.FC<IconProps> = React.memo(props => (
   <svg
     width={props.width || 96}
     height={props.height || 96}
@@ -151,9 +148,9 @@ export const AvatarLoaderIcon: React.FC<IconProps> = props => (
       strokeWidth={3}
     />
   </svg>
-);
+));
 
-export const GoogleIcon: React.FC<IconProps> = props => (
+export const GoogleIcon: React.FC<IconProps> = React.memo(props => (
   <svg width={25} height={25} {...props}>
     <g fill="none">
       <path
@@ -174,16 +171,16 @@ export const GoogleIcon: React.FC<IconProps> = props => (
       ></path>
     </g>
   </svg>
-);
+));
 
-export const FacebookIcon: React.FC<IconProps> = props => (
+export const FacebookIcon: React.FC<IconProps> = React.memo(props => (
   <svg width={25} height={25} fill="#3B5998" {...props}>
     <path d="M20.3 4H4.7a.7.7 0 0 0-.7.7v15.6c0 .38.32.7.7.7h8.33v-6.38h-2.12v-2.65h2.12V9.84c0-2.2 1.4-3.27 3.35-3.27.94 0 1.75.07 1.98.1v2.3H17c-1.06 0-1.31.5-1.31 1.24v1.76h2.65l-.53 2.65H15.7l.04 6.38h4.56a.7.7 0 0 0 .71-.7V4.7a.7.7 0 0 0-.7-.7"></path>
   </svg>
-);
+));
 
-export const EmailIcon: React.FC<IconProps> = props => (
+export const EmailIcon: React.FC<IconProps> = React.memo(props => (
   <svg width={25} height={25} {...props}>
     <path d="M4 6v13h17V6H4zm5.9 7.97l2.6 2.12 2.6-2.12 4.14 4.02H5.76l4.15-4.02zm-4.88 3.32V9.97l4.1 3.35-4.1 3.97zm10.87-3.97l4.1-3.35v7.32l-4.1-3.97zm4.1-6.3v1.64l-7.49 6.12-7.48-6.13V7.01h14.96z"></path>
   </svg>
-);
+));

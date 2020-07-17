@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import styles from './ChatList.module.css';
 
@@ -10,15 +10,11 @@ import { Chat } from '../types';
 
 interface ChatListProps {
   chats: Chat[];
-  chosenChat: string;
-  setChosenChat: (value: string) => void;
 }
 
-export const ChatList: React.FC<ChatListProps> = ({
-  chats,
-  chosenChat,
-  setChosenChat,
-}) => {
+export const ChatList: React.FC<ChatListProps> = React.memo(({ chats }) => {
+  const [chosenChat, setChosenChat] = useState<string>('');
+
   return (
     <section>
       {chats.map(chat => (
@@ -44,4 +40,4 @@ export const ChatList: React.FC<ChatListProps> = ({
       ))}
     </section>
   );
-};
+});

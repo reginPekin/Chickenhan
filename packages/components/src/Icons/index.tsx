@@ -12,7 +12,7 @@ export interface IconProps {
   onClick?: () => void;
 }
 
-export const AddChatIcon: React.FC<IconProps> = props => (
+export const AddChatIcon: React.FC<IconProps> = React.memo(props => (
   <svg width={24} height={24} viewBox="0 0 93 93" {...props}>
     <rect
       x={1.5}
@@ -27,9 +27,9 @@ export const AddChatIcon: React.FC<IconProps> = props => (
     <path d="M47 18L47 78" stroke="black" strokeWidth={5} />
     <line x1={17} y1={48.5} x2={77} y2={48.5} stroke="black" strokeWidth={5} />
   </svg>
-);
+));
 
-export const SearchIcon: React.FC<IconProps> = props => (
+export const SearchIcon: React.FC<IconProps> = React.memo(props => (
   <svg viewBox="0 0 48 50" {...props}>
     <circle
       cx={16.5}
@@ -49,9 +49,9 @@ export const SearchIcon: React.FC<IconProps> = props => (
       fill={props.stroke || '#C4C4C4'}
     />
   </svg>
-);
+));
 
-export const DeleteIcon: React.FC<IconProps> = props => (
+export const DeleteIcon: React.FC<IconProps> = React.memo(props => (
   <svg viewBox="0 0 64 64" {...props}>
     <path
       d="M63.381 63.381C62.5557 64.2063 61.2177 64.2063 60.3924 63.381L0.61898 3.60764C-0.206319 2.78235 -0.20632 1.44427 0.618978 0.618974C1.44428 -0.206325 2.78235 -0.206324 3.60765 0.618974L63.381 60.3923C64.2063 61.2176 64.2063 62.5557 63.381 63.381Z"
@@ -64,9 +64,9 @@ export const DeleteIcon: React.FC<IconProps> = props => (
       strokeWidth={4}
     />
   </svg>
-);
+));
 
-export const SendMessageIcon: React.FC<IconProps> = props => (
+export const SendMessageIcon: React.FC<IconProps> = React.memo(props => (
   <svg width={24} height={24} viewBox="0 0 29 30" fill="none" {...props}>
     <path
       d="M26.683 13.2345L4.41607 1.38275C2.70751 0.473352 0.832336 2.27919 1.67675 4.02079L7 15L1.67675 25.9792C0.832335 27.7208 2.70751 29.5266 4.41607 28.6173L26.683 16.7655C28.0967 16.013 28.0967 13.987 26.683 13.2345Z"
@@ -74,12 +74,12 @@ export const SendMessageIcon: React.FC<IconProps> = props => (
       strokeWidth={4}
     />
   </svg>
-);
+));
 
-export const MoreIcon: React.FC = () => (
+export const MoreIcon: React.FC = React.memo(() => (
   <section className={styles.moreIconSection}>
     <div className={styles.moreIcon} />
     <div className={styles.moreIcon} />
     <div className={styles.moreIcon} />
   </section>
-);
+));
