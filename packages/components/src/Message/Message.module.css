@@ -3,6 +3,8 @@
   display: flex;
   padding: 8px 16px;
   padding-right: 72px;
+  margin: 0 15px;
+  border-radius: 8px;
 }
 
 .textInfo {
@@ -38,6 +40,11 @@
   font-weight: 300;
 }
 
+.messageArticle:hover .moreInfo {
+  display: flex;
+  align-items: center;
+}
+
 .moreInfo{    
   position: absolute;
   right: 12px;
@@ -46,7 +53,8 @@
   display: none;
 }
 
-.messageArticle:hover .moreInfo {
+.moreIconInner {
+  height: 50%;
   display: flex;
   align-items: center;
 }

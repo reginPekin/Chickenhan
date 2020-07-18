@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export const useOnClickOutside = (
   ref: React.RefObject<any>,
@@ -14,4 +14,31 @@ export const useOnClickOutside = (
     document.addEventListener('mousedown', listener);
     return (): void => document.removeEventListener('mousedown', listener);
   }, [ref, handler]);
+};
+
+// проблема с подбиранием типа для рефа
+export const useHover = (): [any, boolean] => {
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  const handleMouseOver = (): void => setIsHovered(true);
+
+  const handleMouseOut = (): void => setIsHovered(false);
+
+  useEffect(() => {
+    const node = ref.current;
+
+    if (node) {
+      node.addEventListener('mouseover', handleMouseOver);
+      node.addEventListener('mouseout', handleMouseOut);
+
+      return (): void => {
+        node.addEventListener('mouseover', handleMouseOver);
+        node.addEventListener('mouseout', handleMouseOut);
+      };
+    }
+  }, [ref.current]);
+
+  return [ref, isHovered];
 };
