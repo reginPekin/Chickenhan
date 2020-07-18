@@ -1,9 +1,12 @@
 import React, { useRef, useState } from 'react';
 
+import cx from 'classnames';
+
 import styles from './ProfilePopup.module.css';
 
 import { ImageLoader } from '@chickenhan/components/src/ImageLoader';
 import { BasicInput } from '@chickenhan/components/src/BasicInput';
+import { PositionAwareButton } from '@chickenhan/components/src/PositionAwareButton';
 
 import { handleFile } from '@chickenhan/components/src/utils';
 
@@ -56,10 +59,9 @@ export const ProfilePopup: React.FC = () => {
           </div>
         </div>
       </section>
-      <footer className={styles.profilePopupModal}>
+      <footer className={cx(styles.profilePopupModal, styles.footer)}>
         <div className={styles.buttonWrapper}>
-          <button
-            className={styles.button}
+          <PositionAwareButton
             onClick={(): void => {
               // ещё проверять на уникальность нового логина
               if (newName && newName !== user.login) {
@@ -71,7 +73,7 @@ export const ProfilePopup: React.FC = () => {
             }}
           >
             Save
-          </button>
+          </PositionAwareButton>
         </div>
       </footer>
     </main>
