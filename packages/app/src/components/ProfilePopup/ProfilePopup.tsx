@@ -24,11 +24,10 @@ export const ProfilePopup: React.FC = () => {
   const [newName, setNewName] = useState<string>('');
   const [loginError, setLoginError] = useState<string>('');
 
+  if (!isProfileOpen) return null;
+
   return (
-    <main
-      className={styles.profilePopup}
-      style={{ display: isProfileOpen ? 'flex' : 'none' }}
-    >
+    <main className={styles.profilePopup}>
       <header className={styles.profilePopupModal}>Edit profile</header>
       <section className={styles.sectionProfilePopup}>
         <div className={styles.modalSection}>

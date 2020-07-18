@@ -1,4 +1,5 @@
 .profilePopup {
+  display: flex;
   position: absolute;
   z-index: 99;
   flex-direction: column;

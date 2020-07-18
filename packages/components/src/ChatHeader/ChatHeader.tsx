@@ -44,7 +44,9 @@ export const ChatHeader: React.FC<ChatHeader> = React.memo(({ chat }) => {
           <span className={styles.name}>{extractChatName()}</span>
           <span>{extractUserCount()}</span>
         </div>
-        <MoreIcon />
+        <span className={styles.moreIcon}>
+          <MoreIcon />
+        </span>
       </section>
     </header>
   );

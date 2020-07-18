@@ -1,8 +1,16 @@
 .moreIconSection {
   display: flex;
+  width: 30px;
+  height: 30px;
   align-items: center;
-  padding: 20px;
+  justify-content: center;
   cursor: pointer;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.moreIcon:first-child  {
+  margin: 0
 }
 
 .moreIcon {

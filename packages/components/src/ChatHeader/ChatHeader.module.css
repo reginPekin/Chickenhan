@@ -23,3 +23,9 @@
   white-space: nowrap;
   max-width: 70%;
 }
+
+.moreIcon {
+  display: flex;
+  align-items: center;
+  margin: 0 28px;
+}
