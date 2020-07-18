@@ -11,6 +11,14 @@
   background-color: var(--light-grey);
 }
 
+.basicInput, .basicInput > * {
+  transition: background-color .2s ease-in-out;
+}
+
+.basicInput:hover, .basicInput:hover > * {
+  background-color: var(--hover-light-grey);
+}
+
 .label {
   position: absolute;
   bottom: 16px;

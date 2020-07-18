@@ -35,6 +35,14 @@
   margin-top: 0;
 }
 
+.searchSection, .searchSection > * {
+  transition: background-color .2s ease-in-out;
+}
+
+.searchSection:hover,  .searchSection:hover > * {
+  background-color: var(--hover-light-grey);
+}
+
 .searchIcon {
   position: absolute;
   left: 10px;
