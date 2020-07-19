@@ -54,16 +54,16 @@ const ChatContaner: React.FC<ChatConteinerProps> = ({ chatId }) => {
       <ProfilePopup />
       <ImagePopup loadedImgUrl={loadedImgUrl} isOpen={isOpen} />
       <ChatHeader chat={filteredChat} />
-      {/* <DragAndDrop
+      <DragAndDrop
         setFiles={(file): void => setLoadedImg(file)}
         dropEvent={(): void => setIsOpen(true)}
-      > */}
-      <section className={styles.contentSection}>
-        {MOCK_MESSAGES_ARRAY_1.map(message => (
-          <Message message={message} key={message.messageId} />
-        ))}
-      </section>
-      {/* </DragAndDrop> */}
+      >
+        <section className={styles.contentSection}>
+          {MOCK_MESSAGES_ARRAY_1.map(message => (
+            <Message message={message} key={message.messageId} />
+          ))}
+        </section>
+      </DragAndDrop>
       <WriteBox />
     </main>
   );

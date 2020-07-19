@@ -29,7 +29,7 @@ export const DragAndDrop: React.FC<DragAndDropProps> = ({
   children = undefined,
   setFiles = (): void => undefined,
 
-  filesAmount = 10,
+  filesAmount = 1,
   dropEvent = (): void => undefined,
 }) => {
   const reducerInitialState = { dropDepth: 0, inDropZone: false, fileList: [] };
