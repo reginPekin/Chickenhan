@@ -3,6 +3,7 @@
   display: flex;
   align-items: center;
   padding-left: 16px;
+  border-bottom: 1px solid var(--light-grey);
 }
 
 .chatInfoSection {
@@ -27,5 +28,5 @@
 .moreIcon {
   display: flex;
   align-items: center;
-  margin: 0 28px;
+  margin: 0 12px;
 }

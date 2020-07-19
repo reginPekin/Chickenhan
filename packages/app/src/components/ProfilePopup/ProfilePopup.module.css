@@ -1,6 +1,7 @@
 .profilePopup {
   display: flex;
   position: absolute;
+  border-radius: 8px;
   z-index: 99;
   flex-direction: column;
   align-items: center;
