@@ -1,0 +1,104 @@
+.popup {
+  position: absolute;
+  z-index: 1;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: 100%;
+}
+
+.popupContent {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  background-color: #ffffff;
+  max-width: 400px;
+  width: 100%;
+  max-height: 480px;
+  height: 100%;
+  z-index: 9999 !important;
+  margin: 20px;
+  border-radius: 8px;
+}
+
+.body {
+  height: 400px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.imageSection {
+  display: flex;
+  /* -webkit-box-pack: center; */
+  justify-content: center;
+  /* -webkit-box-align: center; */
+  align-items: center;
+  margin-bottom: 12px;
+  height: 100%;
+}
+
+.loadedImg {
+  display: flex;
+  align-items: center;
+  
+  height: 100%;
+  width: 100%;
+}
+
+.header, .footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+}
+
+.header {
+  top: 0;
+}
+
+.footer {
+  bottom: 0;
+  border-top: 1px solid var(--light-grey);
+  padding-top: 14px;
+}
+
+.headerTitle {
+  font-weight: 600;
+}
+
+.messageInput {
+  width: 100%;
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  
+  background-color: var(--light-grey);
+  padding: 0 12px;
+  border-radius: 8px;
+}
+
+.deleteIcon {
+  position: absolute;
+  cursor: pointer;
+  width: 36px;
+  padding: 8px;
+  top: 12px;
+  right: 10px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.deleteIcon:hover {
+ background-color: var(--light-grey);
+}

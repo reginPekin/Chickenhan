@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import styles from './ContentContainer.module.css';
 
 import { ProfilePopup } from '../ProfilePopup';
+import { ImagePopup } from '../ImagePopup';
 
 import { ChatHeader } from '@chickenhan/components/src/ChatHeader';
 import { WriteBox } from '@chickenhan/components/src/WriteBox';
@@ -40,7 +41,7 @@ const ChatContaner: React.FC<ChatConteinerProps> = ({ chatId }) => {
   const [loadedImg, setLoadedImg] = useState<File[]>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [loadedImgUrl, setLoadedImgUrl] = useState<string | ArrayBuffer | null>(
-    '',
+    null,
   );
 
   handleFile(loadedImg, fileUrl => setLoadedImgUrl(fileUrl));
@@ -52,7 +53,14 @@ const ChatContaner: React.FC<ChatConteinerProps> = ({ chatId }) => {
   return (
     <main className={styles.contentContainer}>
       <ProfilePopup />
-      <ImagePopup loadedImgUrl={loadedImgUrl} isOpen={isOpen} />
+      <ImagePopup
+        loadedImgUrl={loadedImgUrl}
+        isOpen={isOpen}
+        closePopup={(): void => {
+          setIsOpen(false);
+          setLoadedImgUrl(null);
+        }}
+      />
       <ChatHeader chat={filteredChat} />
       <DragAndDrop
         setFiles={(file): void => setLoadedImg(file)}
@@ -69,19 +77,19 @@ const ChatContaner: React.FC<ChatConteinerProps> = ({ chatId }) => {
   );
 };
 
-const ImagePopup: React.FC<ImagePopupProps> = ({ loadedImgUrl, isOpen }) => {
-  return (
-    <main
-      className={styles.popup}
-      style={{ display: isOpen ? 'flex' : 'none' }}
-    >
-      <section className={styles.popupContent}>
-        <img
-          style={{ height: '100%' }}
-          src={loadedImgUrl as string}
-          className={styles.img}
-        />
-      </section>
-    </main>
-  );
-};
+// const ImagePopup: React.FC<ImagePopupProps> = ({ loadedImgUrl, isOpen }) => {
+//   return (
+//     <main
+//       className={styles.popup}
+//       style={{ display: isOpen ? 'flex' : 'none' }}
+//     >
+//       <section className={styles.popupContent}>
+//         <img
+//           style={{ height: '100%' }}
+//           src={loadedImgUrl as string}
+//           className={styles.img}
+//         />
+//       </section>
+//     </main>
+//   );
+// };
