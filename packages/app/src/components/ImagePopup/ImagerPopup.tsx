@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import styles from './ImagePopup.module.css';
 
 import { BasicInput } from '@chickenhan/components/src/BasicInput';
 
 import { DeleteIcon } from '../Icons';
+
+import { useOnClickOutside } from '@chickenhan/components/src/utils/hooks';
 
 interface ImagePopupProps {
   isOpen: boolean;
@@ -17,11 +19,15 @@ export const ImagePopup: React.FC<ImagePopupProps> = ({
   loadedImgUrl,
   closePopup,
 }) => {
+  const popupRef = useRef<HTMLDivElement | null>(null);
+
+  useOnClickOutside(popupRef, () => closePopup());
+
   if (!isOpen) return null;
 
   return (
     <main className={styles.popup}>
-      <section className={styles.popupContent}>
+      <section className={styles.popupContent} ref={popupRef}>
         <DeleteIcon
           className={styles.deleteIcon}
           fill="#000000"
