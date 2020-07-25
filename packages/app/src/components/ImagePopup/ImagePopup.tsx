@@ -39,17 +39,23 @@ export const ImagePopup: React.FC<ImagePopupProps> = ({
           <span className={styles.headerTitle}>Прикрепить фото</span>
         </header>
         <div className={styles.body}>
-          <article className={styles.imageSection}>
-            <div className={styles.loadedImg}>
-              {images64.map((image, key) => (
-                <img
-                  style={{ width: '100%', height: 'auto' }}
-                  src={image}
-                  key={key}
-                  className={styles.img}
-                />
-              ))}
-            </div>
+          <article
+            className={styles.imageSection}
+            style={{
+              justifyContent: images64.length > 1 ? 'unset' : 'center',
+            }}
+          >
+            {images64.map((image, key) => {
+              return (
+                <div key={key} className={styles.loadedImg}>
+                  <img
+                    style={{ width: '100%', height: 'auto' }}
+                    src={image}
+                    className={styles.img}
+                  />
+                </div>
+              );
+            })}
           </article>
         </div>
         <footer className={styles.footer}>
