@@ -1,37 +1,38 @@
-import React, { useReducer, useEffect, useCallback } from 'react';
+import React, { useReducer } from 'react';
 
 import styles from './DragAndDrop.module.css';
 
 import cx from 'classnames';
+import { handleImages } from '../utils';
 
 interface DragAndDropProps {
   children?: React.ReactNode | React.ReactNode[];
-  setFiles: (file: File[]) => void;
+  onFilesDrop: (files: string[]) => void; // base64[]
 
-  filesAmount?: number;
-  dropEvent?: () => void;
+  options?: Partial<DraggableOptions>;
 }
 
-interface ReducerState {
-  dropDepth: number;
-  inDropZone: boolean;
-  fileList: File[];
+type FileTransfer = 'path' | 'file';
+
+interface DraggableOptions {
+  filesLimit: number;
+  fileTransfer: FileTransfer;
+  // fileTypes: 'image/jpeg'
 }
 
-interface ReducerAction {
-  type: string;
-  dropDepth?: number;
-  inDropZone?: boolean;
-  files?: File[];
-}
+const defaultOptions: DraggableOptions = {
+  filesLimit: 3,
+  fileTransfer: 'path',
+};
 
 export const DragAndDrop: React.FC<DragAndDropProps> = ({
   children = undefined,
-  setFiles = (): void => undefined,
+  onFilesDrop = (): void => undefined,
 
-  filesAmount = 1,
-  dropEvent = (): void => undefined,
+  options = defaultOptions,
 }) => {
+  const params: DraggableOptions = Object.assign(defaultOptions, options);
+
   const reducerInitialState = { dropDepth: 0, inDropZone: false, fileList: [] };
 
   const reducer = (
@@ -83,26 +84,22 @@ export const DragAndDrop: React.FC<DragAndDropProps> = ({
     event.stopPropagation();
 
     // restrict droped files amount
-    const files = [...(event.dataTransfer.files as any)].slice(0, filesAmount);
+    const files = [...(event.dataTransfer.files as any)].slice(
+      0,
+      params.filesLimit,
+    );
 
-    if (files && files.length > 0) {
-      dropEvent();
-      // передавать только дропнувшие файлы, не надо запоминать их все здесь
-      // const existingFiles = data.fileList.map(file => file.name);
-      // files = files.filter(file => !existingFiles.includes(file.name));
-
-      // стоит ли проверять на равенство загружаемого массива с уже имеющимся, чтобы лишний раз не рендерить родителя?
-      dispatch({ type: 'ADD_FILE_TO_LIST', files });
-      event.dataTransfer.clearData();
-      dispatch({ type: 'SET_DROP_DEPTH', dropDepth: 0 });
-      dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: false });
+    if (!files || files.length === 0) {
+      return;
     }
-  }
 
-  // If necessary, transfer droped files to the component above
-  useEffect(() => {
-    setFiles(data.fileList);
-  }, [data.fileList]);
+    if (params.fileTransfer === 'path') handleImages(files, onFilesDrop);
+    else onFilesDrop(files);
+
+    event.dataTransfer.clearData();
+    dispatch({ type: 'SET_DROP_DEPTH', dropDepth: 0 });
+    dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: false });
+  }
 
   return (
     <section
@@ -119,3 +116,16 @@ export const DragAndDrop: React.FC<DragAndDropProps> = ({
     </section>
   );
 };
+
+interface ReducerState {
+  dropDepth: number;
+  inDropZone: boolean;
+  fileList: File[];
+}
+
+interface ReducerAction {
+  type: string;
+  dropDepth?: number;
+  inDropZone?: boolean;
+  files?: File[];
+}
