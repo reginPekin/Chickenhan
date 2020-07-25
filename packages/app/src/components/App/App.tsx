@@ -27,6 +27,15 @@ export const App: React.FC = () => {
 function ModalSwith(): ReactElement {
   const location = useLocation();
 
+  React.useEffect(() => {
+    document.addEventListener('dragover', event => event.preventDefault());
+    document.addEventListener('drop', event => event.preventDefault());
+    return (): void => {
+      document.addEventListener('dragover', event => event.preventDefault());
+      document.addEventListener('drop', event => event.preventDefault());
+    };
+  });
+
   return (
     <Switch location={location}>
       <Route exact path={['/', '/chat', '/chat/:chatId']}>
