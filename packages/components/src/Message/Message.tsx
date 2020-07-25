@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHover } from '../utils/hooks';
 
 import cx from 'classnames';
 
@@ -8,7 +7,6 @@ import { Message as TypeMessage } from '../types';
 import { Avatar } from '../Avatar';
 
 import { parseTime } from '../utils';
-import { MoreIcon } from '../Icons';
 
 import styles from './Message.module.css';
 
@@ -17,8 +15,6 @@ interface MessageProps {
 }
 
 export const Message: React.FC<MessageProps> = React.memo(({ message }) => {
-  const [infoRef, isInfoHovered] = useHover();
-
   function renderAuthor(): JSX.Element {
     return (
       <div className={styles.nameAndDate}>
@@ -48,22 +44,12 @@ export const Message: React.FC<MessageProps> = React.memo(({ message }) => {
   }
 
   return (
-    <article
-      className={styles.messageArticle}
-      style={{
-        background: isInfoHovered ? 'var(--light-grey)' : 'none',
-      }}
-    >
+    <article className={styles.messageArticle}>
       <Avatar url={message.author.avatar} width={40} />
       <div className={styles.textInfo}>
         {renderAuthor()}
         <span className={styles.messageText}>{message.text}</span>
         {renderPictures()}
-        <aside className={styles.moreInfo}>
-          <aside ref={infoRef} className={styles.moreIconInner}>
-            <MoreIcon />
-          </aside>
-        </aside>
       </div>
     </article>
   );
