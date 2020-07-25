@@ -12,6 +12,9 @@ import { LoginPage } from '../LoginPage';
 import { ContentContainer } from '../ContentContainer';
 import { MenuContainer } from '../MenuContainer';
 import { NewChatPopup } from '../NewChatPopup';
+import { ImagePopup } from '../ImagePopup';
+
+import { useStore } from '../../store';
 
 export const App: React.FC = () => {
   return (
@@ -42,12 +45,29 @@ function ModalSwith(): ReactElement {
 }
 
 const Home: React.FC = () => {
+  const store = useStore();
+
+  const [images64, setImages64] = useState<string[]>([]);
+
+  const isImagePopupOpen =
+    store.local.useSelector(local => local.isImagePopupOpen) || false;
+
   return (
     <main className={styles.app}>
       <NewChatPopup />
+      <ImagePopup
+        images64={images64}
+        isOpen={isImagePopupOpen}
+        closePopup={(): void => {
+          store.local.update({ isImagePopupOpen: false });
+          setImages64([]);
+        }}
+      />
       <div className={styles.main}>
         <MenuContainer />
-        <ContentContainer />
+        <ContentContainer
+          setImages64={(paths: string[]): void => setImages64(paths)}
+        />
       </div>
     </main>
   );
