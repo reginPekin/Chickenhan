@@ -1,18 +1,18 @@
 import React, { useRef, useState, useEffect } from 'react';
 
-import styles from './ImageLoader.module.css';
+import styles from './AvatarLoader.module.css';
 
 import { Avatar } from '../Avatar';
 import { handleImages } from '../utils';
 
-interface ImageLoaderProps {
+interface AvatarLoaderProps {
   onFileLoaded?: (image: string) => void;
 
   children?: JSX.Element;
   previewImage?: string | ArrayBuffer | null;
 }
 
-export const ImageLoader: React.FC<ImageLoaderProps> = ({
+export const AvatarLoader: React.FC<AvatarLoaderProps> = ({
   onFileLoaded = (): void => undefined,
   previewImage = null,
 

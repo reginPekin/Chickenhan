@@ -6,7 +6,7 @@ import styles from './NewChatPopup.module.css';
 
 import { InputWithLabel } from '@chickenhan/components/src/InputWithLabel';
 import { Select } from '@chickenhan/components/src/Select';
-import { ImageLoader } from '@chickenhan/components/src/ImageLoader';
+import { AvatarLoader } from '@chickenhan/components/src/AvatarLoader';
 import { DragAndDrop } from '@chickenhan/components/src/DragAndDrop';
 
 import { DeleteIcon, AvatarLoaderIcon } from '../Icons';
@@ -64,12 +64,12 @@ export const NewChatPopup: React.FC = () => {
       >
         <section className={styles.popupContent}>
           <h1 className={styles.popupTitle}>New chat</h1>
-          <ImageLoader
+          <AvatarLoader
             previewImage={chatAvatar}
             onFileLoaded={(image): void => setChatAvatar(image)}
           >
             <AvatarLoaderIcon className={styles.avatarLoaderIcon} />
-          </ImageLoader>
+          </AvatarLoader>
 
           <section className={styles.inputElements}>
             <InputWithLabel

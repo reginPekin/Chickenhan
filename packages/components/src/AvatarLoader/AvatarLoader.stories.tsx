@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ImageLoader } from './ImageLoader';
+import { AvatarLoader } from './AvatarLoader';
 
 import { storiesOf } from '@storybook/react';
 
@@ -26,10 +26,10 @@ const AvatarLoaderIcon: React.FC<IconProps> = props => (
   </svg>
 );
 
-storiesOf('ImageLoader', module).add('Simple image loader', () => (
+storiesOf('AvatarLoader', module).add('Simple image loader', () => (
   <section style={{ margin: '20px' }}>
-    <ImageLoader>
+    <AvatarLoader>
       <AvatarLoaderIcon width={92} height={92} />
-    </ImageLoader>
+    </AvatarLoader>
   </section>
 ));

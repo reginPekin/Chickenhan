@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import styles from './ProfilePopup.module.css';
 
-import { ImageLoader } from '@chickenhan/components/src/ImageLoader';
+import { AvatarLoader } from '@chickenhan/components/src/AvatarLoader';
 import { BasicInput } from '@chickenhan/components/src/BasicInput';
 import { PositionAwareButton } from '@chickenhan/components/src/PositionAwareButton';
 import { DragAndDrop } from '@chickenhan/components/src/DragAndDrop';
@@ -34,9 +34,11 @@ export const ProfilePopup: React.FC = () => {
         <header className={styles.profilePopupModal}>Edit profile</header>
         <section className={styles.sectionProfilePopup}>
           <div className={styles.modalSection}>
-            <ImageLoader
+            <AvatarLoader
               previewImage={user.avatar}
-              onFileLoaded={(avatar): void => store.user.update({ avatar })}
+              onFileLoaded={(avatar: string): void =>
+                store.user.update({ avatar })
+              }
             />
           </div>
           <div className={styles.modalSection}>
