@@ -1,7 +1,6 @@
 .popup {
   position: absolute;
   z-index: 1;
-  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,10 +47,23 @@
 
 .loadedImg {
   display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+
   align-items: center;
+  justify-content: center;
   
   height: 100%;
   width: 100%;
+}
+
+.img {
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+.img:last-child {
+  margin-bottom: 0;
 }
 
 .header, .footer {
@@ -97,6 +109,11 @@
   right: 10px;
   border-radius: 50%;
   transition: background-color 0.2s ease-in-out;
+}
+
+.sendMessageIcon {
+  margin-left: 10px;
+  cursor: pointer;
 }
 
 .deleteIcon:hover {

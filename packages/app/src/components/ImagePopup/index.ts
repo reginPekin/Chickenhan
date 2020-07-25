@@ -1,1 +1,1 @@
-export { ImagePopup } from './ImagerPopup';
+export { ImagePopup } from './ImagePopup';
