@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import styles from './ContentContainer.module.css';
 
 import { ProfilePopup } from '../ProfilePopup';
-import { ImagePopup } from '../ImagePopup';
 
 import { ChatHeader } from '@chickenhan/components/src/ChatHeader';
 import { WriteBox } from '@chickenhan/components/src/WriteBox';
 import { Message } from '@chickenhan/components/src/Message';
 import { DragAndDrop } from '@chickenhan/components/src/DragAndDrop';
-
-import { handleFile } from '@chickenhan/components/src/utils';
 
 import {
   MOCK_MESSAGES_ARRAY_1,
@@ -19,8 +16,14 @@ import {
   MOCK_CHATS_DISCOVER,
 } from '@chickenhan/components/src/__mocks__';
 
+import { useStore } from '../../store';
+
+interface ContentContainerProps {
+  setImages64: (paths: string[]) => void;
+}
 interface ChatConteinerProps {
   chatId: string;
+  setImages64: (paths: string[]) => void;
 }
 
 interface ImagePopupProps {
@@ -28,23 +31,22 @@ interface ImagePopupProps {
   isOpen: boolean;
 }
 
-export const ContentContainer: React.FC = () => {
+export const ContentContainer: React.FC<ContentContainerProps> = ({
+  setImages64,
+}) => {
   const { chatId } = useParams();
 
   if (!chatId) return <span>HI man</span>;
-  return <ChatContaner chatId={chatId} />;
+  return <ChatContaner chatId={chatId} setImages64={setImages64} />;
 };
 
-const ChatContaner: React.FC<ChatConteinerProps> = ({ chatId }) => {
+const ChatContaner: React.FC<ChatConteinerProps> = ({
+  chatId,
+  setImages64,
+}) => {
+  const store = useStore();
+
   const allChats = [...MOCK_CHATS_DISCOVER, ...MOCK_CHATS_1]; // use store
-
-  const [loadedImg, setLoadedImg] = useState<File[]>([]);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [loadedImgUrl, setLoadedImgUrl] = useState<string | ArrayBuffer | null>(
-    null,
-  );
-
-  handleFile(loadedImg, fileUrl => setLoadedImgUrl(fileUrl));
 
   const filteredChat = allChats.filter(chat => chat.id === chatId)[0];
 
@@ -53,43 +55,25 @@ const ChatContaner: React.FC<ChatConteinerProps> = ({ chatId }) => {
   return (
     <main className={styles.contentContainer}>
       <ProfilePopup />
-      <ImagePopup
-        loadedImgUrl={loadedImgUrl}
-        isOpen={isOpen}
-        closePopup={(): void => {
-          setIsOpen(false);
-          setLoadedImgUrl(null);
-        }}
-      />
-      <ChatHeader chat={filteredChat} />
       <DragAndDrop
-        setFiles={(file): void => setLoadedImg(file)}
-        dropEvent={(): void => setIsOpen(true)}
+        onFilesDrop={(paths): void => {
+          store.local.update({ isImagePopupOpen: true });
+          setImages64(paths);
+        }}
+        options={{ filesLimit: 10 }}
       >
+        <ChatHeader chat={filteredChat} />
         <section className={styles.contentSection}>
-          {MOCK_MESSAGES_ARRAY_1.map(message => (
-            <Message message={message} key={message.messageId} />
-          ))}
+          <article className={styles.messagesContainer}>
+            {MOCK_MESSAGES_ARRAY_1.map(message => (
+              <Message message={message} key={message.messageId} />
+            ))}
+          </article>
         </section>
+        <footer className={styles.footer}>
+          <WriteBox />
+        </footer>
       </DragAndDrop>
-      <WriteBox />
     </main>
   );
 };
-
-// const ImagePopup: React.FC<ImagePopupProps> = ({ loadedImgUrl, isOpen }) => {
-//   return (
-//     <main
-//       className={styles.popup}
-//       style={{ display: isOpen ? 'flex' : 'none' }}
-//     >
-//       <section className={styles.popupContent}>
-//         <img
-//           style={{ height: '100%' }}
-//           src={loadedImgUrl as string}
-//           className={styles.img}
-//         />
-//       </section>
-//     </main>
-//   );
-// };

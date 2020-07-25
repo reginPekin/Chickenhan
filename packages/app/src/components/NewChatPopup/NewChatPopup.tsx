@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 
 import cx from 'classnames';
 
@@ -8,8 +8,6 @@ import { InputWithLabel } from '@chickenhan/components/src/InputWithLabel';
 import { Select } from '@chickenhan/components/src/Select';
 import { ImageLoader } from '@chickenhan/components/src/ImageLoader';
 import { DragAndDrop } from '@chickenhan/components/src/DragAndDrop';
-
-import { handleFile } from '@chickenhan/components/src/utils';
 
 import { DeleteIcon, AvatarLoaderIcon } from '../Icons';
 
@@ -23,20 +21,12 @@ export const NewChatPopup: React.FC = () => {
   const isPopupOpen = store.local.useSelector(
     local => local.isNewChatPopupOpen,
   );
-  // добавить аватарку по умолчанию
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
-  const [chatAvatar, setChatAvatar] = useState<string | ArrayBuffer | null>(
-    null,
-  );
+  const [chatAvatar, setChatAvatar] = useState<string>('');
   const [chatType, setChatType] = useState<string>('public');
 
   // замененяет currentInputWithLabelRef
   // const [chatName, setChatName] = useState<string>('');
-
-  useEffect(() => {
-    handleFile(uploadedFiles, fileUrl => setChatAvatar(fileUrl));
-  }, [uploadedFiles]);
 
   if (!isPopupOpen) {
     return null;
@@ -62,19 +52,21 @@ export const NewChatPopup: React.FC = () => {
         className={styles.deleteIcon}
         onClick={(): void => {
           store.local.update({ isNewChatPopupOpen: false });
-          setUploadedFiles([]);
+          setChatAvatar('');
         }}
       />
 
       <DragAndDrop
-        setFiles={(file): void => setUploadedFiles(file)}
-        filesAmount={1}
+        onFilesDrop={(paths): void => {
+          setChatAvatar(paths[0]);
+        }}
+        options={{ filesLimit: 1 }}
       >
         <section className={styles.popupContent}>
           <h1 className={styles.popupTitle}>New chat</h1>
           <ImageLoader
-            files={uploadedFiles}
-            onFileLoaded={(file): void => setUploadedFiles(file)}
+            previewImage={chatAvatar}
+            onFileLoaded={(image): void => setChatAvatar(image)}
           >
             <AvatarLoaderIcon className={styles.avatarLoaderIcon} />
           </ImageLoader>
