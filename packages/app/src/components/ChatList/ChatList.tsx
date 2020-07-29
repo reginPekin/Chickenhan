@@ -18,6 +18,7 @@ export const ChatList: React.FC<ChatListProps> = React.memo(({ chats }) => {
   const [chosenChat, setChosenChat] = useState<string>('');
 
   const store = useStore();
+  // const chats = store.chats.useSelector(re => re);
   const [, setCurrentChat] = store.chat.useState();
 
   return (
