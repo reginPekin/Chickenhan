@@ -17,7 +17,7 @@ export const ChatHeader: React.FC<ChatHeader> = React.memo(({ chat }) => {
     if (chat.type === 'dialog' && chat.opponent) {
       return 'личные сообщения';
     }
-    return chat.userCount.toString();
+    return `${chat.userCount} участник(ов)`;
   }
 
   function extractChatName(): string {
@@ -42,7 +42,7 @@ export const ChatHeader: React.FC<ChatHeader> = React.memo(({ chat }) => {
         />
         <div className={styles.infoSection}>
           <span className={styles.name}>{extractChatName()}</span>
-          <span>{extractUserCount()}</span>
+          <span className={styles.userCount}>{extractUserCount()}</span>
         </div>
         <span className={styles.moreIcon}>
           <MoreIcon />

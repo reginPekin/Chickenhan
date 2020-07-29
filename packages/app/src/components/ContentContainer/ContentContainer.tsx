@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
+import cx from 'classnames';
 
 import styles from './ContentContainer.module.css';
 
@@ -10,47 +12,123 @@ import { WriteBox } from '@chickenhan/components/src/WriteBox';
 import { Message } from '@chickenhan/components/src/Message';
 import { DragAndDrop } from '@chickenhan/components/src/DragAndDrop';
 
-import {
-  MOCK_MESSAGES_ARRAY_1,
-  MOCK_CHATS_1,
-  MOCK_CHATS_DISCOVER,
-} from '@chickenhan/components/src/__mocks__';
+import { sendMessage, getChat, getMessage } from '@chickenhan/components/sdk';
 
 import { useStore } from '../../store';
+import { Chat, Message as MessageType } from '@chickenhan/components/src/types';
 
 interface ContentContainerProps {
   setImages64: (paths: string[]) => void;
 }
 interface ChatConteinerProps {
-  chatId: string;
+  currentChat: Chat;
+  currentMessages: MessageType[] | undefined;
+  isMessageLoading: boolean;
   setImages64: (paths: string[]) => void;
-}
-
-interface ImagePopupProps {
-  loadedImgUrl: string | ArrayBuffer | null;
-  isOpen: boolean;
 }
 
 export const ContentContainer: React.FC<ContentContainerProps> = ({
   setImages64,
 }) => {
+  const store = useStore();
+
+  const [currentChat, setCurrentChat] = store.chat.useState();
+  const currentMessages = store.message.useSelector(
+    message => message.messages,
+  );
+
+  const [isChatLoading, setIsChatLoading] = useState<boolean>(true);
+  const [isMessageLoading, setIsMessageLoading] = useState<boolean>(true);
+
   const { chatId } = useParams();
 
-  if (!chatId) return <span>HI man</span>;
-  return <ChatContaner chatId={chatId} setImages64={setImages64} />;
+  React.useEffect(() => {
+    if (!chatId) return;
+
+    const getCurrentChat = async (): Promise<void> => {
+      setIsChatLoading(true);
+      await getChat(chatId)
+        .then(chat => setCurrentChat(chat))
+        .catch(error => console.log(error));
+      setIsChatLoading(false);
+    };
+
+    const getChatMessages = async (): Promise<void> => {
+      setIsChatLoading(true);
+      await getMessage(chatId).then(messages => store.message.update(messages));
+      setIsMessageLoading(false);
+    };
+
+    getCurrentChat();
+    getChatMessages();
+
+    return (): void => {
+      setIsChatLoading(false);
+      setIsMessageLoading(false);
+
+      store.message.update({ messages: [] });
+    };
+  }, [chatId]);
+
+  if (isChatLoading)
+    return (
+      <main className={cx(styles.contentContainer, styles.undefinedChat)}>
+        <span>Loading</span>
+      </main>
+    );
+
+  if (!currentChat || currentChat.id === '0') {
+    return (
+      <main className={cx(styles.contentContainer, styles.undefinedChat)}>
+        <span>{isChatLoading ? 'Loading' : 'Chose any chat c:'}</span>
+      </main>
+    );
+  }
+  return (
+    <ChatContaner
+      currentChat={currentChat}
+      currentMessages={currentMessages}
+      isMessageLoading={isMessageLoading}
+      setImages64={setImages64}
+    />
+  );
 };
 
 const ChatContaner: React.FC<ChatConteinerProps> = ({
-  chatId,
+  currentChat,
+  currentMessages,
+  isMessageLoading,
   setImages64,
 }) => {
   const store = useStore();
 
-  const allChats = [...MOCK_CHATS_DISCOVER, ...MOCK_CHATS_1]; // use store
+  const messageSectionRef = useRef<HTMLDivElement | null>(null);
 
-  const filteredChat = allChats.filter(chat => chat.id === chatId)[0];
+  useEffect(() => {
+    if (messageSectionRef.current)
+      messageSectionRef.current.scrollTop =
+        messageSectionRef.current.scrollHeight;
+  }, [isMessageLoading]);
 
-  if (!filteredChat) return <div>NO CHAT</div>;
+  function renderMessage(): React.ReactNode {
+    if (isMessageLoading) {
+      return (
+        <article className={styles.loadingMessages}>
+          <span>Messages are loading</span>
+        </article>
+      );
+    }
+
+    if (!currentMessages) return;
+
+    return (
+      <article className={styles.messagesContainer}>
+        {currentMessages.map(message => (
+          <Message message={message} key={message.messageId} />
+        ))}
+      </article>
+    );
+  }
 
   return (
     <main className={styles.contentContainer}>
@@ -62,16 +140,34 @@ const ChatContaner: React.FC<ChatConteinerProps> = ({
         }}
         options={{ filesLimit: 10 }}
       >
-        <ChatHeader chat={filteredChat} />
-        <section className={styles.contentSection}>
-          <article className={styles.messagesContainer}>
-            {MOCK_MESSAGES_ARRAY_1.map(message => (
-              <Message message={message} key={message.messageId} />
-            ))}
-          </article>
+        <ChatHeader chat={currentChat} />
+        <section ref={messageSectionRef} className={styles.contentSection}>
+          {renderMessage()}
         </section>
         <footer className={styles.footer}>
-          <WriteBox />
+          <WriteBox
+            onSubmit={async (value): Promise<any> => {
+              store.message.addMessage({
+                author: {
+                  userId: '2132123',
+                  name: 'reginbegin',
+                  avatar:
+                    'https://sun9-50.userapi.com/c639718/v639718761/5100a/_h6G0-ct2Is.jpg',
+                  isOnline: true,
+                },
+                text: value,
+                date: 1592735749305,
+                messageId: `${Math.floor(Math.random() * Math.floor(10000))}`,
+              });
+
+              const result = await sendMessage().then(res => res);
+
+              if (result !== 'ok') return;
+
+              // менять состояние сообщения (иконка, которая будет показывать статус отправки)
+              console.log('всё оке');
+            }}
+          />
         </footer>
       </DragAndDrop>
     </main>

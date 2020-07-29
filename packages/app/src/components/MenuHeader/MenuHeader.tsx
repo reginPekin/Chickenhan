@@ -12,8 +12,6 @@ import {
   AddChatIcon,
 } from '@chickenhan/components/src/Icons';
 
-import { getTenorGifs } from '@chickenhan/sdk/lib';
-
 import { useStore } from '../../store';
 
 interface HeaderProps {
@@ -59,7 +57,6 @@ export const MenuHeader: React.FC<HeaderProps> = ({ label, chosenTab }) => {
           className={styles.deleteIcon}
           style={{ display: isSearchedValue ? 'block' : 'none' }}
           onClick={(): void => {
-            getTenorGifs();
             if (searchInputRef.current) {
               searchInputRef.current.value = '';
             }

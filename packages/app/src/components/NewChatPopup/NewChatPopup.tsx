@@ -13,6 +13,9 @@ import { DeleteIcon, AvatarLoaderIcon } from '../Icons';
 
 import { useStore } from '../../store';
 
+import { createChat } from '@chickenhan/components/sdk';
+import { ChatType } from '@chickenhan/components/src/types';
+
 export const NewChatPopup: React.FC = () => {
   const inputWithLabelRef = useRef<HTMLInputElement | null>(null);
 
@@ -22,11 +25,10 @@ export const NewChatPopup: React.FC = () => {
     local => local.isNewChatPopupOpen,
   );
 
-  const [chatAvatar, setChatAvatar] = useState<string>('');
-  const [chatType, setChatType] = useState<string>('public');
+  const [isNewChatLoading, setIsNewChatLoading] = useState<boolean>(false);
 
-  // замененяет currentInputWithLabelRef
-  // const [chatName, setChatName] = useState<string>('');
+  const [chatAvatar, setChatAvatar] = useState<string>('');
+  const [chatType, setChatType] = useState<ChatType | string>('public'); // настроить Select
 
   if (!isPopupOpen) {
     return null;
@@ -89,9 +91,29 @@ export const NewChatPopup: React.FC = () => {
 
           <button
             className={cx(styles.basicButton, styles.inputElements)}
-            onClick={(): void => console.log(inputWithLabelRef.current?.value)}
+            onClick={async (): Promise<void> => {
+              if (
+                !(inputWithLabelRef.current && inputWithLabelRef.current.value)
+              )
+                return;
+              setIsNewChatLoading(true);
+              const result = await createChat().then(res => res);
+              if (result !== 'ok') return;
+
+              store.chats.addChat({
+                id: `${Math.floor(Math.random() * Math.floor(10000))}`,
+                type: chatType,
+                avatar:
+                  chatAvatar ||
+                  'https://chto-takoe-lyubov.net/wp-content/uploads/2020/01/morkov-zagadki.jpg',
+                name: inputWithLabelRef.current.value,
+                userCount: 1,
+              });
+              store.local.update({ isNewChatPopupOpen: false });
+              setIsNewChatLoading(false);
+            }}
           >
-            Next
+            {!isNewChatLoading ? 'Next' : 'Your chat is creating, wait'}
           </button>
         </section>
       </DragAndDrop>

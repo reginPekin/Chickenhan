@@ -7,7 +7,6 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  /* min-width: 500px; */
   background-color: white;
   flex-grow: 1;
   border: 1px solid rgba(0, 0, 0, 0.02);
@@ -21,8 +20,21 @@
   overflow-y: scroll;
 }
 
+.undefinedChat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadingMessages {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .messagesContainer {
   max-width: 850px;
+  height: fit-content;
 }
 
 .footer {

@@ -26,6 +26,11 @@
   max-width: 70%;
 }
 
+.userCount {
+  color: var(--black-50);
+  font-size: 13px;
+}
+
 .moreIcon {
   display: flex;
   align-items: center;

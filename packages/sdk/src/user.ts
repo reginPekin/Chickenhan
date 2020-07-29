@@ -1,13 +1,11 @@
-// connect with axioss
-
-// export const getTenorGifs = async (): Promise<void> => {
-//   const response = await fetch(
-//     `https://api.tenor.com/v1/trending?key=GQ4H6AD66RC8`,
-//   );
-//   const body = await response.json();
-
-//   return body;
-// }; // try catch
+// export const getUserInfo = () =>
+//   //  async (): Promise<string>
+//   {
+//     //   setTimeout(() => {
+//     //     return 'HI';
+//     //   }, 1000);
+//     return 'Bzz';
+//   }; // try catch
 
 export async function getUserInfo(): Promise<void> {
   const promisedFiles: Promise<string>[] = [];

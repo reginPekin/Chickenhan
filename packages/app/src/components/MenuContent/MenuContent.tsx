@@ -1,23 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import {
-  MOCK_CHATS_1,
-  MOCK_CHATS_DISCOVER,
-} from '@chickenhan/components/src/__mocks__';
+import { MOCK_CHATS_DISCOVER } from '@chickenhan/components/src/__mocks__';
 
 import { ProfileMenu } from '../ProfileMenu';
 import { MenuHeader } from '../MenuHeader';
-import { ChatList } from '@chickenhan/components/src/ChatList';
+import { ChatList } from '../ChatList';
 
 import styles from './MenuContent.module.css';
 
 import { MenuState } from '../MenuSidebar/consts';
+import { Chat } from '@chickenhan/components/src/types';
 
 interface MenuContentProps {
   chosenTab: MenuState;
+  userChats: Chat[];
 }
 
-export const MenuContent: React.FC<MenuContentProps> = ({ chosenTab }) => {
+export const MenuContent: React.FC<MenuContentProps> = ({
+  chosenTab,
+  userChats,
+}) => {
   function setLabel(): string {
     switch (chosenTab) {
       case 'discover':
@@ -36,11 +38,11 @@ export const MenuContent: React.FC<MenuContentProps> = ({ chosenTab }) => {
       case 'discover':
         return <ChatList chats={MOCK_CHATS_DISCOVER} />;
       case 'chats':
-        return <ChatList chats={MOCK_CHATS_1} />;
+        return <ChatList chats={userChats} />;
       case 'profile':
         return <ProfileMenu />;
       default:
-        return <ChatList chats={MOCK_CHATS_1} />;
+        return <ChatList chats={userChats} />;
     }
   }
 

@@ -1,22 +1,4 @@
-interface Opponent {
-  login: string;
-  isOnline: boolean; // на бэкэ online
-}
-
-export type ChatType = 'dialog' | 'public' | 'private';
-
-export interface Chat {
-  opponent?: Opponent;
-  id: string;
-  lastMessage?: string;
-  lastDateMessage?: string;
-  avatar: string;
-  type: ChatType;
-  // parameters below exists just for public & private types
-  name?: string;
-  userCount?: number;
-}
-
+import { Chat } from '@chickenhan/components/src/types';
 // Статья телеграмм проблема настроек каналов
 
 export const chats: Chat[] = [

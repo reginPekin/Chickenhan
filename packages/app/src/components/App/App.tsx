@@ -1,4 +1,4 @@
-import React, { useState, ReactElement } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -16,50 +16,56 @@ import { ImagePopup } from '../ImagePopup';
 
 import { useStore } from '../../store';
 
+import { getUserChats, getUserInfo } from '@chickenhan/components/sdk';
+
 export const App: React.FC = () => {
-  return (
-    <Router>
-      <ModalSwith />
-    </Router>
-  );
-};
-
-function ModalSwith(): ReactElement {
-  const location = useLocation();
-
-  React.useEffect(() => {
+  useEffect(() => {
     document.addEventListener('dragover', event => event.preventDefault());
     document.addEventListener('drop', event => event.preventDefault());
     return (): void => {
-      document.addEventListener('dragover', event => event.preventDefault());
-      document.addEventListener('drop', event => event.preventDefault());
+      document.removeEventListener('dragover', event => event.preventDefault());
+      document.removeEventListener('drop', event => event.preventDefault());
     };
   });
 
   return (
-    <Switch location={location}>
-      <Route exact path={['/', '/chat', '/chat/:chatId']}>
-        <Home />
-      </Route>
+    <Router>
+      <Switch>
+        <Route exact path={['/', '/chat', '/chat/:chatId']}>
+          <Home />
+        </Route>
 
-      <Route exact path="/login">
-        <LoginPage />
-      </Route>
+        <Route exact path="/login">
+          <LoginPage />
+        </Route>
 
-      <Route>
-        <div>No match</div>
-      </Route>
-    </Switch>
+        <Route>
+          <div>No match</div>
+        </Route>
+      </Switch>
+    </Router>
   );
-}
+};
 
 const Home: React.FC = () => {
   const store = useStore();
+  const [, setUserInfo] = store.user.useState();
+  const userChats = store.chats.useSelector(state => state.chats);
+  const isImagePopupOpen =
+    store.local.useSelector(local => local.isImagePopupOpen) || false;
 
   const [images64, setImages64] = useState<string[]>([]);
 
-  const isImagePopupOpen =
-    store.local.useSelector(local => local.isImagePopupOpen) || false;
+  useEffect(() => {
+    (async function (): Promise<void> {
+      //как одновременно запустить прогрузку чатов и userInfo?
+      const chats = await getUserChats();
+      store.chats.addChats(chats);
+
+      const userInfo = await getUserInfo();
+      setUserInfo(userInfo);
+    })();
+  }, []);
 
   return (
     <main className={styles.app}>
@@ -73,7 +79,7 @@ const Home: React.FC = () => {
         }}
       />
       <div className={styles.main}>
-        <MenuContainer />
+        <MenuContainer userChats={userChats || []} />
         <ContentContainer
           setImages64={(paths: string[]): void => setImages64(paths)}
         />

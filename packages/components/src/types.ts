@@ -14,13 +14,13 @@ export type ChatType = 'dialog' | 'public' | 'private';
 export interface Chat {
   opponent?: Opponent;
   id: string;
-  name: string;
-  userCount: number;
   lastMessage?: string;
   lastDateMessage?: string;
   avatar: string;
-  type: ChatType;
+  type: ChatType | string;
   // parameters below exists just for public & private types
+  name?: string;
+  userCount?: number;
 }
 
 interface Picture {

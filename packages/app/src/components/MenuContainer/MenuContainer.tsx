@@ -4,8 +4,13 @@ import styles from './MenuContainer.module.css';
 import { MenuSidebar } from '../MenuSidebar';
 import { MenuContent } from '../MenuContent';
 import { MenuState } from '../MenuSidebar/consts';
+import { Chat } from '@chickenhan/components/src/types';
 
-export const MenuContainer: React.FC = () => {
+interface MenuContainerProps {
+  userChats: Chat[];
+}
+
+export const MenuContainer: React.FC<MenuContainerProps> = ({ userChats }) => {
   const [chosenTab, setchosenTab] = useState<MenuState>('chats');
 
   return (
@@ -14,7 +19,7 @@ export const MenuContainer: React.FC = () => {
         chosenTab={chosenTab}
         setСhosenTab={(tab): void => setchosenTab(tab)}
       />
-      <MenuContent chosenTab={chosenTab} />
+      <MenuContent chosenTab={chosenTab} userChats={userChats} />
     </div>
   );
 };
