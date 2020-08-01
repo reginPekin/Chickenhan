@@ -109,8 +109,8 @@ export const MOCK_CHATS_DISCOVER: Chat[] = [
 export const MOCK_MESSAGES_ARRAY_1: Message[] = [
   {
     author: {
-      userId: '2132123',
-      name: 'booka',
+      id: '2132123',
+      login: 'booka',
       avatar:
         'https://avatars.mds.yandex.net/get-pdb/1893445/705ae6fb-5274-4708-b705-0b86cee34927/s1200',
       isOnline: true,
@@ -121,8 +121,8 @@ export const MOCK_MESSAGES_ARRAY_1: Message[] = [
   },
   {
     author: {
-      userId: '34234',
-      name: 'fpfpf',
+      id: '34234',
+      login: 'fpfpf',
       avatar:
         'https://avatars.mds.yandex.net/get-pdb/195449/702a5de0-45db-4c55-adc2-e8add004df55/s1200',
       isOnline: false,
@@ -140,8 +140,8 @@ export const MOCK_MESSAGES_ARRAY_1: Message[] = [
   },
   {
     author: {
-      userId: '213212345',
-      name: 'bookaka',
+      id: '213212345',
+      login: 'bookaka',
       avatar:
         'https://avatars.mds.yandex.net/get-pdb/2729594/f57ccc64-30f2-4fff-8057-567a92b6da8c/s1200',
       isOnline: true,
@@ -152,8 +152,8 @@ export const MOCK_MESSAGES_ARRAY_1: Message[] = [
   },
   {
     author: {
-      userId: '2132123',
-      name: 'booka',
+      id: '2132123',
+      login: 'booka',
       avatar:
         'https://avatars.mds.yandex.net/get-pdb/1893445/705ae6fb-5274-4708-b705-0b86cee34927/s1200',
       isOnline: true,
@@ -171,8 +171,8 @@ export const MOCK_MESSAGES_ARRAY_1: Message[] = [
   },
   {
     author: {
-      userId: '2132123',
-      name: 'fpfpf',
+      id: '2132123',
+      login: 'fpfpf',
       avatar:
         'https://avatars.mds.yandex.net/get-pdb/195449/702a5de0-45db-4c55-adc2-e8add004df55/s1200',
       isOnline: false,
@@ -183,8 +183,8 @@ export const MOCK_MESSAGES_ARRAY_1: Message[] = [
   },
   {
     author: {
-      userId: '2132123',
-      name: 'booka',
+      id: '2132123',
+      login: 'booka',
       avatar:
         'https://avatars.mds.yandex.net/get-pdb/1893445/705ae6fb-5274-4708-b705-0b86cee34927/s1200',
       isOnline: true,
@@ -195,8 +195,8 @@ export const MOCK_MESSAGES_ARRAY_1: Message[] = [
   },
   {
     author: {
-      userId: '2132123',
-      name: 'booka',
+      id: '2132123',
+      login: 'booka',
       avatar:
         'https://avatars.mds.yandex.net/get-pdb/1893445/705ae6fb-5274-4708-b705-0b86cee34927/s1200',
       isOnline: true,
@@ -210,8 +210,8 @@ export const MOCK_MESSAGES_ARRAY_1: Message[] = [
 export const MOCK_MESSAGES_ARRAY_2: Message[] = [
   {
     author: {
-      userId: '2132123',
-      name: 'Angy',
+      id: '2132123',
+      login: 'Angy',
       avatar:
         'https://img14.postila.ru/resize?w=540&src=%2Fdata%2F7b%2Fa1%2Fd7%2Fbf%2F7ba1d7bf3bd3270754c0d1e52e02059a11d567517aa862363cc8b5ede7e7556b.jpg',
       isOnline: true,
@@ -222,8 +222,8 @@ export const MOCK_MESSAGES_ARRAY_2: Message[] = [
   },
   {
     author: {
-      userId: '34234',
-      name: 'Angel',
+      id: '34234',
+      login: 'Angel',
       avatar:
         'https://2.bp.blogspot.com/-AjoVc3xQlJc/VHhfw-iW3fI/AAAAAAAAGTw/rWWKcQxydcM/s1600/Nancy_Noel_Angel_023.jpg',
       isOnline: false,
@@ -240,8 +240,8 @@ export const MOCK_MESSAGES_ARRAY_2: Message[] = [
   },
   {
     author: {
-      userId: '213212345',
-      name: 'Best angel',
+      id: '213212345',
+      login: 'Best angel',
       avatar: 'https://pics.livejournal.com/nosh_i/pic/0003p4r3/s320x240',
       isOnline: true,
     },
@@ -251,8 +251,8 @@ export const MOCK_MESSAGES_ARRAY_2: Message[] = [
   },
   {
     author: {
-      userId: '2132123',
-      name: 'Angy',
+      id: '2132123',
+      login: 'Angy',
       avatar:
         'https://img14.postila.ru/resize?w=540&src=%2Fdata%2F7b%2Fa1%2Fd7%2Fbf%2F7ba1d7bf3bd3270754c0d1e52e02059a11d567517aa862363cc8b5ede7e7556b.jpg',
       isOnline: true,
@@ -263,8 +263,8 @@ export const MOCK_MESSAGES_ARRAY_2: Message[] = [
   },
   {
     author: {
-      userId: '2132123',
-      name: 'Angel',
+      id: '2132123',
+      login: 'Angel',
       avatar:
         'https://2.bp.blogspot.com/-AjoVc3xQlJc/VHhfw-iW3fI/AAAAAAAAGTw/rWWKcQxydcM/s1600/Nancy_Noel_Angel_023.jpg',
       isOnline: false,
@@ -275,8 +275,8 @@ export const MOCK_MESSAGES_ARRAY_2: Message[] = [
   },
   {
     author: {
-      userId: '2132123',
-      name: 'Angy',
+      id: '2132123',
+      login: 'Angy',
       avatar:
         'https://img14.postila.ru/resize?w=540&src=%2Fdata%2F7b%2Fa1%2Fd7%2Fbf%2F7ba1d7bf3bd3270754c0d1e52e02059a11d567517aa862363cc8b5ede7e7556b.jpg',
       isOnline: true,
@@ -293,8 +293,8 @@ export const MOCK_MESSAGES_ARRAY_2: Message[] = [
   },
   {
     author: {
-      userId: '2132123',
-      name: 'Angy',
+      id: '2132123',
+      login: 'Angy',
       avatar:
         'https://img14.postila.ru/resize?w=540&src=%2Fdata%2F7b%2Fa1%2Fd7%2Fbf%2F7ba1d7bf3bd3270754c0d1e52e02059a11d567517aa862363cc8b5ede7e7556b.jpg',
       isOnline: true,
@@ -307,8 +307,8 @@ export const MOCK_MESSAGES_ARRAY_2: Message[] = [
 
 export const MOCK_MESSAGE_LINE_1: Message = {
   author: {
-    userId: '2132123',
-    name: 'booka',
+    id: '2132123',
+    login: 'booka',
     avatar:
       'https://avatars.mds.yandex.net/get-pdb/1893445/705ae6fb-5274-4708-b705-0b86cee34927/s1200',
     isOnline: true,
@@ -320,8 +320,8 @@ export const MOCK_MESSAGE_LINE_1: Message = {
 
 export const MOCK_MESSAGE_LINE_2: Message = {
   author: {
-    userId: '2132123',
-    name: 'booka',
+    id: '2132123',
+    login: 'booka',
     avatar:
       'https://avatars.mds.yandex.net/get-pdb/1893445/705ae6fb-5274-4708-b705-0b86cee34927/s1200',
     isOnline: true,
@@ -340,8 +340,8 @@ export const MOCK_MESSAGE_LINE_2: Message = {
 
 export const MOCK_MESSAGE_LINE_3: Message = {
   author: {
-    userId: '34234',
-    name: 'fpfpf',
+    id: '34234',
+    login: 'fpfpf',
     avatar:
       'https://avatars.mds.yandex.net/get-pdb/195449/702a5de0-45db-4c55-adc2-e8add004df55/s1200',
     isOnline: false,

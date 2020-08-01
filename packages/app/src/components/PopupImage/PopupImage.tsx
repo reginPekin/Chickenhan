@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 
-import styles from './ImagePopup.module.css';
+import styles from './PopupImage.module.css';
 
 import { WriteBox } from '@chickenhan/components/src/WriteBox';
 
@@ -14,7 +14,7 @@ interface ImagePopupProps {
   closePopup: () => void;
 }
 
-export const ImagePopup: React.FC<ImagePopupProps> = ({
+export const PopupImage: React.FC<ImagePopupProps> = ({
   isOpen,
   images64,
   closePopup,

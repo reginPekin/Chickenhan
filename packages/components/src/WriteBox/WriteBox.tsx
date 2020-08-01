@@ -18,21 +18,27 @@ export const WriteBox: React.FC<WriteBoxProps> = ({
   onSubmit = (): void => undefined,
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+  function onTextSubmit(): void {
+    if (!inputRef.current?.value) return;
+
+    onSubmit(inputRef.current.value);
+    inputRef.current.value = '';
+  }
+
   return (
     <footer className={styles.footer}>
       <section className={styles.inputSection}>
         <BasicInput
           ref={inputRef}
           placeholder={placeholder}
-          onSubmit={(): void => {
-            if (!inputRef.current?.value) return;
-
-            onSubmit(inputRef.current.value);
-            inputRef.current.value = '';
-          }}
+          onSubmit={(): void => onTextSubmit()}
         />
       </section>
-      <SendMessageIcon className={styles.sendMessageIcon} />
+      <SendMessageIcon
+        onClick={(): void => onTextSubmit()}
+        className={styles.sendMessageIcon}
+      />
     </footer>
   );
 };

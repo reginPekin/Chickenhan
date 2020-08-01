@@ -22,7 +22,7 @@ interface MenuElement {
 interface MenuIconProps {
   menuElement: MenuElement;
   isActiveTab: boolean;
-  setchosenTab: (tab: MenuState) => void;
+  setCurrentMenuState: (tab: MenuState) => void;
   openProfile: () => void;
   closeProfile: () => void;
 }
@@ -31,7 +31,7 @@ export const MenuIcon: React.FC<MenuIconProps> = React.memo(
   ({
     menuElement,
     isActiveTab,
-    setchosenTab = (): void => undefined,
+    setCurrentMenuState = (): void => undefined,
     openProfile,
     closeProfile,
   }) => {
@@ -53,7 +53,7 @@ export const MenuIcon: React.FC<MenuIconProps> = React.memo(
       <div
         className={styles.iconSection}
         onClick={(): void => {
-          setchosenTab(menuElement.name);
+          setCurrentMenuState(menuElement.name);
           if (menuElement.name === 'profile') openProfile();
           else closeProfile();
         }}

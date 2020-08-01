@@ -31,8 +31,8 @@ interface Picture {
 }
 
 interface Author {
-  userId: string;
-  name: string;
+  id: string;
+  login: string;
   avatar: string;
   isOnline: boolean;
 }

@@ -1,9 +1,11 @@
 import { createStore } from '../utils/createStore';
 
+export type MenuState = 'discover' | 'chats' | 'profile';
 interface Local {
   isProfileOpen: boolean;
   isNewChatPopupOpen: boolean;
   isImagePopupOpen: boolean;
+  currentMenuState: MenuState;
 }
 
 // too complex return type
@@ -13,6 +15,7 @@ export function createLocalStore() {
     isProfileOpen: false,
     isNewChatPopupOpen: false,
     isImagePopupOpen: false,
+    currentMenuState: 'chats',
   };
 
   const [state, setState, useState, useSelector] = createStore(initialState);

@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 
 import cx from 'classnames';
 
-import styles from './ProfilePopup.module.css';
+import styles from './PopupProfile.module.css';
 
 import { AvatarLoader } from '@chickenhan/components/src/AvatarLoader';
 import { BasicInput } from '@chickenhan/components/src/BasicInput';
@@ -11,7 +11,7 @@ import { DragAndDrop } from '@chickenhan/components/src/DragAndDrop';
 
 import { useStore } from '../../store';
 
-export const ProfilePopup: React.FC = () => {
+export const PopupProfile: React.FC = () => {
   const store = useStore();
 
   const inpuRef = useRef<HTMLInputElement>(null);

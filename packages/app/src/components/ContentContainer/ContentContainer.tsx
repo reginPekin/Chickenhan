@@ -1,74 +1,57 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import cx from 'classnames';
 
 import styles from './ContentContainer.module.css';
 
-import { ProfilePopup } from '../ProfilePopup';
+import { PopupProfile } from '../PopupProfile';
 
 import { ChatHeader } from '@chickenhan/components/src/ChatHeader';
 import { WriteBox } from '@chickenhan/components/src/WriteBox';
 import { Message } from '@chickenhan/components/src/Message';
 import { DragAndDrop } from '@chickenhan/components/src/DragAndDrop';
 
-import { sendMessage, getChat, getMessage } from '@chickenhan/components/sdk';
+import { sendMessage } from '@chickenhan/components/sdk';
 
 import { useStore } from '../../store';
-import { Chat, Message as MessageType } from '@chickenhan/components/src/types';
 
 interface ContentContainerProps {
   setImages64: (paths: string[]) => void;
 }
-interface ChatConteinerProps {
-  currentChat: Chat;
-  currentMessages: MessageType[] | undefined;
-  isMessageLoading: boolean;
+interface ChatContainerProps {
   setImages64: (paths: string[]) => void;
 }
 
 export const ContentContainer: React.FC<ContentContainerProps> = ({
   setImages64,
 }) => {
-  const store = useStore();
-
-  const [currentChat, setCurrentChat] = store.chat.useState();
-  const currentMessages = store.message.useSelector(
-    message => message.messages,
-  );
-
-  const [isChatLoading, setIsChatLoading] = useState<boolean>(true);
-  const [isMessageLoading, setIsMessageLoading] = useState<boolean>(true);
-
   const { chatId } = useParams();
 
-  React.useEffect(() => {
+  const store = useStore();
+  const isChatLoading = store.chat.useSelector(state => state.isLoading);
+  const isMessageLoading = store.message.useSelector(state => state.isLoading);
+
+  // console.log(isMessageLoading, 'main loading');
+
+  useEffect(() => {
+    store.user.fetchUser();
+  }, []);
+
+  useEffect(() => {
     if (!chatId) return;
 
-    const getCurrentChat = async (): Promise<void> => {
-      setIsChatLoading(true);
-      await getChat(chatId)
-        .then(chat => setCurrentChat(chat))
-        .catch(error => console.log(error));
-      setIsChatLoading(false);
-    };
-
-    const getChatMessages = async (): Promise<void> => {
-      setIsChatLoading(true);
-      await getMessage(chatId).then(messages => store.message.update(messages));
-      setIsMessageLoading(false);
-    };
-
-    getCurrentChat();
-    getChatMessages();
-
-    return (): void => {
-      setIsChatLoading(false);
-      setIsMessageLoading(false);
-
-      store.message.update({ messages: [] });
-    };
+    store.chat.fetchCurrentChat(chatId);
+    store.message.fetchCurrentMessage(chatId);
   }, [chatId]);
+
+  if (!chatId) {
+    return (
+      <main className={cx(styles.contentContainer, styles.undefinedChat)}>
+        <span>Chose any chat c:</span>
+      </main>
+    );
+  }
 
   if (isChatLoading)
     return (
@@ -77,30 +60,17 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
       </main>
     );
 
-  if (!currentChat || currentChat.id === '0') {
-    return (
-      <main className={cx(styles.contentContainer, styles.undefinedChat)}>
-        <span>{isChatLoading ? 'Loading' : 'Chose any chat c:'}</span>
-      </main>
-    );
-  }
-  return (
-    <ChatContaner
-      currentChat={currentChat}
-      currentMessages={currentMessages}
-      isMessageLoading={isMessageLoading}
-      setImages64={setImages64}
-    />
-  );
+  return <ChatContaner setImages64={setImages64} />;
 };
 
-const ChatContaner: React.FC<ChatConteinerProps> = ({
-  currentChat,
-  currentMessages,
-  isMessageLoading,
-  setImages64,
-}) => {
+const ChatContaner: React.FC<ChatContainerProps> = ({ setImages64 }) => {
   const store = useStore();
+  const [user] = store.user.useState();
+  const [currentChat] = store.chat.useState();
+  const isMessageLoading = store.message.useSelector(state => state.isLoading);
+  const currentMessages = store.message.useSelector(state => state.messages);
+
+  console.log(isMessageLoading, 'loading');
 
   const messageSectionRef = useRef<HTMLDivElement | null>(null);
 
@@ -132,7 +102,7 @@ const ChatContaner: React.FC<ChatConteinerProps> = ({
 
   return (
     <main className={styles.contentContainer}>
-      <ProfilePopup />
+      <PopupProfile />
       <DragAndDrop
         onFilesDrop={(paths): void => {
           store.local.update({ isImagePopupOpen: true });
@@ -147,18 +117,16 @@ const ChatContaner: React.FC<ChatConteinerProps> = ({
         <footer className={styles.footer}>
           <WriteBox
             onSubmit={async (value): Promise<any> => {
-              store.message.addMessage({
-                author: {
-                  userId: '2132123',
-                  name: 'reginbegin',
-                  avatar:
-                    'https://sun9-50.userapi.com/c639718/v639718761/5100a/_h6G0-ct2Is.jpg',
-                  isOnline: true,
-                },
+              await store.message.addMessage({
+                author: user,
                 text: value,
                 date: 1592735749305,
                 messageId: `${Math.floor(Math.random() * Math.floor(10000))}`,
               });
+
+              if (messageSectionRef.current)
+                messageSectionRef.current.scrollTop =
+                  messageSectionRef.current.scrollHeight;
 
               const result = await sendMessage().then(res => res);
 

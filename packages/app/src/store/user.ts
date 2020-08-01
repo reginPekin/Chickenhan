@@ -2,6 +2,8 @@ import { createStore } from '../utils/createStore';
 
 import { User } from '@chickenhan/components/src/types';
 
+import { getUserInfo } from '@chickenhan/components/sdk';
+
 // too complex return type
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createUserStore() {
@@ -18,5 +20,10 @@ export function createUserStore() {
     setState({ ...state, ...partialState });
   }
 
-  return { useState, useSelector, update };
+  async function fetchUser(): Promise<void> {
+    const userInfo = await getUserInfo();
+    update({ ...userInfo });
+  }
+
+  return { useState, useSelector, update, fetchUser };
 }

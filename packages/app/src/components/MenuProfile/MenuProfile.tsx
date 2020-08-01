@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import styles from './ProfileMenu.module.css';
+import styles from './MenuProfile.module.css';
 
 import { Avatar } from '@chickenhan/components/src/Avatar';
 
 import { useStore } from '../../store';
 
-export const ProfileMenu: React.FC = () => {
+export const MenuProfile: React.FC = () => {
   const store = useStore();
 
   const [user] = store.user.useState();
@@ -19,6 +19,9 @@ export const ProfileMenu: React.FC = () => {
 
   return (
     <section className={styles.profile}>
+      <div className={styles.label}>
+        <span>Profile</span>
+      </div>
       <div className={styles.avatar}>
         <Avatar url={user.avatar} width={96} />
         <span className={styles.name}>{user.login}</span>

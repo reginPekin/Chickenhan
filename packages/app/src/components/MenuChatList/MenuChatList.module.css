@@ -1,0 +1,48 @@
+.link {
+  margin: 0 8px;
+  border-radius: 4px;
+}
+  
+.mainSection {
+  height: 100%;
+  width: 300px;
+}
+
+.menuContent {
+  height: 100%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.scrolledChats {
+  overflow-y: scroll;
+}
+
+
+.header {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px 12px 20px;
+  font-weight: 700;
+  line-height: 32px;
+  font-size: 24px;
+}
+
+.addChatIcon {
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color .2s ease-out;
+}
+
+.addChatIcon:hover {
+  background-color: var(--main-yellow);
+}

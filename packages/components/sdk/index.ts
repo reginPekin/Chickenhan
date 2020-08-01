@@ -1,6 +1,11 @@
 // connect with axioss
 
-import { Chat } from '../src/types';
+import { Chat, Message, User } from '../src/types';
+
+interface Messages {
+  id: string;
+  messages: Message[];
+}
 
 import {
   MOCK_CHATS_DISCOVER,
@@ -30,15 +35,15 @@ const user = {
   avatar: `https://imgtest.mir24.tv/uploaded/images/crops/2018/September/870x489_0x47_detail_crop_af43017eebc9b37984240ffb3877c8aef3aa8f499eaf279991aa312a36b83f25.jpg`,
 };
 
-export async function getUserInfo(): Promise<any> {
-  const resp = await new Promise(resolve =>
+export async function getUserInfo(): Promise<User> {
+  const resp = await new Promise<User>(resolve =>
     setTimeout(() => resolve(user), 200),
   );
   return resp;
 }
 
-export async function sendMessage(): Promise<any> {
-  const response = await new Promise((resolve, reject) => {
+export async function sendMessage(): Promise<string> {
+  const response = await new Promise<string>((resolve, reject) => {
     try {
       setTimeout(() => resolve('ok'), 200);
     } catch (error) {
@@ -48,11 +53,11 @@ export async function sendMessage(): Promise<any> {
   return response;
 }
 
-export const getChat = async (id: string): Promise<any> => {
+export const getChat = async (id: string): Promise<Chat> => {
   const allChats = [...MOCK_CHATS_DISCOVER, ...MOCK_CHATS_1]; // use store
   const filteredChat = allChats.filter(chat => chat.id === id)[0];
 
-  const response = await new Promise((resolve, reject) => {
+  const response = await new Promise<Chat>((resolve, reject) => {
     try {
       setTimeout(() => resolve(filteredChat), 200);
     } catch (error) {
@@ -63,7 +68,7 @@ export const getChat = async (id: string): Promise<any> => {
   return response;
 };
 
-export const getMessage = async (id: string): Promise<any> => {
+export const getMessage = async (id: string): Promise<Messages> => {
   const allMessages = [
     MOCK_MESSAGES_1,
     MOCK_MESSAGES_2,
@@ -75,7 +80,7 @@ export const getMessage = async (id: string): Promise<any> => {
   ]; // use store
   const filteredMessage = allMessages.filter(messages => messages.id === id)[0];
 
-  const response = await new Promise((resolve, reject) => {
+  const response = await new Promise<Messages>((resolve, reject) => {
     try {
       setTimeout(() => resolve(filteredMessage), 200);
     } catch (error) {
@@ -86,8 +91,8 @@ export const getMessage = async (id: string): Promise<any> => {
   return response;
 };
 
-export const createChat = async (): Promise<any> => {
-  const response = await new Promise((resolve, reject) => {
+export const createChat = async (): Promise<string> => {
+  const response = await new Promise<string>((resolve, reject) => {
     try {
       setTimeout(() => resolve('ok'), 200);
     } catch (error) {

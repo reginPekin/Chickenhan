@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  useLocation,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import styles from './App.module.css';
 
 import { LoginPage } from '../LoginPage';
 import { ContentContainer } from '../ContentContainer';
-import { MenuContainer } from '../MenuContainer';
-import { NewChatPopup } from '../NewChatPopup';
-import { ImagePopup } from '../ImagePopup';
+import { Menu } from '../Menu';
+import { PopupNewChat } from '../PopupNewChat';
+import { PopupImage } from '../PopupImage';
 
 import { useStore } from '../../store';
 
-import { getUserChats, getUserInfo } from '@chickenhan/components/sdk';
+interface PopupsProps {
+  images64: string[];
+  setImages64: (imgs: string[]) => void;
+}
 
 export const App: React.FC = () => {
   useEffect(() => {
@@ -48,29 +46,32 @@ export const App: React.FC = () => {
 };
 
 const Home: React.FC = () => {
-  const store = useStore();
-  const [, setUserInfo] = store.user.useState();
-  const userChats = store.chats.useSelector(state => state.chats);
-  const isImagePopupOpen =
-    store.local.useSelector(local => local.isImagePopupOpen) || false;
-
   const [images64, setImages64] = useState<string[]>([]);
-
-  useEffect(() => {
-    (async function (): Promise<void> {
-      //как одновременно запустить прогрузку чатов и userInfo?
-      const chats = await getUserChats();
-      store.chats.addChats(chats);
-
-      const userInfo = await getUserInfo();
-      setUserInfo(userInfo);
-    })();
-  }, []);
 
   return (
     <main className={styles.app}>
-      <NewChatPopup />
-      <ImagePopup
+      <Popups images64={images64} setImages64={setImages64} />
+
+      <div className={styles.main}>
+        <Menu />
+        <ContentContainer
+          setImages64={(paths: string[]): void => setImages64(paths)}
+        />
+      </div>
+    </main>
+  );
+};
+
+const Popups: React.FC<PopupsProps> = ({ images64, setImages64 }) => {
+  const store = useStore();
+  const isImagePopupOpen = store.local.useSelector(
+    local => local.isImagePopupOpen,
+  );
+
+  return (
+    <>
+      <PopupNewChat />
+      <PopupImage
         images64={images64}
         isOpen={isImagePopupOpen}
         closePopup={(): void => {
@@ -78,12 +79,6 @@ const Home: React.FC = () => {
           setImages64([]);
         }}
       />
-      <div className={styles.main}>
-        <MenuContainer userChats={userChats || []} />
-        <ContentContainer
-          setImages64={(paths: string[]): void => setImages64(paths)}
-        />
-      </div>
-    </main>
+    </>
   );
 };

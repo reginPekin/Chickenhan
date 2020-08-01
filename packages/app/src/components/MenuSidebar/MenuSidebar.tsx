@@ -5,28 +5,26 @@ import { LogoIcon } from '../Icons';
 
 import styles from './MenuSidebar.module.css';
 
-import { menuElements, MenuState } from './consts';
+import { menuElements } from './consts';
 
 import { useStore } from '../../store';
 
-interface MenuSiderProps {
-  chosenTab: MenuState;
-  setСhosenTab: (tab: MenuState) => void;
-}
-
-export const MenuSidebar: React.FC<MenuSiderProps> = ({
-  chosenTab,
-  setСhosenTab,
-}) => {
-  const index: number = menuElements.findIndex(tab => tab.name === chosenTab);
+export const MenuSidebar: React.FC = () => {
   const store = useStore();
+  const currentMenuState = store.local.useSelector(
+    state => state.currentMenuState,
+  );
+
+  const index: number = menuElements.findIndex(
+    tab => tab.name === currentMenuState,
+  ); //@fix
 
   return (
     <nav className={styles.menuSidebar}>
       <div
         className={styles.logoSection}
         onClick={(): void => {
-          setСhosenTab('chats');
+          store.local.update({ currentMenuState: 'chats' });
           store.local.update({ isProfileOpen: false });
         }}
       >
@@ -41,8 +39,10 @@ export const MenuSidebar: React.FC<MenuSiderProps> = ({
           <MenuIcon
             key={key}
             menuElement={menuElement}
-            isActiveTab={chosenTab === menuElement.name}
-            setchosenTab={(tab): void => setСhosenTab(tab)}
+            isActiveTab={currentMenuState === menuElement.name}
+            setCurrentMenuState={(tab): void =>
+              store.local.update({ currentMenuState: tab })
+            }
             openProfile={(): void =>
               store.local.update({ isProfileOpen: true })
             }

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 
 import cx from 'classnames';
 
-import styles from './NewChatPopup.module.css';
+import styles from './PopupNewChat.module.css';
 
 import { InputWithLabel } from '@chickenhan/components/src/InputWithLabel';
 import { Select } from '@chickenhan/components/src/Select';
@@ -16,7 +16,7 @@ import { useStore } from '../../store';
 import { createChat } from '@chickenhan/components/sdk';
 import { ChatType } from '@chickenhan/components/src/types';
 
-export const NewChatPopup: React.FC = () => {
+export const PopupNewChat: React.FC = () => {
   const inputWithLabelRef = useRef<HTMLInputElement | null>(null);
 
   const store = useStore();

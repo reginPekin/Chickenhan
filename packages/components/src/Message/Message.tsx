@@ -18,7 +18,7 @@ export const Message: React.FC<MessageProps> = React.memo(({ message }) => {
   function renderAuthor(): JSX.Element {
     return (
       <div className={styles.nameAndDate}>
-        <span>{message.author.name}</span>
+        <span>{message.author.login}</span>
         <span
           style={{ display: message.author.isOnline ? 'block' : 'none' }}
           className={styles.onlineCircle}

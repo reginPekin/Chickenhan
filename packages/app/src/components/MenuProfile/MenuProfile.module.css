@@ -1,7 +1,18 @@
 .profile {
   height: 100%;
-  width: 100%;
+  width: 300px;
   padding: 0 8px;
+}
+
+.label {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px 12px 12px;
+  font-weight: 700;
+  line-height: 32px;
+  font-size: 24px;
 }
 
 .avatar {
