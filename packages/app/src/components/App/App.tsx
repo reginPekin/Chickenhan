@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import styles from './App.module.css';
 
 import { LoginPage } from '../LoginPage';
-import { ContentContainer } from '../ContentContainer';
+import { ChatContainer } from '../ChatContainer';
 import { Menu } from '../Menu';
 import { PopupNewChat } from '../PopupNewChat';
 import { PopupImage } from '../PopupImage';
@@ -46,7 +46,13 @@ export const App: React.FC = () => {
 };
 
 const Home: React.FC = () => {
+  const store = useStore();
+
   const [images64, setImages64] = useState<string[]>([]);
+
+  useEffect(() => {
+    store.user.fetchUser();
+  }, []);
 
   return (
     <main className={styles.app}>
@@ -54,7 +60,7 @@ const Home: React.FC = () => {
 
       <div className={styles.main}>
         <Menu />
-        <ContentContainer
+        <ChatContainer
           setImages64={(paths: string[]): void => setImages64(paths)}
         />
       </div>

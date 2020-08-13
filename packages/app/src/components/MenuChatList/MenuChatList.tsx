@@ -49,9 +49,11 @@ export const MenuChatList: React.FC = React.memo(() => {
                   backgroundColor:
                     currentChat.id === chat.id ? 'var(--light-grey)' : 'white',
                 }}
-                onClick={(): void =>
-                  setCurrentChat({ ...chat, isLoading: true })
-                }
+                onClick={(): void => {
+                  if (currentChat.id !== chat.id) {
+                    setCurrentChat({ ...chat, isLoading: true });
+                  }
+                }}
               >
                 <ChatLine chat={chat} />
               </div>

@@ -1,0 +1,23 @@
+.contentSection {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.messagesSection {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+
+.footer {
+  padding: 16px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
