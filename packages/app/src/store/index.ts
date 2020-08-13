@@ -3,14 +3,14 @@ import { useContext, createContext } from 'react';
 import { createUserStore } from './user';
 import { createLocalStore } from './local';
 import { createChatStore } from './chat';
-import { createMessageStore } from './message';
+import { createMessageStore } from './messages';
 import { createChatsStore } from './chats';
 
 export interface Store {
   user: ReturnType<typeof createUserStore>;
   local: ReturnType<typeof createLocalStore>;
   chat: ReturnType<typeof createChatStore>;
-  message: ReturnType<typeof createMessageStore>;
+  messages: ReturnType<typeof createMessageStore>;
   chats: ReturnType<typeof createChatsStore>;
 }
 
@@ -21,7 +21,7 @@ function getStore(): Store {
     user: createUserStore(),
     local: createLocalStore(),
     chat: createChatStore(),
-    message: createMessageStore(),
+    messages: createMessageStore(),
     chats: createChatsStore(),
   };
 
