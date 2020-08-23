@@ -48,7 +48,9 @@ export const InputWithLabel: React.ForwardRefExoticComponent<InputWithLabelProps
           if (!isFocused) focusRef();
         }}
         className={cx(styles.label, { [styles.focusedLabel]: isOnTop })}
-        style={{ color: !isOnTop && isRequired ? 'red' : 'var(--black-40)' }}
+        style={{
+          color: !isOnTop && isRequired ? 'var(--red)' : 'var(--black-40)',
+        }}
       >
         {placeholder}
       </span>

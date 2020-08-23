@@ -65,7 +65,7 @@
 }
 
 .draft {
-  color: red;
+  color: var(--red);
 }
 
 .chatLastMessage {
