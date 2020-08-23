@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 
 import cx from 'classnames';
 
@@ -169,7 +169,9 @@ const GoogleButton: React.FC<ButtonProps> = ({ children }) => {
 
 const LoginSection: React.FC<LoginBlockProps> = ({ loginBlock, isSignup }) => {
   const Icon = loginBlock.Icon;
-  const loginText = isSignup ? 'Sign up' : 'Sign in';
+  const loginText = useMemo(() => (isSignup ? 'Sign up' : 'Sign in'), [
+    isSignup,
+  ]);
 
   return (
     <section className={styles.loginBlock}>

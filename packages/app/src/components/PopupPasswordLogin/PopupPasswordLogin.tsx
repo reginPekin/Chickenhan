@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 
 import styles from './PopupPasswordLogin.module.css';
 
@@ -25,21 +25,33 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
 
   // rename slide
   const [signinStatus, setSigninStatus] = useState<SigninStatus>('username');
+  const [usernameError, setUsernameError] = useState<string>('');
+  const [passwordError, setPasswordError] = useState<string>('');
 
   const userNameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const signinRef = useRef<HTMLInputElement>(null);
 
-  const title = isSignup ? 'Sign up with username' : 'Sign in with username';
+  const title = useMemo(
+    () => (isSignup ? 'Sign up with username' : 'Sign in with username'),
+    [isSignup],
+  );
 
-  const signinDescription =
-    signinStatus === 'username'
-      ? 'Enter your username to sign in to the account.'
-      : 'Enter your password to sign in to the account.';
+  const signinDescription = useMemo(
+    () =>
+      signinStatus === 'username'
+        ? 'Enter your username to sign in to the account.'
+        : 'Enter your password to sign in to the account.',
+    [signinStatus],
+  );
 
-  const description = isSignup
-    ? 'Enter your username and password to create an account.'
-    : signinDescription;
+  const description = useMemo(
+    () =>
+      isSignup
+        ? 'Enter your username and password to create an account.'
+        : signinDescription,
+    [isSignup, signinDescription],
+  );
 
   function renderSigninPopupContent(): React.ReactNode {
     if (isSignup) {
@@ -52,12 +64,14 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
               passwordRef.current?.focus();
             }}
             label="Your username"
+            error={usernameError}
           />
           <InputWithUnderline
             className={styles.inputWithUnderline}
             ref={passwordRef}
             type="password"
             label="Your password"
+            error={passwordError}
           />
         </div>
       );
@@ -77,6 +91,7 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
             setSigninStatus('password');
           }}
           label="Your username"
+          error={usernameError}
         />
       );
     }
@@ -88,6 +103,7 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
         ref={signinRef}
         type="password"
         label="Your password"
+        error={passwordError}
       />
     );
   }
