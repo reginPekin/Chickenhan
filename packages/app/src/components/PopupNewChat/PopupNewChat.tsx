@@ -13,7 +13,7 @@ import { DeleteIcon, AvatarLoaderIcon } from '../Icons';
 
 import { useStore } from '../../store';
 
-import { createChat } from '@chickenhan/components/sdk';
+import { createChat } from '@chickenhan/components/sdk/indexOld';
 import { ChatType } from '@chickenhan/components/src/types';
 
 export const PopupNewChat: React.FC = () => {
@@ -30,10 +30,6 @@ export const PopupNewChat: React.FC = () => {
   const [chatAvatar, setChatAvatar] = useState<string>('');
   const [chatType, setChatType] = useState<ChatType | string>('public'); // настроить Select
 
-  if (!isPopupOpen) {
-    return null;
-  }
-
   const options = [
     {
       label: 'Public',
@@ -47,6 +43,10 @@ export const PopupNewChat: React.FC = () => {
       description: 'Only people with invite link can see it',
     },
   ];
+
+  if (!isPopupOpen) {
+    return null;
+  }
 
   return (
     <main className={styles.newChat}>
