@@ -9,35 +9,91 @@ import styles from './ChatLine.module.css';
 
 interface ChatLineProps {
   chat: Chat;
+  writeBoxText: string;
 }
 
-export const ChatLine: React.FC<ChatLineProps> = React.memo(({ chat }) => {
-  function renderUserCount(): React.ReactNode {
-    if (!chat.userCount) return null;
-    return <span className={styles.userCount}>{chat.userCount} участник</span>; // язык и падежи
-  }
+export const ChatLine: React.FC<ChatLineProps> = React.memo(
+  ({ chat, writeBoxText }) => {
+    function renderUserCount(): React.ReactNode {
+      if (!chat.userCount) return null;
+      return (
+        <span className={styles.userCount}>{chat.userCount} участник</span>
+      ); // язык и падежи
+    }
 
-  if (chat.opponent)
+    function renderMessage(): React.ReactNode {
+      if (!writeBoxText)
+        return (
+          <span
+            className={cx(styles.lastMessage, {
+              [styles.dialogLastMessage]: chat.opponent,
+              [styles.chatLastMessage]: !chat.opponent,
+            })}
+          >
+            {chat.lastMessage}
+          </span>
+        );
+
+      return (
+        <span
+          className={cx(styles.lastMessage, {
+            [styles.dialogLastMessage]: chat.opponent,
+            [styles.chatLastMessage]: !chat.opponent,
+          })}
+        >
+          <span className={styles.draft}>Draft: </span>
+          {writeBoxText}
+        </span>
+      );
+    }
+
+    if (chat.opponent)
+      return (
+        <main>
+          <section className={styles.chatLine}>
+            <div className={styles.avatar}>
+              <Avatar url={chat.avatar} chatType={chat.type} />
+              {chat.opponent.isOnline && (
+                <div className={styles.onlineCircle} />
+              )}
+            </div>
+            <div className={styles.chatInfo}>
+              <div className={styles.headInfo}>
+                <span className={styles.name}>{chat.opponent.login}</span>
+                <span className={styles.lastDateMessage}>
+                  {chat.lastDateMessage}
+                </span>
+              </div>
+              <div className={styles.messageSection}>{renderMessage()}</div>
+            </div>
+          </section>
+          <hr
+            style={{
+              backgroundColor: 'var(--hover-grey)',
+              borderRadius: '50%',
+              height: 1,
+              margin: '0 12px',
+            }}
+          />
+        </main>
+      );
+
     return (
       <main>
         <section className={styles.chatLine}>
           <div className={styles.avatar}>
             <Avatar url={chat.avatar} chatType={chat.type} />
-            {chat.opponent.isOnline && <div className={styles.onlineCircle} />}
           </div>
           <div className={styles.chatInfo}>
             <div className={styles.headInfo}>
-              <span className={styles.name}>{chat.opponent.login}</span>
+              <span className={styles.name}>{chat.name}</span>
               <span className={styles.lastDateMessage}>
                 {chat.lastDateMessage}
               </span>
             </div>
             <div className={styles.messageSection}>
-              <span
-                className={cx(styles.lastMessage, styles.dialogLastMessage)}
-              >
-                {chat.lastMessage}
-              </span>
+              {renderMessage()}
+              {renderUserCount()}
             </div>
           </div>
         </section>
@@ -51,36 +107,5 @@ export const ChatLine: React.FC<ChatLineProps> = React.memo(({ chat }) => {
         />
       </main>
     );
-
-  return (
-    <main>
-      <section className={styles.chatLine}>
-        <div className={styles.avatar}>
-          <Avatar url={chat.avatar} chatType={chat.type} />
-        </div>
-        <div className={styles.chatInfo}>
-          <div className={styles.headInfo}>
-            <span className={styles.name}>{chat.name}</span>
-            <span className={styles.lastDateMessage}>
-              {chat.lastDateMessage}
-            </span>
-          </div>
-          <div className={styles.messageSection}>
-            <span className={cx(styles.lastMessage, styles.chatLastMessage)}>
-              {chat.lastMessage}
-            </span>
-            {renderUserCount()}
-          </div>
-        </div>
-      </section>
-      <hr
-        style={{
-          backgroundColor: 'var(--hover-grey)',
-          borderRadius: '50%',
-          height: 1,
-          margin: '0 12px',
-        }}
-      />
-    </main>
-  );
-});
+  },
+);
