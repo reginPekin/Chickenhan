@@ -5,6 +5,7 @@ import { createLocalStore } from './local';
 import { createChatStore } from './chat';
 import { createMessageStore } from './messages';
 import { createChatsStore } from './chats';
+import { createWriteBoxStore } from './writeBox';
 
 export interface Store {
   user: ReturnType<typeof createUserStore>;
@@ -12,6 +13,7 @@ export interface Store {
   chat: ReturnType<typeof createChatStore>;
   messages: ReturnType<typeof createMessageStore>;
   chats: ReturnType<typeof createChatsStore>;
+  writeBox: ReturnType<typeof createWriteBoxStore>;
 }
 
 let refStore: Store | undefined;
@@ -23,6 +25,7 @@ function getStore(): Store {
     chat: createChatStore(),
     messages: createMessageStore(),
     chats: createChatsStore(),
+    writeBox: createWriteBoxStore(),
   };
 
   if (!refStore) {

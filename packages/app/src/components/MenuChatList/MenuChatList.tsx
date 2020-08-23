@@ -36,29 +36,34 @@ export const MenuChatList: React.FC = React.memo(() => {
 
       <section className={styles.scrolledChats}>
         <div className={styles.menuContent}>
-          {chats.map(chat => (
-            <Link
-              key={chat.id}
-              to={`/chat/${chat.id}`}
-              style={{ textDecoration: 'none', color: 'black' }}
-            >
-              <div
+          {chats.map(chat => {
+            const writeBoxText = store.writeBox.get(chat.id).getMessage();
+            return (
+              <Link
                 key={chat.id}
-                className={styles.link}
-                style={{
-                  backgroundColor:
-                    currentChat.id === chat.id ? 'var(--light-grey)' : 'white',
-                }}
-                onClick={(): void => {
-                  if (currentChat.id !== chat.id) {
-                    setCurrentChat({ ...chat, isLoading: true });
-                  }
-                }}
+                to={`/chat/${chat.id}`}
+                style={{ textDecoration: 'none', color: 'black' }}
               >
-                <ChatLine chat={chat} />
-              </div>
-            </Link>
-          ))}
+                <div
+                  key={chat.id}
+                  className={styles.link}
+                  style={{
+                    backgroundColor:
+                      currentChat.id === chat.id
+                        ? 'var(--light-grey)'
+                        : 'white',
+                  }}
+                  onClick={(): void => {
+                    if (currentChat.id !== chat.id) {
+                      setCurrentChat({ ...chat, isLoading: true });
+                    }
+                  }}
+                >
+                  <ChatLine chat={chat} writeBoxText={writeBoxText} />
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
     </aside>

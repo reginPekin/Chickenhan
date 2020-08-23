@@ -15,6 +15,7 @@ interface ChatProps {
 
 export const Chat: React.FC<ChatProps> = ({ chatId }) => {
   const store = useStore();
+  const writeBoxStore = store.writeBox.get(chatId);
   const [currentChat] = store.chat.useState();
   const [user] = store.user.useState();
   const isMessageLoading = store.messages.useSelector(chat =>
@@ -39,13 +40,19 @@ export const Chat: React.FC<ChatProps> = ({ chatId }) => {
       </section>
       <footer className={styles.footer}>
         <WriteBox
+          key={chatId}
+          value={writeBoxStore.getMessage()}
           onSubmit={async (value): Promise<any> => {
             await store.messages.get(chatId).send({ text: value });
+            writeBoxStore.clearMessage();
 
             if (messagesContainerRef.current) {
               messagesContainerRef.current.scrollTop =
                 messagesContainerRef.current.scrollHeight;
             }
+          }}
+          onBlur={(value): void => {
+            writeBoxStore.saveMessage(value);
           }}
         />
       </footer>
