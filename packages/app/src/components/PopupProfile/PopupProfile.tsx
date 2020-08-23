@@ -60,21 +60,19 @@ export const PopupProfile: React.FC = () => {
           </div>
         </section>
         <footer className={cx(styles.profilePopupModal, styles.footer)}>
-          <div className={styles.buttonWrapper}>
-            <PositionAwareButton
-              onClick={(): void => {
-                // ещё проверять на уникальность нового логина
-                if (newName && newName !== user.login) {
-                  store.user.update({ login: newName });
-                  setLoginError('');
-                } else {
-                  setLoginError('Empty space');
-                }
-              }}
-            >
-              Save
-            </PositionAwareButton>
-          </div>
+          <PositionAwareButton
+            onClick={(): void => {
+              // ещё проверять на уникальность нового логина
+              if (newName && newName !== user.login) {
+                store.user.update({ login: newName });
+                setLoginError('');
+              } else {
+                setLoginError('Empty space');
+              }
+            }}
+          >
+            Save changes
+          </PositionAwareButton>
         </footer>
       </DragAndDrop>
     </main>
