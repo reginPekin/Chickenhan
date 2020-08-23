@@ -82,6 +82,71 @@ export const SendMessageIcon: React.FC<IconProps> = React.memo(props => (
   </svg>
 ));
 
+export const PasswordEyeIcon: React.FC<IconProps> = React.memo(props => (
+  <svg
+    width={props.width || 24}
+    height={props.height || 12}
+    viewBox="0 0 50 23"
+    fill="none"
+    {...props}
+  >
+    <circle cx={24.5} cy={14.5} r={8.5} fill="black" />
+    <path
+      d="M1 11.5L7.384 6.92017C17.4077 -0.270748 30.8116 -0.592494 41.1688 6.10921L49.5 11.5"
+      stroke="black"
+      strokeWidth={3}
+    />
+  </svg>
+));
+
+export const ClosedPasswordEyeIcon: React.FC<IconProps> = React.memo(props => (
+  <svg
+    width={props.width || 24}
+    height={props.height || 12}
+    viewBox="0 0 51 24"
+    fill="none"
+    {...props}
+  >
+    <path
+      d="M49.5 2L43.116 6.57983C33.0923 13.7707 19.6884 14.0925 9.33122 7.39079L1 2"
+      stroke="black"
+      strokeWidth="3"
+    />
+    <line
+      x1={11.2862}
+      y1={8.77174}
+      x2={5.28624}
+      y2={18.7717}
+      stroke="black"
+      strokeWidth={3}
+    />
+    <line
+      x1={20.3559}
+      y1={11.9652}
+      x2={18.5346}
+      y2={23.484}
+      stroke="black"
+      strokeWidth={3}
+    />
+    <line
+      y1={-1.5}
+      x2={11.6619}
+      y2={-1.5}
+      transform="matrix(0.15617 0.98773 0.98773 -0.15617 32 12)"
+      stroke="black"
+      strokeWidth={3}
+    />
+    <line
+      y1={-1.5}
+      x2={11.6619}
+      y2={-1.5}
+      transform="matrix(0.514496 0.857493 0.857493 -0.514496 41 8)"
+      stroke="black"
+      strokeWidth={3}
+    />
+  </svg>
+));
+
 export const MoreIcon: React.FC = React.memo(() => (
   <section className={styles.moreIconSection}>
     <div className={styles.moreIcon} />
