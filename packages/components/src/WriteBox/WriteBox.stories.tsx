@@ -4,4 +4,6 @@ import { WriteBox } from './WriteBox';
 
 import { storiesOf } from '@storybook/react';
 
-storiesOf('WriteBox', module).add('Write box', () => <WriteBox />);
+storiesOf('WriteBox', module).add('Write box', () => (
+  <WriteBox value="default value" />
+));
