@@ -154,6 +154,20 @@ export const ClosedPasswordEyeIcon: React.FC<IconProps> = React.memo(props => (
   </svg>
 ));
 
+export const WarningIcon: React.FC<IconProps> = React.memo(props => (
+  <svg
+    width={props.width || 12}
+    height={props.width || 12}
+    viewBox="0 0 77 77"
+    fill="none"
+    {...props}
+  >
+    <circle cx={38.5} cy={38.5} r={37} stroke="var(--red)" strokeWidth={3} />
+    <circle cx={39} cy={61} r={4} fill="var(--red)" />
+    <path d="M34 13L35.1688 51H43.0909L44 13H34Z" fill="var(--red)" />
+  </svg>
+));
+
 export const MoreIcon: React.FC = React.memo(() => (
   <section className={styles.moreIconSection}>
     <div className={styles.moreIcon} />
