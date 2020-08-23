@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 
 import cx from 'classnames';
 
-import styles from './Login.module.css';
-
-import { loginBlocks, LoginBlock } from './consts';
+import styles from './LoginPage.module.css';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
@@ -13,7 +11,17 @@ import { loginBlocks, LoginBlock } from './consts';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { GoogleLogin } from 'react-google-login';
 
-import { GoogleIcon, FacebookIcon } from '../Icons';
+import { PopupPasswordLogin } from '../PopupPasswordLogin';
+
+import { IconProps, GoogleIcon, FacebookIcon, EmailIcon } from '../Icons';
+
+import { useStore } from '../../store';
+import { chickenhan } from '../../store/chickenhan';
+
+export interface LoginBlock {
+  Icon: React.FC<IconProps>;
+  name: string;
+}
 
 interface LoginBlockProps {
   loginBlock: LoginBlock;
@@ -45,6 +53,7 @@ export const LoginPage: React.FC = ({}) => {
 
   return (
     <main className={styles.main}>
+      <PopupPasswordLogin isSignup={isSignup} />
       <section className={styles.loginSection}>
         <h1 className={cx(styles.text, styles.block)}>{page.welcomeText}</h1>
         <GoogleButton>
@@ -65,14 +74,16 @@ export const LoginPage: React.FC = ({}) => {
             isSignup={isSignup}
           />
         </FacebookButton>
-        <div className={cx(styles.signup, styles.block)}>
-          {loginBlocks.map((loginBlock, key) => (
+        <div className={styles.block}>
+          <LoginButton>
             <LoginSection
-              key={key}
-              loginBlock={loginBlock}
+              loginBlock={{
+                Icon: EmailIcon,
+                name: 'username',
+              }}
               isSignup={isSignup}
             />
-          ))}
+          </LoginButton>
         </div>
         <span className={styles.text}>
           {page.transitionText}
@@ -85,9 +96,31 @@ export const LoginPage: React.FC = ({}) => {
   );
 };
 
-export const FacebookButton: React.FC<ButtonProps> = ({ children }) => {
-  function responseFacebook(response: any): void {
+const LoginButton: React.FC<ButtonProps> = ({ children }) => {
+  const store = useStore();
+
+  return (
+    <div
+      onClick={(): void => {
+        store.local.update({ isPasswordPopupOpen: true });
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+
+const FacebookButton: React.FC<ButtonProps> = ({ children }) => {
+  async function responseFacebook(response: any): Promise<void> {
     console.log(response);
+    console.log('check');
+    // не google
+    const responseGoogle = await chickenhan.authorization.signupGoogle(
+      response.accesToken,
+    );
+    console.log('ne google');
+    console.log(responseGoogle, 'google response auth');
+    //
   }
 
   return (
@@ -103,11 +136,16 @@ export const FacebookButton: React.FC<ButtonProps> = ({ children }) => {
   );
 };
 
-export const GoogleButton: React.FC<ButtonProps> = ({ children }) => {
+const GoogleButton: React.FC<ButtonProps> = ({ children }) => {
   const [accessToken, setAccessToken] = useState<string>('');
 
-  function login(response: any): void {
+  async function login(response: any): Promise<void> {
     setAccessToken(response.tokenId);
+    const responseGoogle = await chickenhan.authorization.signupGoogle(
+      response.tokenId,
+    );
+    console.log(responseGoogle, 'google response auth');
+
     console.log(response, 'response');
   }
 
@@ -121,7 +159,7 @@ export const GoogleButton: React.FC<ButtonProps> = ({ children }) => {
         <div onClick={renderProps.onClick}>{children}</div>
       )}
       clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID || ''}
-      onSuccess={(response): void => login(response)}
+      onSuccess={(response): any => login(response)}
       onFailure={(): void => handleLoginFailure()}
       isSignedIn={true}
       cookiePolicy={'single_host_origin'}
