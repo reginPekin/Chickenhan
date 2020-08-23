@@ -17,7 +17,7 @@
 .onlineCircle {
   background-color: var(--main-yellow);
   border-radius: 50%;
-  border: 3px solid white;
+  border: 3px solid var(--white);
   position: absolute;
   width: 15px;
   height: 15px;

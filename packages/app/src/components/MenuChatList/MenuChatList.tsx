@@ -42,7 +42,7 @@ export const MenuChatList: React.FC = React.memo(() => {
               <Link
                 key={chat.id}
                 to={`/chat/${chat.id}`}
-                style={{ textDecoration: 'none', color: 'black' }}
+                style={{ textDecoration: 'none', color: 'var(--black)' }}
               >
                 <div
                   key={chat.id}
@@ -51,7 +51,7 @@ export const MenuChatList: React.FC = React.memo(() => {
                     backgroundColor:
                       currentChat.id === chat.id
                         ? 'var(--light-grey)'
-                        : 'white',
+                        : 'var(--white)',
                   }}
                   onClick={(): void => {
                     if (currentChat.id !== chat.id) {

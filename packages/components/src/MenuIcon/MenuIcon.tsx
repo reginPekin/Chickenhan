@@ -61,7 +61,7 @@ export const MenuIcon: React.FC<MenuIconProps> = React.memo(
         <div className={styles.iconBlock}>
           <Icon
             fill={isActiveTab ? `var(--main-yellow)` : undefined}
-            stroke={isActiveTab ? `var(--main-yellow)` : 'black'}
+            stroke={isActiveTab ? `var(--main-yellow)` : 'var(--black)'}
           />
         </div>
         {renderDecription()}

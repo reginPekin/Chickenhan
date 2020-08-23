@@ -45,7 +45,7 @@ export const MenuProfile: React.FC = () => {
             to={`/chat/00000000000`}
             style={{
               textDecoration: 'none',
-              color: 'black',
+              color: 'var(--black)',
             }}
           >
             <div

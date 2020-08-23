@@ -81,7 +81,7 @@ export const InputWithUnderline: React.ForwardRefExoticComponent<InputWithUnderl
             onSubmit={onSubmit}
             onChange={(event): void => console.log(event.target.value)}
             style={{
-              backgroundColor: 'white',
+              backgroundColor: 'var(--white)',
               paddingBottom: '5px',
               fontSize: '15px',
             }}
