@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import { BasicInput } from '../BasicInput';
 
-import { PasswordEyeIcon, ClosedPasswordEyeIcon } from '../Icons';
+import { PasswordEyeIcon, ClosedPasswordEyeIcon, WarningIcon } from '../Icons';
 
 import styles from './InputWithUnderline.module.css';
 
@@ -15,6 +15,7 @@ interface InputWithUnderlineProps {
 
   ref?: React.Ref<HTMLInputElement>;
 
+  error?: string;
   type?: PasswordType;
   label?: string;
   className?: string;
@@ -26,9 +27,11 @@ export const InputWithUnderline: React.ForwardRefExoticComponent<InputWithUnderl
 >(
   (
     {
+      error = '',
       type = 'text',
       label = '',
       className = undefined,
+
       onSubmit = (): void => undefined,
     },
     ref,
@@ -73,9 +76,22 @@ export const InputWithUnderline: React.ForwardRefExoticComponent<InputWithUnderl
     ]);
 
     return (
-      <section className={cx(styles.basicInputSection, className)}>
-        <span className={styles.label}>{label}</span>
-        <div className={styles.basicInput}>
+      <section
+        // className={cx(styles.basicInputSection, className, {
+        //   errorAnimation: !!error,
+        // })}
+        className={cx(styles.basicInputSection, className)}
+      >
+        <span
+          className={styles.label}
+          style={{ color: error ? 'var(--red)' : 'var(--black)' }}
+        >
+          {label}
+        </span>
+        <div
+          className={styles.basicInput}
+          style={{ borderColor: error ? 'var(--red)' : 'var(--black)' }}
+        >
           <BasicInput
             ref={ref}
             onSubmit={onSubmit}
@@ -88,7 +104,9 @@ export const InputWithUnderline: React.ForwardRefExoticComponent<InputWithUnderl
             type={inputType}
           />
           {MemoizedPasswordIcon}
+          {error && <WarningIcon width={16} className={styles.warningIcon} />}
         </div>
+        <span className={styles.error}>{error}</span>
       </section>
     );
   },
