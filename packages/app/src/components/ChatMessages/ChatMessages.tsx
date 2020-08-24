@@ -1,12 +1,10 @@
-import React, { useEffect, createContext } from 'react';
+import React, { useEffect } from 'react';
 
 import { Message } from '@chickenhan/components/src/Message';
 
 import { Chat, User } from '@chickenhan/components/src/types';
 
 import { useStore } from '../../store';
-
-import styles from './ChatMessages.module.css';
 
 interface ChatMessagesProps {
   chat: Chat;
@@ -28,13 +26,14 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
   const messagesRef = getMessagesRef();
 
   useEffect(() => {
-    messagesApi.fetch().then(() =>
+    (async function fetchMessages(): Promise<any> {
+      await messagesApi.fetch();
       setTimeout(() => {
         if (messagesRef.current) {
           messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
         }
-      }, 50),
-    );
+      }, 50);
+    })();
   }, [chat.id]);
 
   if (!chatMessages?.messages || chatMessages.messages.length === 0) {
