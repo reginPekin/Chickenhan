@@ -4,8 +4,12 @@ import styles from './PopupPasswordLogin.module.css';
 
 import { DeleteIcon } from '../Icons';
 
+import { SignupType } from '@chickenhan/components/src/types';
+
 import { InputWithUnderline } from '@chickenhan/components/src/InputWithUnderline';
 import { PositionAwareButton } from '@chickenhan/components/src/PositionAwareButton';
+
+import { useOnClickOutside } from '@chickenhan/components/src/utils/hooks';
 
 import { useStore } from '../../store';
 
@@ -13,9 +17,11 @@ type SigninStatus = 'username' | 'password';
 
 interface PopupPasswordLoginProps {
   isSignup?: boolean;
+  signupType?: SignupType;
 }
 
 export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
+  signupType = 'username',
   isSignup = false,
 }) => {
   const store = useStore();
@@ -25,16 +31,22 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
 
   // rename slide
   const [signinStatus, setSigninStatus] = useState<SigninStatus>('username');
+  const [socialUsernameError, setSocialUsernameError] = useState<string>('');
   const [usernameError, setUsernameError] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
 
+  const popupRef = useRef<HTMLDivElement>(null);
   const userNameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const signinRef = useRef<HTMLInputElement>(null);
 
+  useOnClickOutside(popupRef, () =>
+    store.local.update({ isPasswordPopupOpen: false }),
+  );
+
   const title = useMemo(
-    () => (isSignup ? 'Sign up with username' : 'Sign in with username'),
-    [isSignup],
+    () => (isSignup ? `Sign up with ${signupType} ` : 'Sign in with username'),
+    [isSignup, signupType],
   );
 
   const signinDescription = useMemo(
@@ -45,16 +57,33 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
     [signinStatus],
   );
 
-  const description = useMemo(
+  const signupDescription = useMemo(
     () =>
-      isSignup
+      signupType === 'username'
         ? 'Enter your username and password to create an account.'
-        : signinDescription,
-    [isSignup, signinDescription],
+        : 'Enter your username to create an account.',
+    [signupType],
+  );
+
+  const description = useMemo(
+    () => (isSignup ? signupDescription : signinDescription),
+    [isSignup, signinDescription, signupDescription],
   );
 
   function renderSigninPopupContent(): React.ReactNode {
     if (isSignup) {
+      if (signupType === 'Google' || signupType === 'Facebook') {
+        return (
+          <InputWithUnderline
+            className={styles.inputWithUnderline}
+            ref={userNameRef}
+            onSubmit={(): void => undefined}
+            label="Your username"
+            error={socialUsernameError}
+          />
+        );
+      }
+
       return (
         <div className={styles.signupInputs}>
           <InputWithUnderline
@@ -76,6 +105,7 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
         </div>
       );
     }
+
     if (signinStatus === 'username') {
       /*
        * Used key inside InputWithUnderline component to separate inputs
@@ -112,7 +142,7 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
 
   return (
     <main className={styles.passwordPopup}>
-      <section className={styles.popupSection}>
+      <section className={styles.popupSection} ref={popupRef}>
         <DeleteIcon
           className={styles.deleteIcon}
           onClick={(): void => {
