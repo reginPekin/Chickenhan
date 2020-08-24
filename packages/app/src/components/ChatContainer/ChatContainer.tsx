@@ -8,7 +8,6 @@ import styles from './ChatContainer.module.css';
 import { PopupProfile } from '../PopupProfile';
 import { Chat } from '../Chat';
 
-import { Message } from '@chickenhan/components/src/Message';
 import { DragAndDrop } from '@chickenhan/components/src/DragAndDrop';
 
 import { useStore } from '../../store';
@@ -29,6 +28,7 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
   if (!chatId) {
     return (
       <main className={cx(styles.contentContainer, styles.undefinedChat)}>
+        <PopupProfile />
         <span>Chose any chat c:</span>
       </main>
     );
