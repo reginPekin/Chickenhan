@@ -23,6 +23,15 @@ export const PopupProfile: React.FC = () => {
   const [newName, setNewName] = useState<string>('');
   const [loginError, setLoginError] = useState<string>('');
 
+  function changeUsername(): void {
+    if (newName && newName !== user.login) {
+      store.user.update({ login: newName });
+      setLoginError('');
+    } else {
+      setLoginError('Enter new username');
+    }
+  }
+
   if (!isProfileOpen) return null;
 
   return (
@@ -47,10 +56,23 @@ export const PopupProfile: React.FC = () => {
 
               {loginError && <span className={styles.error}>{loginError}</span>}
 
-              <div className={styles.input}>
+              <div
+                className={styles.input}
+                style={{
+                  backgroundColor: loginError
+                    ? 'var(--light-red)'
+                    : 'var(--light-grey)',
+                }}
+              >
                 <BasicInput
+                  style={{
+                    backgroundColor: loginError
+                      ? 'var(--light-red)'
+                      : 'var(--light-grey)',
+                  }}
                   placeholder={user.login}
                   ref={inpuRef}
+                  onSubmit={(): void => changeUsername()}
                   onChange={(event): void => {
                     setNewName(event.target.value);
                   }}
@@ -60,17 +82,7 @@ export const PopupProfile: React.FC = () => {
           </div>
         </section>
         <footer className={cx(styles.profilePopupModal, styles.footer)}>
-          <PositionAwareButton
-            onClick={(): void => {
-              // ещё проверять на уникальность нового логина
-              if (newName && newName !== user.login) {
-                store.user.update({ login: newName });
-                setLoginError('');
-              } else {
-                setLoginError('Empty space');
-              }
-            }}
-          >
+          <PositionAwareButton onClick={(): void => changeUsername()}>
             Save changes
           </PositionAwareButton>
         </footer>

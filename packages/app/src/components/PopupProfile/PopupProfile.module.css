@@ -61,13 +61,13 @@
   color: var(--black-40);
   line-height: 1.16em;
   font-size: 12px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .error {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--red);
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
 
 .input {
