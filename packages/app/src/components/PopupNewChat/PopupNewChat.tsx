@@ -14,7 +14,7 @@ import { DeleteIcon, AvatarLoaderIcon } from '../Icons';
 import { useStore } from '../../store';
 
 import { createChat } from '@chickenhan/components/sdk/indexOld';
-import { ChatType } from '@chickenhan/components/src/types';
+import { ChatType } from '@chickenhan/sdk/lib/types';
 
 export const PopupNewChat: React.FC = () => {
   const inputWithLabelRef = useRef<HTMLInputElement | null>(null);

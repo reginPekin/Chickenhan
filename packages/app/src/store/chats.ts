@@ -1,8 +1,7 @@
 import { createStore } from '../utils/createStore';
 
-import { Chat } from '@chickenhan/components/src/types';
-import { ChatIcon } from '../components/Icons';
-import { getUserChats } from '@chickenhan/components/sdk';
+import { Chat } from '@chickenhan/sdk/lib/types';
+import { getUserChats } from '@chickenhan/components/sdk/indexOld';
 
 // too complex return type
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

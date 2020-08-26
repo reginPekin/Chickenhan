@@ -4,7 +4,7 @@ import styles from './PopupPasswordLogin.module.css';
 
 import { DeleteIcon } from '../Icons';
 
-import { SignupType } from '@chickenhan/components/src/types';
+import { SignupType } from '@chickenhan/sdk/lib/types';
 
 import { InputWithUnderline } from '@chickenhan/components/src/InputWithUnderline';
 import { PositionAwareButton } from '@chickenhan/components/src/PositionAwareButton';

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import { Message } from '@chickenhan/components/src/Message';
 
-import { Chat, User } from '@chickenhan/components/src/types';
+import { Chat, User } from '@chickenhan/sdk/lib/types';
 
 import { useStore } from '../../store';
 

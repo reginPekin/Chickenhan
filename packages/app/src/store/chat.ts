@@ -1,8 +1,8 @@
 import { createStore } from '../utils/createStore';
 
-import { Chat } from '@chickenhan/components/src/types';
+import { Chat } from '@chickenhan/sdk/lib/types';
 
-import { getChat } from '@chickenhan/components/sdk';
+import { getChat } from '@chickenhan/components/sdk/indexOld';
 
 interface ChatState extends Chat {
   isLoading: boolean;
