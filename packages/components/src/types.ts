@@ -1,3 +1,5 @@
+export type SignupType = 'username' | 'Google' | 'Facebook';
+
 export interface User {
   id: string;
   login: string;
@@ -23,6 +25,8 @@ export interface Chat {
   userCount?: number;
 }
 
+type LoadStatus = 'loaded' | 'failed' | 'waiting';
+
 interface Picture {
   id: string;
   url: string;
@@ -43,4 +47,5 @@ export interface Message {
   date: number;
   messageId: string;
   pictures?: Array<Picture>;
+  // loadStatus?: LoadStatus;
 }

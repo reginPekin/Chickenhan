@@ -9,7 +9,8 @@ interface OptionsProps {
   method?: 'POST' | 'GET' | 'PATCH' | 'DELETE';
   headers?: { [param: string]: string };
   body?: Object;
-  queryParams?: URLSearchParams;
+  // queryParams?: URLSearchParams;
+  queryParams?: { [key: string]: any };
 }
 
 interface RequestProps {
@@ -32,7 +33,7 @@ class ChickenhanError {
 
 const defaultOptions: OptionsProps = {
   method: 'POST',
-  headers: {},
+  headers: { 'content-type': 'application/json' },
 };
 
 export async function request<T>({
@@ -43,7 +44,7 @@ export async function request<T>({
   const queryParams = options?.queryParams;
 
   const searchParams = queryParams
-    ? new URLSearchParams(camelToSnake(queryParams))
+    ? `?${new URLSearchParams(camelToSnake(queryParams))}`
     : '';
   const endpoint = ctx.apiUrl + url + searchParams;
 
@@ -58,9 +59,15 @@ export async function request<T>({
     compiledOptions.body = JSON.stringify(convertedBodyToSnake);
   }
 
+  console.log(compiledOptions, 'all options');
+
   try {
-    const response = await fetch(endpoint, compiledOptions as any);
-    const body = response.json();
+    const response = await fetch(endpoint, {
+      ...(compiledOptions as any),
+      headers: new Headers(compiledOptions.headers),
+      mode: 'cors',
+    });
+    const body = await response.json();
 
     return snakeToCamel(body) as T;
   } catch (errorJson) {

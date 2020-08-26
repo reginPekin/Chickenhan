@@ -4,7 +4,7 @@
     "rootDir": "./src",
     "outDir": "./lib",
     "composite": true,
-    "target": "es6",
+    "target": "es5",
     "lib": ["dom", "es2017"]
   },
   "exclude": [

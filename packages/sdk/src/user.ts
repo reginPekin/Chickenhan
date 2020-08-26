@@ -1,24 +1,60 @@
-// export const getUserInfo = () =>
-//   //  async (): Promise<string>
-//   {
-//     //   setTimeout(() => {
-//     //     return 'HI';
-//     //   }, 1000);
-//     return 'Bzz';
-//   }; // try catch
+import { Context, request } from './utils';
 
-export async function getUserInfo(): Promise<void> {
-  const promisedFiles: Promise<string>[] = [];
+import { User as UserInterface } from './types';
 
-  const file = ['1', '2', '3', '4', '5'];
+export class User {
+  private ctx: Context;
 
-  for (let i = 0; i++; i < file.length) {
-    const promise = new Promise<string>(resolve => {
-      resolve(file[i]);
-    });
-
-    promisedFiles.push(promise);
+  constructor(context: Context) {
+    this.ctx = context;
   }
 
-  Promise.all(promisedFiles).then(res => console.log(res));
+  public async getMe(): Promise<User> {
+    return request({
+      ctx: this.ctx,
+      url: '/users/me',
+      options: {
+        method: 'GET',
+      },
+    });
+  }
+
+  public async getUser(id: string): Promise<User> {
+    return request({
+      ctx: this.ctx,
+      url: '/users',
+      options: {
+        method: 'GET',
+        queryParams: { id },
+      },
+    });
+  }
+
+  public async edit(id: string, body: Partial<UserInterface>): Promise<User> {
+    return request({
+      ctx: this.ctx,
+      url: '/users',
+      options: {
+        method: 'PATCH',
+        queryParams: { id },
+        body: body,
+      },
+    });
+  }
+
+  // public async addChat(id: string, chatId: string) {
+  //   return request({
+  //     ctx: this.ctx,
+  //     url: `/users/${id}/chats`,
+  //     options: { method: 'POST', body: { chatId } },
+  //   });
+  // }
+
+  // public async deleteChat(id: string, chatId: string) {
+  //   return request({
+  //     ctx: this.ctx,
+  //     url: `/users/${id}/chats/${chatId}`,
+  //     options: { method: 'DELETE' },
+  //   });
+  // }
 }

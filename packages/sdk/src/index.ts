@@ -1,26 +1,35 @@
-// connect with axioss
+import { Authorization } from './auth';
+import { User } from './user';
 
-// export const getTenorGifs = async (): Promise<void> => {
-//   const response = await fetch(
-//     `https://api.tenor.com/v1/trending?key=GQ4H6AD66RC8`,
-//   );
-//   const body = await response.json();
+interface ChickenhanProps {
+  token?: string;
+  apiUrl?: string;
+}
 
-//   return body;
-// }; // try catch
+const API_URL = 'http://localhost:3200/api';
 
-export async function getUserInfo(): Promise<void> {
-  const promisedFiles: Promise<string>[] = [];
+export class Chickenhan {
+  private token: string;
+  private apiUrl: string;
 
-  const file = ['1', '2', '3', '4', '5'];
+  public authorization: Authorization;
+  public user: User;
 
-  for (let i = 0; i++; i < file.length) {
-    const promise = new Promise<string>(resolve => {
-      resolve(file[i]);
-    });
+  // настройки токена и url
+  constructor({ token, apiUrl }: ChickenhanProps) {
+    this.token = token || '';
+    this.apiUrl = apiUrl || API_URL;
 
-    promisedFiles.push(promise);
+    const ctx = {
+      apiUrl: this.apiUrl,
+      token: this.token,
+    };
+
+    this.authorization = new Authorization(ctx);
+    this.user = new User(ctx);
   }
 
-  Promise.all(promisedFiles).then(res => console.log(res));
+  public setToken(token: string): void {
+    this.token = token;
+  }
 }
