@@ -6,6 +6,10 @@
 .mainSection {
   height: 100%;
   width: 300px;
+
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
 }
 
 .menuContent {

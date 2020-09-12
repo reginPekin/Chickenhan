@@ -10,62 +10,75 @@ import { useStore } from '../../store';
 
 import styles from './MenuChatList.module.css';
 
-export const MenuChatList: React.FC = React.memo(() => {
-  const store = useStore();
-  const chats = store.chats.useSelector(state => state.chats);
-  const [currentChat, setCurrentChat] = store.chat.useState();
+interface MenuChatListProps {
+  title: 'Chats' | 'Discover';
+  fetchChats: () => void;
+}
 
-  useEffect(() => {
-    store.chats.fetchUserChats();
-  }, []);
+export const MenuChatList: React.FC<MenuChatListProps> = React.memo(
+  ({ title, fetchChats }) => {
+    const store = useStore();
+    const chats =
+      title === 'Chats'
+        ? store.chats.useSelector(state => state.chats)
+        : store.chats.useSelector(state => state.discover);
+    const [currentChat, setCurrentChat] = store.chat.useState();
 
-  return (
-    <aside className={styles.mainSection}>
-      <header className={styles.header}>
-        <div className={styles.label}>
-          <span>Chats</span>
-          <AddChatIcon
-            className={styles.addChatIcon}
-            onClick={(): void =>
-              store.local.update({ isNewChatPopupOpen: true })
-            }
-          />
-        </div>
-        <MenuInputSearch />
-      </header>
+    useEffect(() => {
+      fetchChats();
+    }, []);
 
-      <section className={styles.scrolledChats}>
-        <div className={styles.menuContent}>
-          {chats.map(chat => {
-            const writeBoxText = store.writeBox.get(chat.id).getMessage();
-            return (
-              <Link
-                key={chat.id}
-                to={`/chat/${chat.id}`}
-                style={{ textDecoration: 'none', color: 'var(--black)' }}
-              >
-                <div
-                  key={chat.id}
-                  className={styles.link}
-                  style={{
-                    backgroundColor:
-                      currentChat.id === chat.id
-                        ? 'var(--light-grey)'
-                        : 'var(--white)',
-                  }}
-                  onClick={(): void => {
-                    if (currentChat.id !== chat.id) {
-                      setCurrentChat({ ...chat, isLoading: true });
-                    }
-                  }}
+    return (
+      <aside className={styles.mainSection}>
+        <header className={styles.header}>
+          <div className={styles.label}>
+            <span>{title}</span>
+            <AddChatIcon
+              className={styles.addChatIcon}
+              onClick={(): void =>
+                store.local.update({ isNewChatPopupOpen: true })
+              }
+            />
+          </div>
+          <MenuInputSearch />
+        </header>
+
+        <section className={styles.scrolledChats}>
+          <div className={styles.menuContent}>
+            {chats.map(chat => {
+              const chatId = chat.chatId;
+              const currentChatId = currentChat.chatId;
+
+              const writeBoxText = store.writeBox.get(chatId).getMessage();
+              return (
+                <Link
+                  key={chatId}
+                  to={`/chat/${chatId}`}
+                  style={{ textDecoration: 'none', color: 'var(--black)' }}
                 >
-                  <ChatLine chat={chat} writeBoxText={writeBoxText} />
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
-    </aside>
-  );
-});
+                  <div
+                    key={chatId}
+                    className={styles.link}
+                    style={{
+                      backgroundColor:
+                        currentChatId === chatId
+                          ? 'var(--light-grey)'
+                          : 'var(--white)',
+                    }}
+                    onClick={(): void => {
+                      if (currentChatId !== chatId) {
+                        setCurrentChat({ ...chat, isLoading: true });
+                      }
+                    }}
+                  >
+                    <ChatLine chat={chat} writeBoxText={writeBoxText} />
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+      </aside>
+    );
+  },
+);

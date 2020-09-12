@@ -16,9 +16,21 @@ export const Menu: React.FC = () => {
   function renderCurrentTab(): React.ReactNode {
     switch (currentMenuState) {
       case 'discover':
-        return <MenuChatList />;
+        return (
+          <MenuChatList
+            key="discover"
+            title="Discover"
+            fetchChats={(): Promise<void> => store.chats.fetchDiscoverChats()}
+          />
+        );
       case 'chats':
-        return <MenuChatList />;
+        return (
+          <MenuChatList
+            key="chat"
+            title="Chats"
+            fetchChats={(): Promise<void> => store.chats.fetchUserChats()}
+          />
+        );
       case 'profile':
         return <MenuProfile />;
     }
