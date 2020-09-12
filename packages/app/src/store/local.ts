@@ -5,6 +5,8 @@ interface Local {
   isProfileOpen: boolean;
   isNewChatPopupOpen: boolean;
   isImagePopupOpen: boolean;
+  isPasswordPopupOpen: boolean;
+  isBioPopupOpen: boolean;
   currentMenuState: MenuState;
 }
 
@@ -15,6 +17,8 @@ export function createLocalStore() {
     isProfileOpen: false,
     isNewChatPopupOpen: false,
     isImagePopupOpen: false,
+    isPasswordPopupOpen: false,
+    isBioPopupOpen: false,
     currentMenuState: 'chats',
   };
 
