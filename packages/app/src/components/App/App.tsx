@@ -1,5 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React, { useState, useEffect, createContext } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useHistory,
+} from 'react-router-dom';
 
 import styles from './App.module.css';
 
@@ -8,13 +13,20 @@ import { ChatContainer } from '../ChatContainer';
 import { Menu } from '../Menu';
 import { PopupNewChat } from '../PopupNewChat';
 import { PopupImage } from '../PopupImage';
+import { PopupBio } from '../PopupBio';
 
 import { useStore } from '../../store';
+import { TOKEN_KEY } from '../../consts';
 
 interface PopupsProps {
   images64: string[];
   setImages64: (imgs: string[]) => void;
 }
+
+export const BioContext = createContext({
+  bioId: 0,
+  changeBioId: (id: number): void => undefined,
+});
 
 export const App: React.FC = () => {
   useEffect(() => {
@@ -26,11 +38,19 @@ export const App: React.FC = () => {
     };
   });
 
+  const [bioId, setBioId] = useState<number>(0);
+
+  function changeBioId(id: number): void {
+    setBioId(id);
+  }
+
   return (
     <Router>
       <Switch>
         <Route exact path={['/', '/chat', '/chat/:chatId']}>
-          <Home />
+          <BioContext.Provider value={{ bioId, changeBioId }}>
+            <Home />
+          </BioContext.Provider>
         </Route>
 
         <Route exact path="/login">
@@ -47,12 +67,19 @@ export const App: React.FC = () => {
 
 const Home: React.FC = () => {
   const store = useStore();
+  const history = useHistory();
 
-  const [images64, setImages64] = useState<string[]>([]);
+  const token_key = window.localStorage.getItem(TOKEN_KEY);
+
+  if (!token_key) {
+    history.push('/login');
+  }
 
   useEffect(() => {
     store.user.fetchUser();
   }, []);
+
+  const [images64, setImages64] = useState<string[]>([]);
 
   return (
     <main className={styles.app}>
@@ -85,6 +112,7 @@ const Popups: React.FC<PopupsProps> = ({ images64, setImages64 }) => {
           setImages64([]);
         }}
       />
+      <PopupBio />
     </>
   );
 };
