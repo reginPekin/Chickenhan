@@ -1,5 +1,5 @@
 import { Context, request } from './utils';
-import { User } from '../src/types';
+import { User, BackUser } from '../src/types';
 
 export class Authorization {
   private ctx: Context;
@@ -10,14 +10,14 @@ export class Authorization {
 
   public async authUserByFacebook(
     facebookToken: string,
-  ): Promise<User & { token: string }> {
+  ): Promise<BackUser & { token: string }> {
     return request({
       ctx: this.ctx,
       url: '/auth/facebook',
       options: {
         method: 'POST',
         body: {
-          token: facebookToken,
+          facebookToken,
         },
       },
     });
@@ -32,7 +32,7 @@ export class Authorization {
       options: {
         method: 'POST',
         body: {
-          token: googleToken,
+          googleToken,
         },
       },
     });
@@ -44,7 +44,7 @@ export class Authorization {
   ): Promise<User & { token: string }> {
     return request({
       ctx: this.ctx,
-      url: '/auth/mail',
+      url: '/auth/login',
       options: {
         method: 'POST',
         body: {
@@ -65,7 +65,7 @@ export class Authorization {
       options: {
         method: 'POST',
         body: {
-          token: facebookToken,
+          facebookToken,
           login: username,
         },
       },
@@ -82,7 +82,7 @@ export class Authorization {
       options: {
         method: 'POST',
         body: {
-          token: googleToken,
+          googleToken,
           login: username,
         },
       },
@@ -95,13 +95,23 @@ export class Authorization {
   ): Promise<User & { token: string }> {
     return request({
       ctx: this.ctx,
-      url: '/auth/new/mail',
+      url: '/auth/new/login',
       options: {
         method: 'POST',
         body: {
           login: username,
           password,
         },
+      },
+    });
+  }
+
+  public async ping(): Promise<string> {
+    return request({
+      ctx: this.ctx,
+      url: '/ping',
+      options: {
+        method: 'GET',
       },
     });
   }

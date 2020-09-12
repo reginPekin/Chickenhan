@@ -18,7 +18,25 @@ export class Message {
       url: `/messages/${chatId}`,
       options: {
         method: 'POST',
-        body: { message },
+        body: message,
+      },
+    });
+  }
+
+  public async getMessageList(
+    chatId: number,
+    nextId?: number,
+  ): Promise<{
+    list: MessageInterface[];
+    nextFromId?: number | undefined;
+    hasMore: boolean;
+  }> {
+    return request({
+      ctx: this.ctx,
+      url: `/messages/pagination/${chatId}`,
+      options: {
+        method: 'GET',
+        queryParams: { nextId },
       },
     });
   }

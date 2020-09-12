@@ -12,10 +12,28 @@ export class Chats {
   public async getChatById(chatId: number): Promise<Chat> {
     return request({
       ctx: this.ctx,
-      url: `/chats`,
+      url: `/chats/${chatId}`,
       options: {
         method: 'GET',
-        queryParams: { chatId },
+      },
+    });
+  }
+
+  public async getDiscoverChats(
+    nextId?: number,
+  ): Promise<{
+    list: Chat[];
+    nextFromId?: number | undefined;
+    hasMore: boolean;
+  }> {
+    return request({
+      ctx: this.ctx,
+      url: `/discover`,
+      options: {
+        method: 'GET',
+        queryParams: {
+          nextId,
+        },
       },
     });
   }
@@ -31,36 +49,17 @@ export class Chats {
     });
   }
 
-  public async editChat(id: string, updatePart: Partial<Chat>): Promise<Chat> {
+  public async editChat(
+    chatId: number,
+    updatePart: Partial<Chat>,
+  ): Promise<Chat> {
     return request({
       ctx: this.ctx,
-      url: `/chats`,
+      url: `/chats/${chatId}`,
       options: {
         method: 'PATCH',
         body: updatePart,
-        queryParams: { chat_id: id },
       },
     });
   }
-
-  // public async editAvatar(id: string, avatar: FormData): Promise<any> {
-  //   return request({
-  //     ctx: this.ctx,
-  //     url: `/chats/${id}/avatar`,
-  //     options: {
-  //       method: 'PATCH',
-  //       body: avatar,
-  //     },
-  //   });
-  // }
-
-  // public async remove(id: string): Promise<any> {
-  //   return request({
-  //     ctx: this.ctx,
-  //     url: `/chats/${id}`,
-  //     options: {
-  //       method: 'DELETE',
-  //     },
-  //   });
-  // }
 }

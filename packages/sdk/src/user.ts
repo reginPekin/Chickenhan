@@ -19,42 +19,24 @@ export class User {
     });
   }
 
-  public async getUser(id: string): Promise<User> {
+  public async getUser(id: number): Promise<User> {
     return request({
       ctx: this.ctx,
-      url: '/users',
+      url: `/users/${id}`,
       options: {
         method: 'GET',
-        queryParams: { id },
       },
     });
   }
 
-  public async edit(id: string, body: Partial<UserInterface>): Promise<User> {
+  public async editMe(body: Partial<UserInterface>): Promise<User> {
     return request({
       ctx: this.ctx,
-      url: '/users',
+      url: '/users/me',
       options: {
         method: 'PATCH',
-        queryParams: { id },
         body: body,
       },
     });
   }
-
-  // public async addChat(id: string, chatId: string) {
-  //   return request({
-  //     ctx: this.ctx,
-  //     url: `/users/${id}/chats`,
-  //     options: { method: 'POST', body: { chatId } },
-  //   });
-  // }
-
-  // public async deleteChat(id: string, chatId: string) {
-  //   return request({
-  //     ctx: this.ctx,
-  //     url: `/users/${id}/chats/${chatId}`,
-  //     options: { method: 'DELETE' },
-  //   });
-  // }
 }
