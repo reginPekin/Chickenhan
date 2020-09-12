@@ -1,8 +1,11 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import cx from 'classnames';
 
 import styles from './LoginPage.module.css';
+
+import { SignupType } from '@chickenhan/sdk/lib/types';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
@@ -17,6 +20,7 @@ import { IconProps, GoogleIcon, FacebookIcon, EmailIcon } from '../Icons';
 
 import { useStore } from '../../store';
 import { chickenhan } from '../../store/chickenhan';
+import { TOKEN_KEY } from '../../consts';
 
 export interface LoginBlock {
   Icon: React.FC<IconProps>;
@@ -30,10 +34,26 @@ interface LoginBlockProps {
 
 interface ButtonProps {
   children: JSX.Element;
+
+  openPopup?: () => void;
+  setToken?: (token: string) => void;
+  setSignupType?: (type: SignupType) => void;
 }
 
 export const LoginPage: React.FC = ({}) => {
-  const [isSignup, setIsSignip] = useState(true);
+  useEffect(() => {
+    window.localStorage.removeItem(TOKEN_KEY);
+  }, []);
+
+  const store = useStore();
+  const history = useHistory();
+
+  const [isSignup, setIsSignip] = useState<boolean>(true);
+  const [signupType, setSignupType] = useState<SignupType>('username');
+
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>(''); // for username
+  const [socialToken, setSocialToken] = useState<string>(''); // for Facebook and Google
 
   const signupPage = {
     welcomeText: 'Join Chickenhan.',
@@ -49,14 +69,97 @@ export const LoginPage: React.FC = ({}) => {
     onClick: (): void => setIsSignip(true),
   };
 
+  function openPopup(): void {
+    store.local.update({ isPasswordPopupOpen: true });
+  }
+
+  function closePopup(): void {
+    store.local.update({ isPasswordPopupOpen: false });
+  }
+
+  async function signupUsername(): Promise<void> {
+    await chickenhan.authorization.ping();
+    const responseSignupUser = await chickenhan.authorization.signUpUserByUsername(
+      username,
+      password,
+    );
+
+    if (responseSignupUser.hasOwnProperty('error')) {
+      return;
+    }
+
+    const user = {
+      id: responseSignupUser.id,
+      login: responseSignupUser.login,
+      isOnline: true,
+      // isOnline: responseSignupUser.online,
+      avatar: responseSignupUser.avatar,
+    };
+
+    store.user.auth(responseSignupUser.token, user);
+    history.push('/');
+  }
+
+  async function signinUsername(): Promise<void> {
+    const responseAuthUsername = await chickenhan.authorization.authUserByUsername(
+      username,
+      password,
+    );
+
+    if (responseAuthUsername.hasOwnProperty('error')) {
+      return;
+    }
+
+    const user = {
+      id: responseAuthUsername.id,
+      login: responseAuthUsername.login,
+      isOnline: true,
+      // isOnline: responseAuthUsername.online,
+      avatar: responseAuthUsername.avatar,
+    };
+
+    store.user.auth(responseAuthUsername.token, user);
+    history.push('/');
+  }
+
+  async function signupFacebook(): Promise<void> {
+    await chickenhan.authorization.signUpUserByFacebook(socialToken, username);
+  }
+
+  async function signupGoogle(): Promise<void> {
+    await chickenhan.authorization.signUpUserByFacebook(socialToken, username);
+  }
+
   const page = isSignup ? signupPage : loginPage;
+
+  function chooseSignupSubmit(): Promise<any> {
+    switch (signupType) {
+      case 'username':
+        return signupUsername();
+
+      case 'Facebook':
+        return signupFacebook();
+
+      case 'Google':
+        return signupGoogle();
+    }
+  }
 
   return (
     <main className={styles.main}>
-      <PopupPasswordLogin isSignup={isSignup} />
+      <PopupPasswordLogin
+        isSignup={isSignup}
+        signupType={signupType}
+        setLogin={(value: string): void => setUsername(value)}
+        setPassword={(value: string): void => setPassword(value)}
+        onSubmit={(): any => {
+          isSignup ? chooseSignupSubmit() : signinUsername();
+          closePopup();
+        }}
+      />
       <section className={styles.loginSection}>
         <h1 className={cx(styles.text, styles.block)}>{page.welcomeText}</h1>
-        <GoogleButton>
+        <GoogleButton openPopup={(): void => openPopup()}>
           <LoginSection
             loginBlock={{
               Icon: GoogleIcon,
@@ -65,7 +168,11 @@ export const LoginPage: React.FC = ({}) => {
             isSignup={isSignup}
           />
         </GoogleButton>
-        <FacebookButton>
+        <FacebookButton
+          openPopup={(): void => openPopup()}
+          setToken={(token: string): void => setSocialToken(token)}
+          setSignupType={(type: SignupType): void => setSignupType(type)}
+        >
           <LoginSection
             loginBlock={{
               Icon: FacebookIcon,
@@ -74,16 +181,22 @@ export const LoginPage: React.FC = ({}) => {
             isSignup={isSignup}
           />
         </FacebookButton>
-        <div className={styles.block}>
-          <LoginButton>
-            <LoginSection
-              loginBlock={{
-                Icon: EmailIcon,
-                name: 'username',
-              }}
-              isSignup={isSignup}
-            />
-          </LoginButton>
+        <div
+          className={styles.block}
+          onClick={(): void => {
+            openPopup();
+
+            // if (isSignup) signupUsername();
+            // else signinUsername();
+          }}
+        >
+          <LoginSection
+            loginBlock={{
+              Icon: EmailIcon,
+              name: 'username',
+            }}
+            isSignup={isSignup}
+          />
         </div>
         <span className={styles.text}>
           {page.transitionText}
@@ -96,31 +209,39 @@ export const LoginPage: React.FC = ({}) => {
   );
 };
 
-const LoginButton: React.FC<ButtonProps> = ({ children }) => {
+const FacebookButton: React.FC<ButtonProps> = ({
+  children,
+
+  openPopup = (): void => undefined,
+  setToken = (): void => undefined,
+  setSignupType = (): void => undefined,
+}) => {
   const store = useStore();
+  const history = useHistory();
 
-  return (
-    <div
-      onClick={(): void => {
-        store.local.update({ isPasswordPopupOpen: true });
-      }}
-    >
-      {children}
-    </div>
-  );
-};
+  async function responseFacebook(response: any): Promise<any> {
+    const facebookToken: string = response.id || '';
 
-const FacebookButton: React.FC<ButtonProps> = ({ children }) => {
-  async function responseFacebook(response: any): Promise<void> {
-    console.log(response);
-    console.log('check');
-    // не google
-    const responseGoogle = await chickenhan.authorization.signupGoogle(
-      response.accesToken,
-    );
-    console.log('ne google');
-    console.log(responseGoogle, 'google response auth');
-    //
+    if (facebookToken) {
+      const responseAuthFacebook = await chickenhan.authorization.authUserByFacebook(
+        facebookToken,
+      );
+
+      if (responseAuthFacebook.hasOwnProperty('error')) {
+        setSignupType('Facebook');
+        setToken(facebookToken);
+        openPopup();
+      } else {
+        const user = {
+          id: responseAuthFacebook.id,
+          login: responseAuthFacebook.login,
+          isOnline: responseAuthFacebook.online,
+          avatar: responseAuthFacebook.avatar,
+        };
+        store.user.auth(responseAuthFacebook.token, user);
+        history.push('/');
+      }
+    }
   }
 
   return (
@@ -136,21 +257,30 @@ const FacebookButton: React.FC<ButtonProps> = ({ children }) => {
   );
 };
 
-const GoogleButton: React.FC<ButtonProps> = ({ children }) => {
-  const [accessToken, setAccessToken] = useState<string>('');
+const GoogleButton: React.FC<ButtonProps> = ({
+  children,
 
-  async function login(response: any): Promise<void> {
-    setAccessToken(response.tokenId);
-    const responseGoogle = await chickenhan.authorization.signupGoogle(
-      response.tokenId,
-    );
-    console.log(responseGoogle, 'google response auth');
+  openPopup = (): void => undefined,
+  setToken = (): void => undefined,
+  setSignupType = (): void => undefined,
+}) => {
+  async function responseGoogle(response: any): Promise<void> {
+    const googleToken: string = response.tokenId || '';
 
-    console.log(response, 'response');
+    if (googleToken) {
+      // const responseAuthGoogle = await chickenhan.authorization.authUserByGoogle(
+      //   googleToken,
+      // );
+      // if (responseAuthGoogle.hasOwnProperty('error')) {
+      //   setSignupType('Google');
+      //   setToken(googleToken);
+      //   openPopup();
+      // }
+    }
   }
 
-  function handleLoginFailure(): void {
-    console.log('Failed to log in');
+  function handleLoginFailure(error: any): void {
+    console.log(error, 'Google auth error');
   }
 
   return (
@@ -159,8 +289,8 @@ const GoogleButton: React.FC<ButtonProps> = ({ children }) => {
         <div onClick={renderProps.onClick}>{children}</div>
       )}
       clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID || ''}
-      onSuccess={(response): any => login(response)}
-      onFailure={(): void => handleLoginFailure()}
+      onSuccess={(response): any => responseGoogle(response)}
+      onFailure={(error: any): void => handleLoginFailure(error)}
       isSignedIn={true}
       cookiePolicy={'single_host_origin'}
     />
