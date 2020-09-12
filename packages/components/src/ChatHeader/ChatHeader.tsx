@@ -4,17 +4,19 @@ import { Avatar } from '@chickenhan/components/src/Avatar';
 
 import styles from './ChatHeader.module.css';
 
-import { Chat } from '../types';
+import { ChatState } from '../types';
 
 import { MoreIcon } from '../Icons';
 
 interface ChatHeader {
-  chat: Chat;
-  leaveChat?: () => void;
+  chat: ChatState;
+  isOptionsOpen?: boolean;
+
+  leaveChat?: () => Promise<void>;
 }
 
 export const ChatHeader: React.FC<ChatHeader> = React.memo(
-  ({ chat, leaveChat = (): void => undefined }) => {
+  ({ chat, isOptionsOpen = false, leaveChat = (): void => undefined }) => {
     const [isMoreIconHover, setIsMoreIconHover] = useState<boolean>(false);
 
     const chatName = chat.name || '';
@@ -23,7 +25,9 @@ export const ChatHeader: React.FC<ChatHeader> = React.memo(
       if (chat.type === 'dialog' && chat.opponent) {
         return 'личные сообщения';
       }
-      return `${chat.userCount} участник(ов)`;
+      return `${chat.userCount} ${
+        chat.userCount && chat.userCount > 1 ? `members` : `member`
+      }`;
     }
 
     function extractChatName(): string {
@@ -66,9 +70,14 @@ export const ChatHeader: React.FC<ChatHeader> = React.memo(
             <span className={styles.userCount}>{extractUserCount()}</span>
           </div>
           <span
+            style={{ display: isOptionsOpen ? 'block' : 'none' }}
             className={styles.moreIcon}
             onMouseEnter={(): void => setIsMoreIconHover(true)}
-            onMouseLeave={(): void => setIsMoreIconHover(false)}
+            onMouseLeave={(): void => {
+              setTimeout(() => {
+                setIsMoreIconHover(false);
+              }, 230);
+            }}
           >
             <MoreIcon />
             {MemoizedOptions}

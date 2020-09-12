@@ -10,11 +10,12 @@ import { useStore } from '../../store';
 import styles from './Chat.module.css';
 
 interface ChatProps {
-  chatId: string;
+  chatId: number;
 }
 
 export const Chat: React.FC<ChatProps> = ({ chatId }) => {
   const store = useStore();
+  const chats = store.chats.useSelector(storeChats => storeChats.chats);
   const writeBoxStore = store.writeBox.get(chatId);
   const [currentChat] = store.chat.useState();
   const [user] = store.user.useState();
@@ -22,15 +23,55 @@ export const Chat: React.FC<ChatProps> = ({ chatId }) => {
     Boolean(chat[chatId]?.isLoading),
   );
 
+  function checkTheChat(): boolean {
+    const found = chats.find(chat => chat.chatId === chatId);
+
+    return Boolean(found);
+  }
+
   const messagesContainerRef = useRef<HTMLDivElement | null>(null);
 
   const getMessagesRef = useCallback((): React.RefObject<HTMLDivElement> => {
     return messagesContainerRef;
   }, [messagesContainerRef]);
 
+  function renderFooter(): React.ReactNode {
+    if (!checkTheChat())
+      return (
+        <button
+          className={styles.button}
+          onClick={(): Promise<void> => store.chats.joinChat(chatId)}
+        >
+          Join the chat
+        </button>
+      );
+    return (
+      <WriteBox
+        key={chatId}
+        value={writeBoxStore.getMessage()}
+        onSubmit={async (value): Promise<any> => {
+          await store.messages.get(chatId).send({ text: value });
+          writeBoxStore.clearMessage();
+
+          if (messagesContainerRef.current) {
+            messagesContainerRef.current.scrollTop =
+              messagesContainerRef.current.scrollHeight;
+          }
+        }}
+        onBlur={(value): void => {
+          writeBoxStore.saveMessage(value);
+        }}
+      />
+    );
+  }
+
   return (
     <>
-      <ChatHeader chat={currentChat} />
+      <ChatHeader
+        chat={currentChat}
+        leaveChat={(): Promise<void> => store.chats.leaveChat(chatId)}
+        isOptionsOpen={checkTheChat()}
+      />
       <section className={styles.messagesSection} ref={messagesContainerRef}>
         <ChatMessages
           chat={currentChat}
@@ -38,24 +79,7 @@ export const Chat: React.FC<ChatProps> = ({ chatId }) => {
           getMessagesRef={getMessagesRef}
         />
       </section>
-      <footer className={styles.footer}>
-        <WriteBox
-          key={chatId}
-          value={writeBoxStore.getMessage()}
-          onSubmit={async (value): Promise<any> => {
-            await store.messages.get(chatId).send({ text: value });
-            writeBoxStore.clearMessage();
-
-            if (messagesContainerRef.current) {
-              messagesContainerRef.current.scrollTop =
-                messagesContainerRef.current.scrollHeight;
-            }
-          }}
-          onBlur={(value): void => {
-            writeBoxStore.saveMessage(value);
-          }}
-        />
-      </footer>
+      <footer className={styles.footer}>{renderFooter()}</footer>
     </>
   );
 };

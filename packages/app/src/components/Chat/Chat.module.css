@@ -16,6 +16,18 @@
 }
 
 
+.button {
+  padding: 8px 24px;
+  font-size: 15px;
+  border-radius: 16px;
+  cursor: pointer;
+  background-color: var(--hover-main-yellow);
+}
+
+.button:hover {
+  background-color: var(--main-yellow);
+}
+
 .footer {
   padding: 16px;
   width: 100%;
