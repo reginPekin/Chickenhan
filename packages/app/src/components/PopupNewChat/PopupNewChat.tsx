@@ -13,7 +13,6 @@ import { DeleteIcon, AvatarLoaderIcon } from '../Icons';
 
 import { useStore } from '../../store';
 
-import { createChat } from '@chickenhan/components/sdk/indexOld';
 import { ChatType } from '@chickenhan/sdk/lib/types';
 
 export const PopupNewChat: React.FC = () => {
@@ -28,9 +27,14 @@ export const PopupNewChat: React.FC = () => {
   const [isNewChatLoading, setIsNewChatLoading] = useState<boolean>(false);
 
   const [chatAvatar, setChatAvatar] = useState<string>('');
-  const [chatType, setChatType] = useState<ChatType | string>('public'); // настроить Select
+  const [chatType, setChatType] = useState<ChatType>('public'); // настроить Select
 
-  const options = [
+  const options: Array<{
+    label: string;
+    value: ChatType;
+    description: string;
+    selected?: boolean;
+  }> = [
     {
       label: 'Public',
       value: 'public',
@@ -85,7 +89,7 @@ export const PopupNewChat: React.FC = () => {
             <Select
               title="Chat type"
               options={options}
-              setSelectedOption={(value: string): void => setChatType(value)}
+              setSelectedOption={(option): void => setChatType(option.value)}
             />
           </section>
 
@@ -97,18 +101,14 @@ export const PopupNewChat: React.FC = () => {
               )
                 return;
               setIsNewChatLoading(true);
-              const result = await createChat().then(res => res);
-              if (result !== 'ok') return;
 
-              store.chats.addChat({
-                id: `${Math.floor(Math.random() * Math.floor(10000))}`,
+              const newChat = {
                 type: chatType,
-                avatar:
-                  chatAvatar ||
-                  'https://chto-takoe-lyubov.net/wp-content/uploads/2020/01/morkov-zagadki.jpg',
+                avatar: chatAvatar,
                 name: inputWithLabelRef.current.value,
-                userCount: 1,
-              });
+              };
+
+              store.chats.addChat(newChat);
               store.local.update({ isNewChatPopupOpen: false });
               setIsNewChatLoading(false);
             }}

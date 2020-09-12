@@ -2,7 +2,6 @@ import { createStore } from '../utils/createStore';
 
 import { User } from '@chickenhan/sdk/lib/types';
 
-import { getUserInfo } from '@chickenhan/components/sdk/indexOld';
 import { TOKEN_KEY } from '../consts';
 import { chickenhan } from './chickenhan';
 
@@ -10,7 +9,7 @@ import { chickenhan } from './chickenhan';
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createUserStore() {
   const initialState: User = {
-    id: '',
+    id: 0,
     login: '',
     isOnline: true,
     avatar: ``,
@@ -19,6 +18,7 @@ export function createUserStore() {
   const [state, setState, useState, useSelector] = createStore(initialState);
 
   function update(partialState: Partial<User>): void {
+    chickenhan.user.editMe(partialState);
     setState({ ...state, ...partialState });
   }
 
@@ -30,7 +30,7 @@ export function createUserStore() {
   }
 
   async function fetchUser(): Promise<void> {
-    const userInfo = await getUserInfo();
+    const userInfo = await chickenhan.user.getMe();
 
     update({ ...userInfo });
   }

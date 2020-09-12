@@ -1,8 +1,8 @@
 import { createStore } from '../utils/createStore';
 
-import { Message } from '@chickenhan/components/src/types';
+import { Message } from '@chickenhan/sdk/lib/types';
 
-import { fetchMessage, sendMessage } from '@chickenhan/components/sdk/indexOld';
+import { chickenhan } from './chickenhan';
 
 interface MessageUI extends Message {
   status?: 'failed' | 'success';
@@ -14,10 +14,13 @@ interface ChatMessages {
   messages: MessageUI[];
   pendingMessages: PendingMessage[];
   isLoading: boolean;
+  isFetched: boolean;
+  nextFromId?: number;
+  hasMore?: boolean;
 }
 
 interface Messages {
-  [chatId: string]: ChatMessages | undefined;
+  [chatId: number]: ChatMessages | undefined;
 }
 
 export function createMessageStore() {
@@ -26,6 +29,7 @@ export function createMessageStore() {
     messages: [],
     pendingMessages: [],
     isLoading: true,
+    isFetched: false,
   };
 
   const [state, setState, useState, useSelector] = createStore(initialState);
@@ -34,7 +38,7 @@ export function createMessageStore() {
     setState({ ...state, ...updatedState });
   }
 
-  function get(chatId: string) {
+  function get(chatId: number) {
     if (!state[chatId]) updateGlobal({ [chatId]: initialChat });
 
     function update(partialChat: Partial<ChatMessages>): void {
@@ -42,17 +46,29 @@ export function createMessageStore() {
     }
 
     async function fetch(): Promise<void> {
-      update({ isLoading: true });
-      const messages = await fetchMessage(chatId);
-      update({ messages, isLoading: false });
+      if (state[chatId]?.hasMore === false) return;
+
+      if (!state[chatId]?.isFetched) {
+        update({ isLoading: true });
+        const messages = await chickenhan.messages.getMessageList(
+          chatId,
+          state[chatId]?.nextFromId,
+        );
+        update({
+          messages: messages.list.reverse(),
+          nextFromId: messages.nextFromId,
+          hasMore: messages.hasMore,
+          isLoading: false,
+          isFetched: true,
+        });
+      }
     }
 
     async function send(newMessage: { text: string }): Promise<void> {
-      console.log(state[chatId]);
       const message: PendingMessage = {
         text: newMessage.text,
-        date: new Date().getTime(),
-        messageId: `${state[chatId]!.pendingMessages.length}`,
+        date: `${new Date().toISOString()}`,
+        messageId: state[chatId]!.pendingMessages.length,
       };
 
       const messagesClone = [...state[chatId]!.messages];
@@ -63,8 +79,13 @@ export function createMessageStore() {
       update({ pendingMessages: clone });
 
       try {
-        const result = await sendMessage({ ...newMessage, chatId });
+        const result = await chickenhan.messages.addMessage(
+          { text: newMessage.text },
+          chatId,
+        );
+
         clone.shift();
+        update({ pendingMessages: clone });
 
         messagesClone.push(result);
         update({ messages: messagesClone });
@@ -73,14 +94,19 @@ export function createMessageStore() {
       }
     }
 
-    // function remove(): void {
-    //   return;
-    // }
+    function remove(messageId: number): void {
+      const messagesClone = [...state[chatId]!.messages];
+      const remainingMessages = messagesClone.filter(
+        message => message.messageId !== messageId,
+      );
+
+      update({
+        messages: remainingMessages,
+      });
+    }
 
     return { fetch, send };
   }
-
-  // function changeMessageStatus(id: string): void {}
 
   return { useState, useSelector, get };
 }

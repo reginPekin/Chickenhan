@@ -1,18 +1,14 @@
 import { createStore } from '../utils/createStore';
 
-import { Chat } from '@chickenhan/sdk/lib/types';
+import { ChatState } from '@chickenhan/sdk/lib/types';
 
-import { getChat } from '@chickenhan/components/sdk/indexOld';
-
-interface ChatState extends Chat {
-  isLoading: boolean;
-}
+import { chickenhan } from './chickenhan';
 
 export function createChatStore() {
   const initialState: ChatState = {
     name: '',
     type: 'public',
-    id: '0',
+    chatId: 0,
     avatar: '',
     userCount: 0,
 
@@ -25,9 +21,9 @@ export function createChatStore() {
     setState({ ...state, ...partialState });
   }
 
-  async function fetchCurrentChat(id: string): Promise<void> {
+  async function fetchCurrentChat(id: number): Promise<void> {
     update({ isLoading: true });
-    const currentChat = await getChat(id);
+    const currentChat = await chickenhan.chats.getChatById(id);
 
     update({ ...currentChat, isLoading: false });
   }
