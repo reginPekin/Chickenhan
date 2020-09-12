@@ -1,17 +1,17 @@
 function convertCase(incomingElement: any, convert: any): any {
   const convertedObject: Record<string, any> = {};
 
-  const convertArray = (array: any[]) => {
+  const convertArray = (array: any[]): any[] => {
     const convertedArray = array.map(element => convertCase(element, convert));
 
     return convertedArray;
   };
 
   const checkForObject = (element: any): boolean =>
-    typeof element === 'object' && !element.length;
+    typeof element === 'object' && element.length === undefined;
 
   const checkForArray = (element: any): boolean =>
-    typeof element === 'object' && element.length;
+    typeof element === 'object' && element.length !== undefined;
 
   if (checkForObject(incomingElement)) {
     for (const property in incomingElement) {
