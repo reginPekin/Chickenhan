@@ -5,7 +5,7 @@ interface ChatWriteBox {
 }
 
 interface WriteBoxes {
-  [chatId: string]: ChatWriteBox;
+  [chatId: number]: ChatWriteBox;
 }
 
 // too complex return type
@@ -20,7 +20,7 @@ export function createWriteBoxStore() {
     setState({ ...state, ...updatedState });
   }
 
-  function get(chatId: string) {
+  function get(chatId: number) {
     if (!state[chatId]) updateGlobal({ [chatId]: initialWriteBox });
 
     function update(partialChatWriteBox: Partial<ChatWriteBox>): void {
