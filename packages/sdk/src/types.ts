@@ -1,28 +1,17 @@
 export type SignupType = 'username' | 'Google' | 'Facebook';
 
 export interface User {
-  id: string;
+  id: number;
   login: string;
-  isOnline: boolean; // на бэкэ online
+  isOnline: boolean;
   avatar: string;
 }
 
-interface Opponent {
-  isOnline: boolean; // на бэкэ online
+export interface BackUser {
+  id: number;
   login: string;
-}
-
-export type ChatType = 'dialog' | 'public' | 'private';
-export interface Chat {
-  opponent?: Opponent;
-  id: string;
-  lastMessage?: string;
-  lastDateMessage?: string;
+  online: boolean;
   avatar: string;
-  type: ChatType | string;
-  // parameters below exists just for public & private types
-  name?: string;
-  userCount?: number;
 }
 
 export interface AddChat {
@@ -33,14 +22,14 @@ export interface AddChat {
 }
 
 interface Picture {
-  id: string;
+  id: number;
   url: string;
   // height: number;
   // width: number;
 }
 
 interface Author {
-  id: string;
+  id: number;
   login: string;
   avatar: string;
   isOnline: boolean;
@@ -49,8 +38,8 @@ interface Author {
 export interface Message {
   author: Author;
   text: string;
-  date: number;
-  messageId: string;
+  date: string;
+  messageId: number;
   pictures?: Array<Picture>;
   // loadStatus?: LoadStatus;
 }
@@ -59,11 +48,36 @@ export interface AddMessage {
   pictures?: string[];
   text?: string;
 }
-// chat_id: number;
-//   author_id: number;
 
-//   message_id: BigInt;
-//   date: string;
+export type ChatType = 'dialog' | 'public' | 'private';
 
-//   text: string;
-//   pictures: BigInt[];
+export interface Opponent {
+  avatar: string;
+  isOnline: boolean;
+  login: string;
+}
+
+export interface ChatWrapper {
+  chatId: number;
+  type: ChatType;
+
+  avatar: string;
+  name?: string;
+  userCount?: number;
+
+  opponent?: Opponent;
+}
+
+export interface Chat extends ChatWrapper {
+  lastMessage?: string;
+  lastDateMessage?: string;
+}
+
+export interface ChatState extends Chat {
+  isLoading: boolean;
+}
+
+export interface UserChats {
+  userId: number;
+  chats: number[];
+}
