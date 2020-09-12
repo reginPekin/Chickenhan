@@ -12,6 +12,7 @@ type PasswordType = 'password' | 'text';
 
 interface InputWithUnderlineProps {
   onSubmit?: () => void;
+  onChange?: (text: string) => void;
 
   ref?: React.Ref<HTMLInputElement>;
 
@@ -33,6 +34,7 @@ export const InputWithUnderline: React.ForwardRefExoticComponent<InputWithUnderl
       className = undefined,
 
       onSubmit = (): void => undefined,
+      onChange = (): void => undefined,
     },
     ref,
   ) => {
@@ -95,7 +97,7 @@ export const InputWithUnderline: React.ForwardRefExoticComponent<InputWithUnderl
           <BasicInput
             ref={ref}
             onSubmit={onSubmit}
-            onChange={(event): void => console.log(event.target.value)}
+            onChange={(event): void => onChange(event.target.value)}
             style={{
               backgroundColor: 'var(--white)',
               paddingBottom: '5px',
