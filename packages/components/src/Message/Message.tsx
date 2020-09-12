@@ -12,15 +12,21 @@ import styles from './Message.module.css';
 
 interface MessageProps {
   message: TypeMessage;
+  openBioPopup?: (id: number) => void;
   pending?: boolean;
 }
 
 export const Message: React.FC<MessageProps> = React.memo(
-  ({ message, pending }) => {
+  ({ message, openBioPopup = () => undefined, pending }) => {
     function renderAuthor(): JSX.Element {
       return (
         <div className={styles.nameAndDate}>
-          <span>{message.author.login}</span>
+          <span
+            className={styles.pointer}
+            onClick={(): void => openBioPopup(message.author.id)}
+          >
+            {message.author.login}
+          </span>
           <div>
             <span
               style={{ display: message.author.isOnline ? 'block' : 'none' }}
@@ -51,7 +57,12 @@ export const Message: React.FC<MessageProps> = React.memo(
 
     return (
       <article className={styles.messageArticle}>
-        <Avatar url={message.author.avatar} width={40} />
+        <div
+          className={styles.pointer}
+          onClick={(): void => openBioPopup(message.author.id)}
+        >
+          <Avatar url={message.author.avatar} width={40} />
+        </div>
         <div className={styles.textInfo}>
           {renderAuthor()}
           <span className={styles.messageText}>{message.text}</span>
