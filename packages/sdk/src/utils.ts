@@ -59,20 +59,20 @@ export async function request<T>({
     compiledOptions.body = JSON.stringify(convertedBodyToSnake);
   }
 
-  console.log(compiledOptions, 'all options');
-
   try {
     const response = await fetch(endpoint, {
       ...(compiledOptions as any),
       headers: new Headers(compiledOptions.headers),
       mode: 'cors',
     });
+
     const body = await response.json();
 
     return snakeToCamel(body) as T;
   } catch (errorJson) {
     // приходит в виде JSON
     const error = snakeToCamel(JSON.parse(errorJson));
+
     throw new ChickenhanError(error.code, error.name, error.desc);
   }
 }

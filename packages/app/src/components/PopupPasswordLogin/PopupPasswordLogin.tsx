@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef, useMemo, useEffect } from 'react';
 
 import styles from './PopupPasswordLogin.module.css';
 
@@ -18,11 +18,19 @@ type SigninStatus = 'username' | 'password';
 interface PopupPasswordLoginProps {
   isSignup?: boolean;
   signupType?: SignupType;
+
+  setLogin?: (value: string) => void;
+  setPassword?: (value: string) => void;
+  onSubmit?: () => void;
 }
 
 export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
   signupType = 'username',
   isSignup = false,
+
+  onSubmit = (): void => undefined,
+  setLogin = (): void => undefined,
+  setPassword = (): void => undefined,
 }) => {
   const store = useStore();
   const isPopupOpen = store.local.useSelector(
@@ -34,6 +42,9 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
   const [socialUsernameError, setSocialUsernameError] = useState<string>('');
   const [usernameError, setUsernameError] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
+
+  // const [popupLogin, setPopupLogin] = useState<string>('');
+  // const [popupPassword, setPopupPassword] = useState<string>('');
 
   const popupRef = useRef<HTMLDivElement>(null);
   const userNameRef = useRef<HTMLInputElement>(null);
@@ -77,7 +88,8 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
           <InputWithUnderline
             className={styles.inputWithUnderline}
             ref={userNameRef}
-            onSubmit={(): void => undefined}
+            onSubmit={onSubmit}
+            onChange={setLogin}
             label="Your username"
             error={socialUsernameError}
           />
@@ -92,6 +104,8 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
             onSubmit={(): void => {
               passwordRef.current?.focus();
             }}
+            // onChange={(value): void => setPopupLogin(value)}
+            onChange={setLogin}
             label="Your username"
             error={usernameError}
           />
@@ -100,6 +114,15 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
             ref={passwordRef}
             type="password"
             label="Your password"
+            // onChange={(value): void => setPopupPassword(value)}
+            onChange={setPassword}
+            onSubmit={(): void => {
+              // не проходит setState
+              // setLogin(popupLogin);
+              // setPassword(popupPassword);
+              // пока менять внутри сабмитов
+              onSubmit();
+            }}
             error={passwordError}
           />
         </div>
@@ -116,7 +139,8 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
         <InputWithUnderline
           className={styles.inputWithUnderline}
           key="username"
-          ref={signinRef}
+          ref={userNameRef}
+          onChange={setLogin}
           onSubmit={(): void => {
             setSigninStatus('password');
           }}
@@ -126,11 +150,14 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
       );
     }
 
+    passwordRef.current?.focus();
     return (
       <InputWithUnderline
+        onSubmit={onSubmit}
+        onChange={setPassword}
         className={styles.inputWithUnderline}
         key="password"
-        ref={signinRef}
+        ref={passwordRef}
         type="password"
         label="Your password"
         error={passwordError}
@@ -154,7 +181,7 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
           <h1 className={styles.title}>{title}</h1>
           <span className={styles.description}>{description}</span>
           {renderSigninPopupContent()}
-          <div className={styles.button}>
+          <div className={styles.button} onClick={(): void => onSubmit()}>
             <PositionAwareButton
               backgroundColor="var(--black)"
               hoveredColor="var(--hover-black)"

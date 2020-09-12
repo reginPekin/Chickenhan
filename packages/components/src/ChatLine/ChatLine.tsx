@@ -5,6 +5,8 @@ import cx from 'classnames';
 import { Chat } from '../types';
 import { Avatar } from '../Avatar';
 
+import { parseTime } from '../utils';
+
 import styles from './ChatLine.module.css';
 
 interface ChatLineProps {
@@ -17,7 +19,9 @@ export const ChatLine: React.FC<ChatLineProps> = React.memo(
     function renderUserCount(): React.ReactNode {
       if (!chat.userCount) return null;
       return (
-        <span className={styles.userCount}>{chat.userCount} участник</span>
+        <span className={styles.userCount}>
+          {chat.userCount} {chat.userCount > 1 ? 'members' : 'member'}
+        </span>
       ); // язык и падежи
     }
 
@@ -61,7 +65,7 @@ export const ChatLine: React.FC<ChatLineProps> = React.memo(
               <div className={styles.headInfo}>
                 <span className={styles.name}>{chat.opponent.login}</span>
                 <span className={styles.lastDateMessage}>
-                  {chat.lastDateMessage}
+                  {chat.lastDateMessage && parseTime(chat.lastDateMessage)}
                 </span>
               </div>
               <div className={styles.messageSection}>{renderMessage()}</div>
@@ -88,7 +92,7 @@ export const ChatLine: React.FC<ChatLineProps> = React.memo(
             <div className={styles.headInfo}>
               <span className={styles.name}>{chat.name}</span>
               <span className={styles.lastDateMessage}>
-                {chat.lastDateMessage}
+                {chat.lastDateMessage && parseTime(chat.lastDateMessage)}
               </span>
             </div>
             <div className={styles.messageSection}>

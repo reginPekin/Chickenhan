@@ -1,18 +1,20 @@
-export function parseTime(date: number): string {
-  const days = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
+export function parseTime(stringDate: string): string {
+  const date = Date.parse(stringDate);
+
+  const days = ['sun', 'mon', 'tue', 'med', 'thu', 'fri', 'sat'];
   const months = [
-    'янв',
-    'фев',
-    'мар',
-    'апр',
-    'май',
-    'июн',
-    'июл',
-    'авг',
-    'сен',
-    'окт',
-    'ноя',
-    'дек',
+    'jun',
+    'feb',
+    'mar',
+    'apr',
+    'may',
+    'jun',
+    'jul',
+    'aug',
+    'sept',
+    'okt',
+    'nov',
+    'dec',
   ];
 
   const oneDayMs = 24 * 60 * 60 * 1000;
