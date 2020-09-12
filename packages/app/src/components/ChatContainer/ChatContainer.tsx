@@ -16,7 +16,7 @@ interface ChatContainerProps {
   setImages64: (paths: string[]) => void;
 }
 interface ChatLayoutProps {
-  chatId: string;
+  chatId: number;
   setImages64: (paths: string[]) => void;
 }
 
@@ -34,7 +34,7 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
     );
   }
 
-  return <ChatLayout setImages64={setImages64} chatId={chatId} />;
+  return <ChatLayout setImages64={setImages64} chatId={parseInt(chatId)} />;
 };
 
 const ChatLayout: React.FC<ChatLayoutProps> = ({ setImages64, chatId }) => {
