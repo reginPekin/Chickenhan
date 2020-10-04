@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "@chickenhan/components": "1.0.0",
-    "@chickenhan/sdk": "1.0.0"
+    "@chickenhan/sdk": "1.0.0",
+    "events": "^3.2.0",
+    "http2": "^3.3.7"
   },
   "scripts": {
     "start": "react-app-rewired start",
