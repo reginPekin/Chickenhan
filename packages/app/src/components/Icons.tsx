@@ -65,15 +65,36 @@ export const LogoIcon: React.FC<IconProps> = React.memo(() => (
 ));
 
 export const DiscoverIcon: React.FC<IconProps> = React.memo(
-  ({ fill = 'var(--black)', stroke = 'var(--black)' }) => (
+  ({ fill, stroke = 'var(--black)' }) => (
     <svg width={26} height={26} viewBox="0 0 282 282" fill="none">
-      <path
-        d="M194.5 87L117.5 120L87.5 195.5L164 163.5L194.5 87Z"
+      <circle
+        cx={141}
+        cy={141}
+        r={133.5}
+        stroke={stroke}
+        strokeWidth={15}
         fill={fill}
       />
-      <circle cx={141} cy={141} r={133.5} stroke={stroke} strokeWidth={15} />
-      <rect x={229} y={132} width={45} height={19} rx={9.5} fill={fill} />
-      <rect x={8} y={132} width={45} height={19} rx={9.5} fill={fill} />
+      <path
+        d="M194.5 87L117.5 120L87.5 195.5L164 163.5L194.5 87Z"
+        fill={fill ? 'var(--light-grey)' : 'var(--black)'}
+      />
+      <rect
+        x={229}
+        y={132}
+        width={45}
+        height={19}
+        rx={9.5}
+        fill={fill ? 'var(--light-grey)' : 'var(--black)'}
+      />
+      <rect
+        x={8}
+        y={132}
+        width={45}
+        height={19}
+        rx={9.5}
+        fill={fill ? 'var(--light-grey)' : 'var(--black)'}
+      />
       <rect
         x={131}
         y={279}
@@ -81,7 +102,7 @@ export const DiscoverIcon: React.FC<IconProps> = React.memo(
         height={19}
         rx={9.5}
         transform="rotate(-90 131 279)"
-        fill={fill}
+        fill={fill ? 'var(--light-grey)' : 'var(--black)'}
       />
       <rect
         x={131}
@@ -90,7 +111,15 @@ export const DiscoverIcon: React.FC<IconProps> = React.memo(
         height={19}
         rx={9.5}
         transform="rotate(-90 131 52)"
-        fill={fill}
+        fill={fill ? 'var(--light-grey)' : 'var(--black)'}
+      />
+      <circle
+        cx={141}
+        cy={141}
+        r={133.5}
+        stroke={stroke}
+        strokeWidth={15}
+        fill="none"
       />
     </svg>
   ),
