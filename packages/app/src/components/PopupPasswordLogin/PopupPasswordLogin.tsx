@@ -39,21 +39,45 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
 
   // rename slide
   const [signinStatus, setSigninStatus] = useState<SigninStatus>('username');
+  const [isFocus, setIsFocus] = useState<boolean>(false);
+
   const [socialUsernameError, setSocialUsernameError] = useState<string>('');
   const [usernameError, setUsernameError] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
 
-  // const [popupLogin, setPopupLogin] = useState<string>('');
-  // const [popupPassword, setPopupPassword] = useState<string>('');
-
   const popupRef = useRef<HTMLDivElement>(null);
   const userNameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  const signinRef = useRef<HTMLInputElement>(null);
 
-  useOnClickOutside(popupRef, () =>
-    store.local.update({ isPasswordPopupOpen: false }),
-  );
+  useOnClickOutside(popupRef, () => {
+    store.local.update({ isPasswordPopupOpen: false });
+    setSigninStatus('username');
+  });
+
+  useEffect(() => {
+    if (isSignup && signupType === 'username') {
+      if (userNameRef.current) {
+        userNameRef.current.focus();
+      }
+      return;
+    }
+
+    document.addEventListener('keydown', (event: KeyboardEvent) => {
+      if (!isPopupOpen || isFocus || (isSignup && signupType === 'username')) {
+        return;
+      }
+
+      if (event.key === 'Enter') return;
+
+      if (signinStatus === 'password' && passwordRef.current) {
+        passwordRef.current.focus();
+        return;
+      }
+      if (userNameRef.current) {
+        userNameRef.current.focus();
+      }
+    });
+  }, [isPopupOpen, signinStatus]);
 
   const title = useMemo(
     () => (isSignup ? `Sign up with ${signupType} ` : 'Sign in with username'),
@@ -81,6 +105,14 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
     [isSignup, signinDescription, signupDescription],
   );
 
+  function onFocus(): void {
+    setIsFocus(true);
+  }
+
+  function onBlur(): void {
+    setIsFocus(false);
+  }
+
   function renderSigninPopupContent(): React.ReactNode {
     if (isSignup) {
       if (signupType === 'Google' || signupType === 'Facebook') {
@@ -90,6 +122,8 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
             ref={userNameRef}
             onSubmit={onSubmit}
             onChange={setLogin}
+            onFocus={onFocus}
+            onBlur={onBlur}
             label="Your username"
             error={socialUsernameError}
           />
@@ -104,7 +138,6 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
             onSubmit={(): void => {
               passwordRef.current?.focus();
             }}
-            // onChange={(value): void => setPopupLogin(value)}
             onChange={setLogin}
             label="Your username"
             error={usernameError}
@@ -112,17 +145,9 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
           <InputWithUnderline
             className={styles.inputWithUnderline}
             ref={passwordRef}
+            onSubmit={onSubmit}
             type="password"
             label="Your password"
-            // onChange={(value): void => setPopupPassword(value)}
-            onChange={setPassword}
-            onSubmit={(): void => {
-              // не проходит setState
-              // setLogin(popupLogin);
-              // setPassword(popupPassword);
-              // пока менять внутри сабмитов
-              onSubmit();
-            }}
             error={passwordError}
           />
         </div>
@@ -143,18 +168,25 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
           onChange={setLogin}
           onSubmit={(): void => {
             setSigninStatus('password');
+            setIsFocus(false);
           }}
+          onFocus={onFocus}
+          onBlur={onBlur}
           label="Your username"
           error={usernameError}
         />
       );
     }
 
-    passwordRef.current?.focus();
     return (
       <InputWithUnderline
-        onSubmit={onSubmit}
+        onSubmit={(): void => {
+          onSubmit();
+          setSigninStatus('username');
+        }}
         onChange={setPassword}
+        onFocus={onFocus}
+        onBlur={onBlur}
         className={styles.inputWithUnderline}
         key="password"
         ref={passwordRef}
@@ -174,6 +206,7 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
           className={styles.deleteIcon}
           onClick={(): void => {
             store.local.update({ isPasswordPopupOpen: false });
+            setSigninStatus('username');
           }}
         />
 
@@ -181,12 +214,21 @@ export const PopupPasswordLogin: React.FC<PopupPasswordLoginProps> = ({
           <h1 className={styles.title}>{title}</h1>
           <span className={styles.description}>{description}</span>
           {renderSigninPopupContent()}
-          <div className={styles.button} onClick={(): void => onSubmit()}>
+          <div className={styles.button}>
             <PositionAwareButton
               backgroundColor="var(--black)"
               hoveredColor="var(--hover-black)"
               clickedColor="var(--click-black)"
               textColor="var(--white)"
+              onClick={(): void => {
+                if (!isSignup && signinStatus === 'username') {
+                  setSigninStatus('password');
+                  return;
+                }
+
+                onSubmit();
+                setSigninStatus('username');
+              }}
             >
               Continue
             </PositionAwareButton>
