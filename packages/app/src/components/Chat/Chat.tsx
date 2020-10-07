@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 
 import { ChatMessages } from '../ChatMessages';
 
@@ -19,9 +19,6 @@ export const Chat: React.FC<ChatProps> = ({ chatId }) => {
   const writeBoxStore = store.writeBox.get(chatId);
   const [currentChat] = store.chat.useState();
   const [user] = store.user.useState();
-  const isMessageLoading = store.messages.useSelector(chat =>
-    Boolean(chat[chatId]?.isLoading),
-  );
 
   function checkTheChat(): boolean {
     const found = chats.find(chat => chat.chatId === chatId);
@@ -36,7 +33,7 @@ export const Chat: React.FC<ChatProps> = ({ chatId }) => {
   }, [messagesContainerRef]);
 
   function renderFooter(): React.ReactNode {
-    if (!checkTheChat())
+    if (!checkTheChat() && currentChat.type !== 'dialog')
       return (
         <button
           className={styles.button}
@@ -65,12 +62,16 @@ export const Chat: React.FC<ChatProps> = ({ chatId }) => {
     );
   }
 
+  if (currentChat.error) {
+    return <div>{currentChat.error}</div>;
+  }
+
   return (
     <>
       <ChatHeader
         chat={currentChat}
         leaveChat={(): Promise<void> => store.chats.leaveChat(chatId)}
-        isOptionsOpen={checkTheChat()}
+        isOptionsOpen={checkTheChat() && currentChat.type !== 'dialog'}
       />
       <section className={styles.messagesSection} ref={messagesContainerRef}>
         <ChatMessages
