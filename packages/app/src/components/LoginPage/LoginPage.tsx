@@ -250,7 +250,11 @@ const FacebookButton: React.FC<ButtonProps> = ({
 
   return (
     <FacebookLogin
-      appId={process.env.REACT_APP_FACEBOOK_APP_ID}
+      appId={
+        process.env.NODE_ENV === 'development'
+          ? process.env.REACT_APP_FACEBOOK_APP_ID
+          : process.env.REACT_APP_FACEBOOK_DEVELOPMENT_APP_ID
+      }
       autoLoad={false}
       fields="name,email,picture"
       callback={responseFacebook}
@@ -296,7 +300,11 @@ const GoogleButton: React.FC<ButtonProps> = ({
       render={(renderProps: any): JSX.Element => (
         <div onClick={renderProps.onClick}>{children}</div>
       )}
-      clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID || ''}
+      clientId={
+        (process.env.NODE_ENV === 'development'
+          ? process.env.REACT_APP_GOOGLE_CLIENT_ID
+          : process.env.REACT_APP_GOOGLE_DEVELOPMENT_CLIENT_ID) || ''
+      }
       onSuccess={(response): any => responseGoogle(response)}
       onFailure={(error: any): void => handleLoginFailure(error)}
       cookiePolicy={'single_host_origin'}
