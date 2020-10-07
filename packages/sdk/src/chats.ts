@@ -19,6 +19,16 @@ export class Chats {
     });
   }
 
+  public async getDialog(opponentId: number): Promise<Chat> {
+    return request({
+      ctx: this.ctx,
+      url: `/dialogs/${opponentId}`,
+      options: {
+        method: 'GET',
+      },
+    });
+  }
+
   public async getDiscoverChats(
     nextId?: number,
   ): Promise<{
