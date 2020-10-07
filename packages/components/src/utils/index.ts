@@ -1,7 +1,7 @@
 export function parseTime(stringDate: string): string {
   const date = Date.parse(stringDate);
 
-  const days = ['sun', 'mon', 'tue', 'med', 'thu', 'fri', 'sat'];
+  const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
   const months = [
     'jun',
     'feb',

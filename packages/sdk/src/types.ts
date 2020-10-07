@@ -1,5 +1,7 @@
 export type SignupType = 'username' | 'Google' | 'Facebook';
 
+export type PictureType = 'UserAvatar' | 'ChatAvatar' | 'Message';
+
 export interface User {
   id: number;
   login: string;
@@ -39,8 +41,9 @@ export interface Message {
   author: Author;
   text: string;
   date: string;
-  messageId: number;
+  messageId: string;
   pictures?: Array<Picture>;
+  chatId: number;
   // loadStatus?: LoadStatus;
 }
 
@@ -61,7 +64,7 @@ export interface ChatWrapper {
   chatId: number;
   type: ChatType;
 
-  avatar: string;
+  avatar?: string;
   name?: string;
   userCount?: number;
 
@@ -75,6 +78,7 @@ export interface Chat extends ChatWrapper {
 
 export interface ChatState extends Chat {
   isLoading: boolean;
+  error?: string;
 }
 
 export interface UserChats {

@@ -54,7 +54,7 @@ export async function request<T>({
     compiledOptions.headers['token'] = ctx.token;
   }
 
-  if (compiledOptions.body) {
+  if (compiledOptions.body && !(compiledOptions.body instanceof FormData)) {
     const convertedBodyToSnake = camelToSnake(compiledOptions.body);
     compiledOptions.body = JSON.stringify(convertedBodyToSnake);
   }

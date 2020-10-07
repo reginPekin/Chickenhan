@@ -1,5 +1,5 @@
 import { Context, request } from './utils';
-import { User, BackUser } from '../src/types';
+import { BackUser } from '../src/types';
 
 export class Authorization {
   private ctx: Context;
@@ -25,7 +25,7 @@ export class Authorization {
 
   public async authUserByGoogle(
     googleToken: string,
-  ): Promise<User & { token: string }> {
+  ): Promise<BackUser & { token: string }> {
     return request({
       ctx: this.ctx,
       url: '/auth/google',
@@ -41,7 +41,7 @@ export class Authorization {
   public async authUserByUsername(
     username: string,
     password: string,
-  ): Promise<User & { token: string }> {
+  ): Promise<BackUser & { token: string }> {
     return request({
       ctx: this.ctx,
       url: '/auth/login',
@@ -58,7 +58,7 @@ export class Authorization {
   public async signUpUserByFacebook(
     facebookToken: string,
     username: string,
-  ): Promise<User & { token: string }> {
+  ): Promise<BackUser & { token: string }> {
     return request({
       ctx: this.ctx,
       url: '/auth/new/facebook',
@@ -75,7 +75,7 @@ export class Authorization {
   public async signUpUserByGoogle(
     googleToken: string,
     username: string,
-  ): Promise<User & { token: string }> {
+  ): Promise<BackUser & { token: string }> {
     return request({
       ctx: this.ctx,
       url: '/auth/new/google',
@@ -92,7 +92,7 @@ export class Authorization {
   public async signUpUserByUsername(
     username: string,
     password: string,
-  ): Promise<User & { token: string }> {
+  ): Promise<BackUser & { token: string }> {
     return request({
       ctx: this.ctx,
       url: '/auth/new/login',

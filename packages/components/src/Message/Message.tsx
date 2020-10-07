@@ -17,7 +17,7 @@ interface MessageProps {
 }
 
 export const Message: React.FC<MessageProps> = React.memo(
-  ({ message, openBioPopup = () => undefined, pending }) => {
+  ({ message, openBioPopup = (): void => undefined }) => {
     function renderAuthor(): JSX.Element {
       return (
         <div className={styles.nameAndDate}>
@@ -34,8 +34,6 @@ export const Message: React.FC<MessageProps> = React.memo(
             />
           </div>
           <time className={styles.date}>{parseTime(message.date)}</time>
-          {/* статус отправки сообщения (если в режиме ожидания) */}
-          {/* <div>{pending ? 'Peeending' : ''}</div> */}
         </div>
       );
     }

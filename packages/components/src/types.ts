@@ -19,7 +19,7 @@ export interface ChatWrapper {
   chatId: number;
   type: ChatType;
 
-  avatar: string;
+  avatar?: string;
   name?: string;
   userCount?: number;
 
@@ -55,7 +55,7 @@ export interface Message {
   author: Author;
   text: string;
   date: string;
-  messageId: number;
+  messageId: string;
   pictures?: Array<Picture>;
   // loadStatus?: LoadStatus;
 }

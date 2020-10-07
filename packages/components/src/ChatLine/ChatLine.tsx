@@ -51,12 +51,12 @@ export const ChatLine: React.FC<ChatLineProps> = React.memo(
       );
     }
 
-    if (chat.opponent)
+    if (chat.opponent) {
       return (
         <main>
           <section className={styles.chatLine}>
             <div className={styles.avatar}>
-              <Avatar url={chat.avatar} chatType={chat.type} />
+              <Avatar url={chat.opponent.avatar} chatType={chat.type} />
               {chat.opponent.isOnline && (
                 <div className={styles.onlineCircle} />
               )}
@@ -81,6 +81,7 @@ export const ChatLine: React.FC<ChatLineProps> = React.memo(
           />
         </main>
       );
+    }
 
     return (
       <main>
