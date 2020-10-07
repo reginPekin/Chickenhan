@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import cx from 'classnames';
 
@@ -41,12 +41,35 @@ export const PopupNewChat: React.FC = () => {
       description: 'Visible in group search',
       selected: true,
     },
-    {
-      label: 'Secret',
-      value: 'private',
-      description: 'Only people with invite link can see it',
-    },
+    // {
+    //   label: 'Secret',
+    //   value: 'private',
+    //   description: 'Only people with invite link can see it',
+    // },
   ];
+
+  useEffect(() => {
+    if (!isPopupOpen) return;
+
+    inputWithLabelRef.current?.focus();
+  }, [isPopupOpen]);
+
+  async function createNewChat(): Promise<void> {
+    if (!(inputWithLabelRef.current && inputWithLabelRef.current.value)) {
+      return;
+    }
+    setIsNewChatLoading(true);
+
+    const newChat = {
+      type: chatType,
+      avatar: chatAvatar,
+      name: inputWithLabelRef.current.value,
+    };
+
+    store.chats.createChat(newChat);
+    store.local.update({ isNewChatPopupOpen: false });
+    setIsNewChatLoading(false);
+  }
 
   if (!isPopupOpen) {
     return null;
@@ -79,6 +102,9 @@ export const PopupNewChat: React.FC = () => {
 
           <section className={styles.inputElements}>
             <InputWithLabel
+              onSubmit={(): void => {
+                createNewChat();
+              }}
               placeholder="Name"
               ref={inputWithLabelRef}
               focusRef={(): void => inputWithLabelRef.current?.focus()}
@@ -95,22 +121,8 @@ export const PopupNewChat: React.FC = () => {
 
           <button
             className={cx(styles.basicButton, styles.inputElements)}
-            onClick={async (): Promise<void> => {
-              if (
-                !(inputWithLabelRef.current && inputWithLabelRef.current.value)
-              )
-                return;
-              setIsNewChatLoading(true);
-
-              const newChat = {
-                type: chatType,
-                avatar: chatAvatar,
-                name: inputWithLabelRef.current.value,
-              };
-
-              store.chats.addChat(newChat);
-              store.local.update({ isNewChatPopupOpen: false });
-              setIsNewChatLoading(false);
+            onClick={(): void => {
+              createNewChat();
             }}
           >
             {!isNewChatLoading ? 'Next' : 'Your chat is creating, wait'}
