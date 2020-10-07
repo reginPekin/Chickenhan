@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { MenuInputSearch } from '../MenuInputSearch';
+// import { MenuInputSearch } from '../MenuInputSearch';
 
 import { ChatLine } from '@chickenhan/components/src/ChatLine';
 import { AddChatIcon } from '@chickenhan/components/src/Icons';
@@ -12,11 +12,11 @@ import styles from './MenuChatList.module.css';
 
 interface MenuChatListProps {
   title: 'Chats' | 'Discover';
-  fetchChats: () => void;
+  fetchChats?: () => void;
 }
 
 export const MenuChatList: React.FC<MenuChatListProps> = React.memo(
-  ({ title, fetchChats }) => {
+  ({ title, fetchChats = (): void => undefined }) => {
     const store = useStore();
     const chats =
       title === 'Chats'
@@ -40,7 +40,7 @@ export const MenuChatList: React.FC<MenuChatListProps> = React.memo(
               }
             />
           </div>
-          <MenuInputSearch />
+          {/* <MenuInputSearch /> */}
         </header>
 
         <section className={styles.scrolledChats}>
