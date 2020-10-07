@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export const useOnClickOutside = (
   ref: React.RefObject<any>,
@@ -42,3 +42,38 @@ export const useHover = (): [any, boolean] => {
 
   return [ref, isHovered];
 };
+
+export function usePagination<T>(
+  onPagination: () => void,
+  targetRef: React.MutableRefObject<HTMLDivElement | HTMLButtonElement | null>,
+  nextFrom: T,
+): void {
+  const [nextFromList, setNextFromList] = useState<Array<T>>([]);
+
+  useEffect(() => {
+    if (!targetRef?.current) {
+      return;
+    }
+
+    const intersectionObserver = new IntersectionObserver(([checkPoint]) => {
+      if (
+        checkPoint.target.isSameNode(targetRef.current) &&
+        checkPoint.isIntersecting
+      ) {
+        // This nextFrom has already used
+        if (nextFromList.indexOf(nextFrom) !== -1) {
+          return;
+        }
+        setNextFromList([...nextFromList, nextFrom]);
+
+        onPagination();
+      }
+    });
+
+    if (targetRef?.current) {
+      intersectionObserver.observe(targetRef.current);
+    }
+
+    return (): void => intersectionObserver.disconnect();
+  }, [targetRef, onPagination, nextFrom]);
+}
