@@ -21,6 +21,14 @@ export const ChatHeader: React.FC<ChatHeader> = React.memo(
 
     const chatName = chat.name || '';
 
+    function extractChatAvatar(): string {
+      if (chat.type === 'dialog' && chat.opponent) {
+        return chat.opponent.avatar;
+      }
+
+      return chat.avatar;
+    }
+
     function extractUserCount(): string {
       if (chat.type === 'dialog' && chat.opponent) {
         return 'личные сообщения';
@@ -61,7 +69,7 @@ export const ChatHeader: React.FC<ChatHeader> = React.memo(
         <section className={styles.chatInfoSection}>
           <Avatar
             chatType={chat.type}
-            url={chat.avatar}
+            url={extractChatAvatar()}
             width={40}
             style={{ marginRight: '16px' }}
           />
