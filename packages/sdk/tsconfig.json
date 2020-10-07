@@ -1,11 +1,33 @@
 {
-  "extends": "../tsconfig.settings.json",
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./lib",
-    "composite": true,
     "target": "es5",
-    "lib": ["dom", "es2017"]
+    "incremental": true,
+    "strict": true,
+    "module": "commonjs",
+    "declaration": true,
+    "declarationMap": true,
+    "composite": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "sourceMap": false,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "lib": [
+      "ES2019",
+      "ESNext",
+      "ES2015",
+      "DOM"
+    ]
   },
   "exclude": [
     "node_modules",
