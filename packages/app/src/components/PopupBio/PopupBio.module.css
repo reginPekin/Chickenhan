@@ -57,9 +57,15 @@
   font-weight: 600;
   border-radius: 16px;
   cursor: pointer;
-  background-color: var(--hover-main-yellow);
+  background-color: var(--white);
+  color: var(--main-yellow);
+  border: 1px solid var(--main-yellow);
+
+  transition-property: color, background-color;
+  transition: .12s cubic-bezier(0.55, 0.09, 0.68, 0.53);
 }
 
 .button:hover {
   background-color: var(--main-yellow);
+  color: white;
 }

@@ -12,7 +12,6 @@ import { useOnClickOutside } from '@chickenhan/components/src/utils/hooks';
 import { Avatar } from '@chickenhan/components/src/Avatar';
 
 import styles from './PopupBio.module.css';
-import { User } from '@chickenhan/components/src/types';
 
 export const PopupBio: React.FC = () => {
   const store = useStore();
@@ -24,11 +23,15 @@ export const PopupBio: React.FC = () => {
 
   const [bio, setBio] = useState<any>(null);
 
+  async function getBio(): Promise<void> {
+    if (!bioId) return;
+
+    const uploadedBio = await chickenhan.user.getUser(bioId);
+    setBio(uploadedBio);
+  }
+
   React.useEffect(() => {
-    (async function anyNameFunction(): Promise<void> {
-      const uploadedBio = await chickenhan.user.getUser(bioId);
-      setBio(uploadedBio);
-    })();
+    getBio();
   }, [bioId]);
 
   const popupRef = useRef<HTMLDivElement>(null);
@@ -52,8 +55,11 @@ export const PopupBio: React.FC = () => {
         <Avatar url={bio?.avatar} width={96} />
         <span className={styles.login}>{bio?.login}</span>
         <button
-          onClick={(): void => {
-            history.push(`${bio?.id}`);
+          onClick={async (): Promise<void> => {
+            if (!bio.id) return;
+
+            const dialog = await chickenhan.chats.getDialog(bio?.id);
+            history.push(`${dialog.chatId}`);
             closePopup();
           }}
           className={styles.button}
