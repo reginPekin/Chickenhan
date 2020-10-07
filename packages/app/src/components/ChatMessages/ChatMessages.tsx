@@ -1,9 +1,9 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useRef } from 'react';
 import { BioContext } from '../App';
 
 import { Message } from '@chickenhan/components/src/Message';
-
 import { Chat, User } from '@chickenhan/sdk/lib/types';
+import { usePagination } from '@chickenhan/components/src/utils/hooks';
 
 import { useStore } from '../../store';
 
@@ -26,24 +26,46 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
     messages => messages[chat.chatId],
   );
 
+  const messages = chatMessages?.messages || [];
+  const lastMessage = messages[messages.length - 1];
+
   const { changeBioId } = useContext(BioContext);
 
   const messagesRef = getMessagesRef();
+  const checkRef = useRef<HTMLDivElement>(null);
 
   function openBioPopup(id: number): void {
     changeBioId(id);
     store.local.update({ isBioPopupOpen: true });
   }
 
+  async function fetchMessages(): Promise<void> {
+    await messagesApi.fetch();
+  }
+
+  usePagination(
+    async () => {
+      if (messagesRef.current) {
+        const scrollBottom =
+          messagesRef.current.scrollHeight - messagesRef.current.scrollTop;
+
+        await messagesApi.fetch();
+        messagesRef.current.scrollTop =
+          messagesRef.current.scrollHeight - scrollBottom;
+      }
+    },
+    checkRef,
+    chatMessages?.nextFromId,
+  );
+
   useEffect(() => {
-    (async function fetchMessages(): Promise<any> {
-      await messagesApi.fetch();
-      setTimeout(() => {
-        if (messagesRef.current) {
-          messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
-        }
-      }, 50);
-    })();
+    if (messagesRef.current) {
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+    }
+  }, [lastMessage]);
+
+  useEffect(() => {
+    fetchMessages();
   }, [chat.chatId]);
 
   if (!chatMessages?.messages || chatMessages.messages.length === 0) {
@@ -51,8 +73,10 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
       <div className={styles.emptyMessagesSection}>Write first message</div>
     );
   }
+
   return (
     <>
+      <div ref={checkRef} className={styles.paginationIndicator} />
       {chatMessages.messages.map(message => (
         <Message
           message={message}
