@@ -75,7 +75,7 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
   }
 
   return (
-    <>
+    <section className={styles.messageSection}>
       <div ref={checkRef} className={styles.paginationIndicator} />
       {chatMessages.messages.map(message => (
         <Message
@@ -91,6 +91,6 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
           pending
         />
       ))}
-    </>
+    </section>
   );
 };

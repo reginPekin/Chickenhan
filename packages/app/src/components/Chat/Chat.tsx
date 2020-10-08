@@ -73,13 +73,13 @@ export const Chat: React.FC<ChatProps> = ({ chatId }) => {
         leaveChat={(): Promise<void> => store.chats.leaveChat(chatId)}
         isOptionsOpen={checkTheChat() && currentChat.type !== 'dialog'}
       />
-      <section className={styles.messagesSection} ref={messagesContainerRef}>
+      <article className={styles.messagesSection} ref={messagesContainerRef}>
         <ChatMessages
           chat={currentChat}
           user={user}
           getMessagesRef={getMessagesRef}
         />
-      </section>
+      </article>
       <footer className={styles.footer}>{renderFooter()}</footer>
     </>
   );
