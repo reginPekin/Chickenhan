@@ -5,8 +5,10 @@
   "dependencies": {
     "@chickenhan/components": "1.0.0",
     "@chickenhan/sdk": "1.0.0",
+    "@types/websocket": "^1.0.1",
     "events": "^3.2.0",
-    "http2": "^3.3.7"
+    "http2": "^3.3.7",
+    "websocket": "^1.0.32"
   },
   "scripts": {
     "start": "react-app-rewired start",

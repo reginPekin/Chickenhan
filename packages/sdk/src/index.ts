@@ -4,6 +4,7 @@ import { Chats } from './chats';
 import { Message } from './message';
 import { UserChats } from './userChats';
 import { EventSource } from './eventSource';
+import { Socket } from './socket';
 
 interface ChickenhanProps {
   token?: string;
@@ -25,6 +26,7 @@ export class Chickenhan {
   public messages: Message;
   public userChats: UserChats;
   public eventSource: EventSource;
+  public websocket: Socket;
 
   private ctx: {
     apiUrl: string;
@@ -47,6 +49,7 @@ export class Chickenhan {
     this.messages = new Message(this.ctx);
     this.userChats = new UserChats(this.ctx);
     this.eventSource = new EventSource(this.ctx);
+    this.websocket = new Socket(this.ctx);
   }
 
   public setToken(token: string): void {

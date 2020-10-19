@@ -18,6 +18,8 @@ import { PopupBio } from '../PopupBio';
 import { useStore } from '../../store';
 import { TOKEN_KEY } from '../../consts';
 
+import { chickenhan } from '../../store/chickenhan';
+
 interface PopupsProps {
   images64: string[];
   setImages64: (imgs: string[]) => void;
@@ -67,16 +69,39 @@ export const App: React.FC = () => {
 
 const Home: React.FC = () => {
   const store = useStore();
+
   const history = useHistory();
 
-  const token_key = window.localStorage.getItem(TOKEN_KEY);
+  async function fetchAll(): Promise<void> {
+    const token_key = window.localStorage.getItem(TOKEN_KEY);
 
-  if (!token_key) {
-    history.push('/login');
+    if (!token_key) {
+      history.push('/login');
+    }
+
+    // check for user db compliance
+    const fetchUserResult = await store.user.fetchUser();
+    if (fetchUserResult === 'error') {
+      history.push('/login');
+      return;
+    }
+
+    store.chats.fetchUserChats();
   }
 
   useEffect(() => {
-    store.user.fetchUser();
+    fetchAll();
+
+    chickenhan.websocket.listenToWebsocket();
+    chickenhan.websocket.addEventListener('message', data =>
+      console.log(data, 'app data'),
+    );
+
+    chickenhan.websocket.setOnline();
+
+    window.addEventListener('beforeunload', () => {
+      chickenhan.websocket.setOffline();
+    });
   }, []);
 
   const [images64, setImages64] = useState<string[]>([]);

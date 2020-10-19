@@ -21,7 +21,7 @@
       "allowSyntheticDefaultImports": true,
       "skipLibCheck": true,
       "lib": [
-        "ES2019"
+        "ES2019", "DOM"
       ]
     },
     "exclude": [
