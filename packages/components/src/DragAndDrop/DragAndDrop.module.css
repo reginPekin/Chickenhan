@@ -1,5 +1,4 @@
   .dragDropZone {
-    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -7,6 +6,7 @@
     justify-content: center;
     background: none;
     overflow-y: scroll;
+    margin-left: 16px;
   }
 
   .insideDragDrea {

@@ -30,6 +30,7 @@
 
 .footer {
   padding: 16px;
+  padding-left: 0;
   width: 100%;
   min-height: 65px;
   display: flex;
