@@ -4,6 +4,19 @@ import { Message } from '@chickenhan/sdk/lib/types';
 
 import { chickenhan } from './chickenhan';
 
+interface Picture {
+  id: number;
+  url: string;
+  // height: number;
+  // width: number;
+}
+interface Author {
+  id: number;
+  login: string;
+  avatar: string;
+  isOnline: boolean;
+}
+
 interface MessageUI extends Message {
   status?: 'failed' | 'success';
 }
@@ -45,56 +58,81 @@ export function createMessageStore() {
       updateGlobal({ [chatId]: { ...state[chatId]!, ...partialChat } });
     }
 
+    function updateMessages(
+      messagesId: string[],
+      commonParams: Partial<MessageUI>,
+      authorParams: Partial<Author>,
+    ): void {
+      const messages = state[chatId]?.messages;
+
+      if (!messages) return;
+      const updatedMessages = messages.map(message => {
+        if (messagesId.indexOf(message.messageId) !== -1) {
+          return {
+            ...message,
+            ...commonParams,
+            author: { ...message.author, ...authorParams },
+          };
+        } else return { ...message, ...commonParams };
+      });
+
+      update({ messages: updatedMessages });
+    }
+
     async function fetch(): Promise<void> {
       if (state[chatId]?.hasMore === false) return;
 
-      if (!state[chatId]?.isFetched) {
-        update({ isLoading: true });
-        const messages = await chickenhan.messages.getMessageList(
-          chatId,
-          state[chatId]?.nextFromId,
-        );
-        update({
-          messages: messages.list.reverse(),
-          nextFromId: messages.nextFromId,
-          hasMore: messages.hasMore,
-          isLoading: false,
-          isFetched: true,
-        });
-      }
+      update({ isLoading: true });
+
+      const messages = await chickenhan.messages.getMessageList(
+        chatId,
+        state[chatId]?.nextFromId,
+      );
+
+      update({
+        messages: [...messages.list.reverse(), ...state[chatId]!.messages],
+        nextFromId: messages.nextFromId,
+        hasMore: messages.hasMore,
+        isLoading: false,
+        isFetched: true,
+      });
     }
 
     async function send(newMessage: { text: string }): Promise<void> {
       const message: PendingMessage = {
         text: newMessage.text,
         date: `${new Date().toISOString()}`,
-        messageId: state[chatId]!.pendingMessages.length,
+        chatId,
+        messageId: `${state[chatId]!.pendingMessages.length}`,
       };
 
       const messagesClone = [...state[chatId]!.messages];
 
-      const clone = [...state[chatId]!.pendingMessages];
-      clone.push(message);
+      // const clone = [...state[chatId]!.pendingMessages];
+      // clone.push(message);
 
-      update({ pendingMessages: clone });
+      // update({ pendingMessages: clone });
 
       try {
-        const result = await chickenhan.messages.addMessage(
-          { text: newMessage.text },
-          chatId,
-        );
-
-        clone.shift();
-        update({ pendingMessages: clone });
-
-        messagesClone.push(result);
-        update({ messages: messagesClone });
+        chickenhan.websocket.addMessage(newMessage.text, chatId);
+        // await chickenhan.eventSource.addMessage(
+        //   { text: newMessage.text },
+        //   chatId,
+        // );
+        // clone.shift();
+        // update({ pendingMessages: clone });
       } catch {
         // поменять статус сообщения в pendingMessage
       }
     }
 
-    function remove(messageId: number): void {
+    function addMessageToTheList(message: Message): void {
+      const messagesClone = [...state[chatId]!.messages];
+      messagesClone.push(message);
+      update({ messages: messagesClone });
+    }
+
+    function remove(messageId: string): void {
       const messagesClone = [...state[chatId]!.messages];
       const remainingMessages = messagesClone.filter(
         message => message.messageId !== messageId,
@@ -105,8 +143,53 @@ export function createMessageStore() {
       });
     }
 
-    return { fetch, send };
+    return { fetch, send, updateMessages, addMessageToTheList };
   }
+
+  chickenhan.websocket.addEventListener(
+    'message',
+    (data: Record<string, any>) => {
+      console.log(data, 'data messages');
+      if (!data.type) {
+        return;
+      }
+
+      const type = data.type;
+      const message: Message = data.message;
+
+      if (type === 'setOnline') {
+        data.userMessages.forEach(
+          (messages: { chatId: number; arrayAgg: string[] }) => {
+            get(messages.chatId).updateMessages(
+              messages.arrayAgg,
+              {},
+              { isOnline: true },
+            );
+          },
+        );
+      }
+
+      if (type === 'setOffline') {
+        data.userMessages.forEach(
+          (messages: { chatId: number; arrayAgg: string[] }) => {
+            get(messages.chatId).updateMessages(
+              messages.arrayAgg,
+              {},
+              { isOnline: false },
+            );
+          },
+        );
+      }
+
+      if (type === 'addMessage') {
+        if (!message) {
+          return;
+        }
+
+        get(message.chatId).addMessageToTheList(message);
+      }
+    },
+  );
 
   return { useState, useSelector, get };
 }
