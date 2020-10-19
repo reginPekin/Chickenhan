@@ -76,3 +76,12 @@ export async function request<T>({
     throw new ChickenhanError(error.code, error.name, error.desc);
   }
 }
+
+export function isJsonString(message: string): boolean {
+  try {
+    JSON.parse(message);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
