@@ -49,7 +49,7 @@ export const LoginPage: React.FC = ({}) => {
   const store = useStore();
   const history = useHistory();
 
-  const [isSignup, setIsSignip] = useState<boolean>(true);
+  const [isSignup, setIsSignup] = useState<boolean>(true);
   const [signupType, setSignupType] = useState<SignupType>('username');
 
   const [username, setUsername] = useState<string>('');
@@ -60,14 +60,14 @@ export const LoginPage: React.FC = ({}) => {
     welcomeText: 'Join Chickenhan.',
     transitionText: 'Already have an account?',
     linkText: 'Sign in',
-    onClick: (): void => setIsSignip(false),
+    onClick: (): void => setIsSignup(false),
   };
 
   const loginPage = {
     welcomeText: 'Welcome back.',
     transitionText: 'No account?',
     linkText: 'Create one',
-    onClick: (): void => setIsSignip(true),
+    onClick: (): void => setIsSignup(true),
   };
 
   function openPopup(): void {
@@ -155,6 +155,19 @@ export const LoginPage: React.FC = ({}) => {
     }
   }
 
+  function chooseSigninSubmit(): Promise<any> {
+    switch (signupType) {
+      case 'username':
+        return signinUsername();
+
+      case 'Facebook':
+        return signupFacebook();
+
+      case 'Google':
+        return signupGoogle();
+    }
+  }
+
   return (
     <main className={styles.main}>
       <PopupPasswordLogin
@@ -163,7 +176,7 @@ export const LoginPage: React.FC = ({}) => {
         setLogin={(value: string): void => setUsername(value)}
         setPassword={(value: string): void => setPassword(value)}
         onSubmit={(): any => {
-          isSignup ? chooseSignupSubmit() : signinUsername();
+          isSignup ? chooseSignupSubmit() : chooseSigninSubmit();
           closePopup();
         }}
       />
