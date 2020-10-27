@@ -72,17 +72,15 @@ export class Socket {
     );
   }
 
-  public check(): void {
-    if (!this.wss || this.wss.readyState == WebSocket.CLOSED) {
-      this.listenToWebsocket(); //check if websocket instance is closed, if so call `connect` function.
-    }
-  }
 
   public listenToWebsocket(): void {
+    this.wss = new websocket(this.wwsUrl);
     this.wss.onopen = (): void => {
       console.log('connected websocket main component');
 
       this.isOpen = true;
+
+      this.setOnline();
 
       this.timeout = 250; // reset timer to 250 on open of websocket connection
       clearTimeout(this.connectInterval); // clear Interval on on open of websocket connection
@@ -97,15 +95,16 @@ export class Socket {
         event.reason,
       );
 
-      this.emit('closed', null);
-
       this.isOpen = false;
 
+      this.emit('closed', null);
+
       this.timeout = this.timeout + this.timeout; //increment retry interval
-      this.connectInterval = setTimeout(
-        this.check,
-        Math.min(10000, this.timeout),
-      ); //call check function after timeout
+      this.connectInterval = setTimeout(() => {
+        if (!this.wss || this.wss.readyState == WebSocket.CLOSED) {
+          this.listenToWebsocket(); //check if websocket instance is closed, if so call `connect` function.
+        }
+      }, Math.min(10000, this.timeout)); //call check function after timeout
     };
 
     this.wss.onerror = (error): void => {

@@ -93,11 +93,6 @@ const Home: React.FC = () => {
     fetchAll();
 
     chickenhan.websocket.listenToWebsocket();
-    chickenhan.websocket.addEventListener('message', data =>
-      console.log(data, 'app data'),
-    );
-
-    chickenhan.websocket.setOnline();
 
     window.addEventListener('beforeunload', () => {
       chickenhan.websocket.setOffline();

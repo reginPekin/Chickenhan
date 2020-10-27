@@ -3,7 +3,6 @@ import { User } from './user';
 import { Chats } from './chats';
 import { Message } from './message';
 import { UserChats } from './userChats';
-import { EventSource } from './eventSource';
 import { Socket } from './socket';
 
 interface ChickenhanProps {
@@ -25,7 +24,6 @@ export class Chickenhan {
   public chats: Chats;
   public messages: Message;
   public userChats: UserChats;
-  public eventSource: EventSource;
   public websocket: Socket;
 
   private ctx: {
@@ -48,7 +46,6 @@ export class Chickenhan {
     this.chats = new Chats(this.ctx);
     this.messages = new Message(this.ctx);
     this.userChats = new UserChats(this.ctx);
-    this.eventSource = new EventSource(this.ctx);
     this.websocket = new Socket(this.ctx);
   }
 
