@@ -152,11 +152,11 @@ export function createChatsStore() {
 
       const type = data.type;
 
-      if (type === 'setOnline') {
+      if (type === 'setOnline' && !data.isUser) {
         updateChats(data.userDialogs, {}, { isOnline: true });
       }
 
-      if (type === 'setOffline') {
+      if (type === 'setOffline' && !data.isUser) {
         updateChats(data.userDialogs, {}, { isOnline: false });
       }
 
