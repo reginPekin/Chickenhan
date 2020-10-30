@@ -1,6 +1,6 @@
 import { Context, request } from './utils';
 
-import { User as UserInterface } from './types';
+import { User as UserInterface, PictureType } from './types';
 
 export class User {
   private ctx: Context;
@@ -36,6 +36,25 @@ export class User {
       options: {
         method: 'PATCH',
         body: body,
+      },
+    });
+  }
+
+  public async editAvatar(
+    avatar: string,
+  ): Promise<{ pictureId: BigInt; type: PictureType }> {
+    const formDataAvatar = new FormData();
+    formDataAvatar.append('picture', avatar);
+
+    return request({
+      ctx: this.ctx,
+      url: '/users/avatar',
+      options: {
+        method: 'PATCH',
+        body: formDataAvatar,
+        headers: {
+          enctype: 'multipart/form-data',
+        },
       },
     });
   }

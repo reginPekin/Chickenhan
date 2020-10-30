@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import styles from './WriteBox.module.css';
 
@@ -25,6 +25,35 @@ export const WriteBox: React.FC<WriteBoxProps> = ({
   onBlur = (): void => undefined,
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+  // function focusOnInput(event: KeyboardEvent): void {
+  //   console.log(isFocus, 'isFocus');
+  //   const codeAtA = 'A'.charCodeAt(0); // 65
+  //   const codeAtZ = 'Z'.charCodeAt(0); // 90
+  //   const codeAt0 = '0'.charCodeAt(0); // 48
+  //   const codeAt9 = '9'.charCodeAt(0); // 57
+
+  //   const isLetterOrNumber =
+  //     (codeAtZ >= event.which && event.which >= codeAtA) ||
+  //     (codeAt0 >= event.which && event.which >= codeAt9);
+
+  //   if (!isFocus && isLetterOrNumber && inputRef.current) {
+  //     inputRef.current.focus();
+  //   }
+  // }
+
+  document.addEventListener('keyup', (event: KeyboardEvent) => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+      event.preventDefault();
+    }
+  });
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   function onTextSubmit(): void {
     if (!inputRef.current?.value) return;

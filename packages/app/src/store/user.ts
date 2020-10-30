@@ -18,7 +18,14 @@ export function createUserStore() {
   const [state, setState, useState, useSelector] = createStore(initialState);
 
   function update(partialState: Partial<User>): void {
-    chickenhan.user.editMe(partialState);
+    if (partialState.avatar) {
+      const { avatar, ...wrappedUser } = partialState;
+
+      chickenhan.user.editMe(wrappedUser);
+      chickenhan.user.editAvatar(avatar);
+    } else {
+      chickenhan.user.editMe(partialState);
+    }
     setState({ ...state, ...partialState });
   }
 
@@ -29,10 +36,15 @@ export function createUserStore() {
     update({ ...user });
   }
 
-  async function fetchUser(): Promise<void> {
+  async function fetchUser(): Promise<string> {
     const userInfo = await chickenhan.user.getMe();
 
+    if (userInfo.hasOwnProperty('error')) {
+      return 'error';
+    }
+
     update({ ...userInfo });
+    return 'ok';
   }
 
   return { useState, useSelector, update, fetchUser, auth };
