@@ -1,0 +1,38 @@
+.btnPosnawr {
+  display: flex;
+  height: 40px;
+  padding: 0 24px;
+  align-items: center;
+  justify-content: center;
+  /* background-color: var(--main-yellow); */
+  overflow: hidden;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0px 8px 24px -12px #ffbb0070;
+}
+
+/* .btnPosnawr:hover { */
+  /* background-color: #ffb100; */
+/* } */
+
+.span {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  /* background-color: var(--hover-main-yellow); */
+  -webkit-transition: width .4s ease-in-out, height .4s ease-in-out;
+  transition: width .4s ease-in-out, height .4s ease-in-out;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+} 
+
+.spanText {
+  /* color: var(--light-black); */
+  white-space: nowrap;
+  line-height: 24px;
+  font-size: 15px;
+  z-index: 3;
+}

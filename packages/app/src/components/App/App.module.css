@@ -6,7 +6,7 @@
 
 .main {
   display: flex;
-  background-color: white;
+  background-color: var(--white);
   width: 100%;
   justify-items: stretch;
   height: 100%;

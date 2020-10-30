@@ -26,3 +26,12 @@ dl,
 dd {
   margin: 0;
 }
+
+* {
+	vertical-align: baseline;
+	font-weight: inherit;
+	border: 0 none;
+	outline: 0;
+	padding: 0;
+	margin: 0;
+}

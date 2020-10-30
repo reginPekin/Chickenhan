@@ -17,7 +17,7 @@
 .onlineCircle {
   background-color: var(--main-yellow);
   border-radius: 50%;
-  border: 3px solid white;
+  border: 3px solid var(--white);
   position: absolute;
   width: 15px;
   height: 15px;
@@ -32,12 +32,12 @@
   flex-grow: 2;
   width: 100%;
   padding: 12px 12px 12px 0;
-  border-bottom: 1px solid rgba(0,0,0,.05);
 }
 
 .headInfo {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
 }
 
 .messageSection {
@@ -62,6 +62,10 @@
 
 .dialogLastMessage {
   white-space: normal;
+}
+
+.draft {
+  color: var(--red);
 }
 
 .chatLastMessage {

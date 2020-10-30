@@ -1,18 +1,20 @@
-export function parseTime(date: number): string {
-  const days = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
+export function parseTime(stringDate: string): string {
+  const date = Date.parse(stringDate);
+
+  const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
   const months = [
-    'янв',
-    'фев',
-    'мар',
-    'апр',
-    'май',
-    'июн',
-    'июл',
-    'авг',
-    'сен',
-    'окт',
-    'ноя',
-    'дек',
+    'jun',
+    'feb',
+    'mar',
+    'apr',
+    'may',
+    'jun',
+    'jul',
+    'aug',
+    'sept',
+    'okt',
+    'nov',
+    'dec',
   ];
 
   const oneDayMs = 24 * 60 * 60 * 1000;
@@ -30,34 +32,25 @@ export function parseTime(date: number): string {
   return `${innerDate.getDate()} ${months[innerDate.getMonth()]}`;
 }
 
-export const handleFile = (
-  loadedFiles: File[] | FileList,
-  setFileUrl: (file: string | ArrayBuffer | null) => void,
-): void => {
-  if (!loadedFiles) {
-    return;
-  }
+export async function handleImages(
+  files: File[],
+  onLoad: (files: string[]) => void,
+): Promise<void> {
+  if (!files) return; // сам вызывается @fix
 
-  const files: File[] = Array.prototype.slice.call(loadedFiles);
+  const promisedFiles: Promise<string>[] = [];
 
   for (const file of files) {
-    const reader = new FileReader();
+    const promise = new Promise<string>(resolve => {
+      const reader = new FileReader();
+      reader.onload = (event): void => {
+        resolve(String(event.target?.result));
+      };
+      reader.readAsDataURL(file);
+    });
 
-    reader.onload = async (): Promise<void> => {
-      const b64image = reader.result;
-
-      const img = new Image();
-      img.src = `${b64image}`;
-
-      const form = new FormData();
-      form.append('photo', file);
-      setFileUrl(reader.result);
-    };
-
-    // eslint-disable-next-line no-console
-    reader.onabort = (): void => console.log('file reading was aborted');
-    // eslint-disable-next-line no-console
-    reader.onerror = (): void => console.log('file reading has failed');
-    reader.readAsDataURL(file);
+    promisedFiles.push(promise);
   }
-};
+
+  Promise.all(promisedFiles).then(onLoad);
+}

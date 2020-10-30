@@ -1,61 +1,162 @@
-import React, { useState, ReactElement } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import {
   BrowserRouter as Router,
   Route,
   Switch,
-  useLocation,
+  useHistory,
 } from 'react-router-dom';
 
 import styles from './App.module.css';
 
 import { LoginPage } from '../LoginPage';
-import { ContentContainer } from '../ContentContainer';
-import { MenuContainer } from '../MenuContainer';
-import { NewChatPopup } from '../NewChatPopup';
+import { ChatContainer } from '../ChatContainer';
+import { Menu } from '../Menu';
+import { PopupNewChat } from '../PopupNewChat';
+import { PopupImage } from '../PopupImage';
+import { PopupBio } from '../PopupBio';
+
+import { useStore } from '../../store';
+import { TOKEN_KEY } from '../../consts';
+
+import { chickenhan } from '../../store/chickenhan';
+
+interface PopupsProps {
+  images64: string[];
+  setImages64: (imgs: string[]) => void;
+}
+
+export const BioContext = createContext({
+  bioId: 0,
+  changeBioId: (id: number): void => undefined,
+});
 
 export const App: React.FC = () => {
+  useEffect(() => {
+    document.addEventListener('dragover', event => event.preventDefault());
+    document.addEventListener('drop', event => event.preventDefault());
+    return (): void => {
+      document.removeEventListener('dragover', event => event.preventDefault());
+      document.removeEventListener('drop', event => event.preventDefault());
+    };
+  });
+
+  const [bioId, setBioId] = useState<number>(0);
+
+  function changeBioId(id: number): void {
+    setBioId(id);
+  }
+
   return (
     <Router>
-      <ModalSwith />
+      <Switch>
+        <Route exact path={['/', '/chat', '/chat/:chatId']}>
+          <BioContext.Provider value={{ bioId, changeBioId }}>
+            <Home />
+          </BioContext.Provider>
+        </Route>
+
+        <Route exact path="/login">
+          <LoginPage />
+        </Route>
+
+        <Route>
+          <div>No match</div>
+        </Route>
+      </Switch>
     </Router>
   );
 };
 
-function ModalSwith(): ReactElement {
-  const location = useLocation();
-
-  return (
-    <Switch location={location}>
-      <Route exact path={['/', '/chat', '/chat/:chatId']}>
-        <Home />
-      </Route>
-
-      <Route exact path="/login">
-        <LoginPage />
-      </Route>
-
-      <Route>
-        <div>No match</div>
-      </Route>
-    </Switch>
-  );
-}
-
 const Home: React.FC = () => {
-  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+  const store = useStore();
+  const userId = store.user.useSelector(user => user.id);
+
+  const history = useHistory();
+
+  async function fetchAll(): Promise<void> {
+    const token_key = window.localStorage.getItem(TOKEN_KEY);
+
+    if (!token_key) {
+      history.push('/login');
+    }
+
+    // check for user db compliance
+    const fetchUserResult = await store.user.fetchUser();
+    if (fetchUserResult === 'error') {
+      history.push('/login');
+      return;
+    }
+
+    store.chats.fetchUserChats();
+  }
+
+  useEffect(() => {
+    fetchAll();
+
+    chickenhan.websocket.listenToWebsocket();
+
+    window.addEventListener('beforeunload', () => {
+      chickenhan.websocket.setOffline();
+    });
+  }, []);
+
+  const [images64, setImages64] = useState<string[]>([]);
+
+  chickenhan.websocket.addEventListener(
+    'message',
+    (data: Record<string, any>) => {
+      if (!data.type) {
+        return;
+      }
+
+      const type = data.type;
+
+      if (type === 'addDialog') {
+        if (store.chats.isChat(data.userDialog.chatId)) {
+          return;
+        }
+
+        if (userId === data.userId) {
+          store.chats.addDialog(data.userDialog);
+        } else if (userId === data.opponentId) {
+          store.chats.addDialog(data.opponentDialog);
+        }
+      }
+    },
+  );
 
   return (
     <main className={styles.app}>
-      <NewChatPopup
-        isPopupOpen={isPopupOpen}
-        setIsPopupOpen={(value): void => setIsPopupOpen(value)}
-      />
+      <Popups images64={images64} setImages64={setImages64} />
+
       <div className={styles.main}>
-        <MenuContainer
-          setIsPopupOpen={(value): void => setIsPopupOpen(value)}
+        <Menu />
+        <ChatContainer
+          setImages64={(paths: string[]): void => setImages64(paths)}
         />
-        <ContentContainer />
       </div>
     </main>
+  );
+};
+
+const Popups: React.FC<PopupsProps> = ({ images64, setImages64 }) => {
+  const store = useStore();
+  const isImagePopupOpen = store.local.useSelector(
+    local => local.isImagePopupOpen,
+  );
+
+  return (
+    <>
+      <PopupNewChat />
+      <PopupImage
+        images64={images64}
+        isOpen={isImagePopupOpen}
+        closePopup={(): void => {
+          store.local.update({ isImagePopupOpen: false });
+          setImages64([]);
+        }}
+      />
+      <PopupBio />
+    </>
   );
 };

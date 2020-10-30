@@ -1,0 +1,59 @@
+.header {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px 12px 20px;
+  font-weight: 700;
+  line-height: 32px;
+  font-size: 24px;
+}
+
+.addChatIcon {
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color .2s ease-out;
+}
+
+.addChatIcon:hover {
+  background-color: var(--main-yellow);
+}
+
+.searchSection {
+  display: flex;
+  position: relative;
+  align-items: center;
+  margin: 16px;
+  padding: 0 32px;
+  background-color: var(--light-grey);
+  border-radius: 8px;
+  margin-top: 0;
+}
+
+.searchSection, .searchSection > * {
+  transition: background-color .2s ease-in-out;
+}
+
+.searchSection:hover,  .searchSection:hover > * {
+  background-color: var(--hover-light-grey);
+}
+
+.searchIcon {
+  position: absolute;
+  left: 10px;
+  width: 18px;
+  height: 18px
+}
+
+.deleteIcon {
+  position: absolute;
+  cursor: pointer;
+  right: 10px;
+  width: 18px;
+  height: 18px
+}

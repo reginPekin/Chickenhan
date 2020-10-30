@@ -5,10 +5,18 @@
 
 .basicInput {
   height: 55px;
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 18px;
   padding-bottom: 0;
   background-color: var(--light-grey);
+}
+
+.basicInput, .basicInput > * {
+  transition: background-color .2s ease-in-out;
+}
+
+.basicInput:hover, .basicInput:hover > * {
+  background-color: var(--hover-light-grey);
 }
 
 .label {

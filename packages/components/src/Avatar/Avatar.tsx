@@ -9,29 +9,27 @@ interface AvatarProps {
   style?: React.CSSProperties;
 }
 
-export const Avatar: React.FC<AvatarProps> = ({
-  url,
-  chatType = 'dialog',
-  width = 48,
-  style = {},
-}) => {
-  return (
-    <div
-      className={styles.avatarSection}
-      style={{
-        width: width,
-        height: width,
-        ...style,
-      }}
-    >
-      <img
-        src={url}
-        height={width}
-        width={width}
+export const Avatar: React.FC<AvatarProps> = React.memo(
+  ({ url, chatType = 'dialog', width = 48, style = {} }) => {
+    return (
+      <div
+        className={styles.avatarSection}
         style={{
-          borderRadius: chatType === 'dialog' ? '50%' : '30%',
+          width: width,
+          height: width,
+          ...style,
         }}
-      />
-    </div>
-  );
-};
+      >
+        <img
+          src={url}
+          height={width}
+          width={width}
+          style={{
+            borderRadius: chatType === 'dialog' ? '50%' : '30%',
+          }}
+          className={styles.img}
+        />
+      </div>
+    );
+  },
+);

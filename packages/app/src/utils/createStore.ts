@@ -35,7 +35,7 @@ type StoreReturnedType<T> = [
   T, // state
   (newState: T) => void, // setState
   () => [T, (newState: T) => void], // useState
-  <K>(selector: (state: T) => K) => K | undefined, // useSelector
+  <K>(selector: (state: T) => K) => K, // useSelector
 ];
 
 export function createStore<T>(initialState: T): StoreReturnedType<T> {
@@ -60,7 +60,7 @@ export function createStore<T>(initialState: T): StoreReturnedType<T> {
     return [innerState, setState];
   }
 
-  function useSelector<K>(selector: (state: T) => K): K | undefined {
+  function useSelector<K>(selector: (state: T) => K): K {
     const [, forceRender] = React.useReducer(innerState => innerState + 1, 0);
 
     const latestSelector = React.useRef<Function>();
@@ -106,7 +106,7 @@ export function createStore<T>(initialState: T): StoreReturnedType<T> {
       return unsubscriber;
     }, []);
 
-    return selectedState;
+    return selectedState as K;
   }
 
   return [state, setState, useState, useSelector];

@@ -4,40 +4,38 @@ import styles from './Select.module.css';
 
 import { useOnClickOutside } from '../utils/hooks';
 
-interface Option {
+interface Option<T> {
   label: string;
-  value: string;
+  value: T;
   description?: string;
   selected?: boolean;
 }
 
-interface SelectProps {
-  options: Option[];
+interface SelectProps<T> {
+  options: Option<T>[];
   title: string;
 
-  isReseted?: boolean;
-  setSelectedOption?: (value: string) => void;
+  setSelectedOption?: (option: Option<T>) => void;
 }
 
-export const Select: React.FC<SelectProps> = ({
+export const Select = <T,>({
   title,
   options,
-  isReseted = false,
   setSelectedOption = (): void => undefined,
-}) => {
+}: SelectProps<T>): JSX.Element => {
   const defaultValue = options.filter(option => option.selected);
 
   const selectRef = useRef<HTMLDivElement | null>(null);
 
-  const [chosenOption, setchosenOption] = useState<Option>(defaultValue[0]);
+  const [chosenOption, setChosenOption] = useState<Option<T>>(defaultValue[0]);
   const [isOpened, setIsOpened] = useState<boolean>(false);
 
   useOnClickOutside(selectRef, () => setIsOpened(false));
 
   useEffect(() => {
-    setchosenOption(defaultValue[0]);
-    setSelectedOption(defaultValue[0].value);
-  }, [isReseted]);
+    setChosenOption(defaultValue[0]);
+    setSelectedOption(defaultValue[0]);
+  }, []);
 
   return (
     <section className={styles.select} ref={selectRef}>
@@ -58,8 +56,8 @@ export const Select: React.FC<SelectProps> = ({
             className={styles.option}
             onClick={(): void => {
               setIsOpened(false);
-              setchosenOption(option);
-              setSelectedOption(option.value);
+              setChosenOption(option);
+              setSelectedOption(option);
             }}
           >
             <span className={styles.label}>{option.label}</span>

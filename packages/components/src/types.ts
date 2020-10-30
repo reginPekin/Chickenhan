@@ -1,38 +1,52 @@
+export type SignupType = 'username' | 'Google' | 'Facebook';
+
 export interface User {
-  id: string;
+  id: number;
   login: string;
   isOnline: boolean; // на бэкэ online
   avatar: string;
-}
-
-interface Opponent {
-  isOnline: boolean; // на бэкэ online
-  login: string;
 }
 
 export type ChatType = 'dialog' | 'public' | 'private';
-export interface Chat {
-  opponent?: Opponent;
-  id: string;
-  name: string;
-  userCount: number;
-  lastMessage?: string;
-  lastDateMessage?: string;
+
+export interface Opponent {
   avatar: string;
-  type: ChatType;
-  // parameters below exists just for public & private types
+  isOnline: boolean;
+  login: string;
 }
 
+export interface ChatWrapper {
+  chatId: number;
+  type: ChatType;
+
+  avatar?: string;
+  name?: string;
+  userCount?: number;
+
+  opponent?: Opponent;
+}
+
+export interface Chat extends ChatWrapper {
+  lastMessage?: string;
+  lastDateMessage?: string;
+}
+
+export interface ChatState extends Chat {
+  isLoading: boolean;
+}
+
+type LoadStatus = 'loaded' | 'failed' | 'waiting';
+
 interface Picture {
-  id: string;
+  id: number;
   url: string;
   // height: number;
   // width: number;
 }
 
 interface Author {
-  userId: string;
-  name: string;
+  id: number;
+  login: string;
   avatar: string;
   isOnline: boolean;
 }
@@ -40,7 +54,8 @@ interface Author {
 export interface Message {
   author: Author;
   text: string;
-  date: number;
+  date: string;
   messageId: string;
   pictures?: Array<Picture>;
+  // loadStatus?: LoadStatus;
 }

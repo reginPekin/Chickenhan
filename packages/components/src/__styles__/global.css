@@ -7,8 +7,22 @@
 
 :root{
   --main-yellow: #ffbb00;
-  --light-grey: #f2f3f5;
-  --hover-grey: #00000010;
+  --hover-main-yellow: #ffc31d;
+
+  --light-grey: #f5f6f7;
+  --hover-light-grey: #eaecf1;
+  --hover-grey: #f1f1f2;
+
   --black-40: #999;
   --black-50: #7f7f7f;
+  --light-black: #2d2d2d;
+
+  --black: #000000;
+  --hover-black: #000000d9;
+  --click-black: #383838;
+
+  --white: #ffffff;
+
+  --red: red;
+  --light-red: #ffe1e3;
 }

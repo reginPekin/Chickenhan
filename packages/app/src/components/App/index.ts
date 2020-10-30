@@ -1,1 +1,1 @@
-export { App } from './App';
+export { App, BioContext } from './App';

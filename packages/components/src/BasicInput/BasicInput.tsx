@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import React from 'react';
 
 import styles from './BasicInput.module.css';
@@ -12,6 +11,8 @@ interface BasicInputProps {
   ref?: React.Ref<HTMLInputElement>;
   placeholder?: string;
   style?: React.CSSProperties;
+  type?: string;
+  defaultValue?: string;
 }
 
 export const BasicInput: React.ForwardRefExoticComponent<BasicInputProps> = React.forwardRef<
@@ -26,6 +27,8 @@ export const BasicInput: React.ForwardRefExoticComponent<BasicInputProps> = Reac
       onBlur = (): void => undefined,
       placeholder = '',
       style = {},
+      type = 'text',
+      defaultValue = '',
     },
     ref,
   ) => {
@@ -37,7 +40,8 @@ export const BasicInput: React.ForwardRefExoticComponent<BasicInputProps> = Reac
 
     return (
       <input
-        type="text"
+        type={type}
+        defaultValue={defaultValue}
         onChange={onChange}
         onFocus={onFocus}
         onBlur={onBlur}

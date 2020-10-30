@@ -1,13 +1,22 @@
 .moreIconSection {
   display: flex;
+  width: 30px;
+  height: 30px;
   align-items: center;
-  padding: 20px;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: var(--white);
+}
+
+.moreIcon:first-child  {
+  margin: 0
 }
 
 .moreIcon {
   height: 4px;
   width: 4px;
-  background-color: black;
+  background-color: var(--black);
   border-radius: 50%;
   margin-left: 2px;
 }
