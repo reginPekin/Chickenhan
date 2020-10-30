@@ -69,6 +69,7 @@ export const App: React.FC = () => {
 
 const Home: React.FC = () => {
   const store = useStore();
+  const userId = store.user.useSelector(user => user.id);
 
   const history = useHistory();
 
@@ -100,6 +101,29 @@ const Home: React.FC = () => {
   }, []);
 
   const [images64, setImages64] = useState<string[]>([]);
+
+  chickenhan.websocket.addEventListener(
+    'message',
+    (data: Record<string, any>) => {
+      if (!data.type) {
+        return;
+      }
+
+      const type = data.type;
+
+      if (type === 'addDialog') {
+        if (store.chats.isChat(data.userDialog.chatId)) {
+          return;
+        }
+
+        if (userId === data.userId) {
+          store.chats.addDialog(data.userDialog);
+        } else if (userId === data.opponentId) {
+          store.chats.addDialog(data.opponentDialog);
+        }
+      }
+    },
+  );
 
   return (
     <main className={styles.app}>
