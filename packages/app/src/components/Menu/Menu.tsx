@@ -28,7 +28,7 @@ export const Menu: React.FC = () => {
           <MenuChatList
             key="chat"
             title="Chats"
-            fetchChats={(): Promise<void> => store.chats.fetchUserChats()}
+            // fetchChats={(): Promise<void> => store.chats.fetchUserChats()}
           />
         );
       case 'profile':
