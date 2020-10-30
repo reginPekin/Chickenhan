@@ -131,9 +131,10 @@ export function createChatsStore() {
 
   function isChat(chatId: number): boolean {
     const chats = state.chats;
+
     const filteredChat = chats.filter(chat => chat.chatId === chatId);
 
-    if (!filteredChat) return false;
+    if (!filteredChat.length) return false;
 
     return true;
   }
@@ -145,7 +146,6 @@ export function createChatsStore() {
   chickenhan.websocket.addEventListener(
     'message',
     (data: Record<string, any>) => {
-      console.log(data, 'data chats');
       if (!data.type) {
         return;
       }

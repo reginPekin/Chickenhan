@@ -149,7 +149,6 @@ export function createMessageStore() {
   chickenhan.websocket.addEventListener(
     'message',
     (data: Record<string, any>) => {
-      console.log(data, 'data messages');
       if (!data.type) {
         return;
       }

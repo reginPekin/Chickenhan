@@ -15,6 +15,7 @@ import styles from './PopupBio.module.css';
 
 export const PopupBio: React.FC = () => {
   const store = useStore();
+  const userId = store.user.useSelector(user => user.id);
   const isPopupOpen = store.local.useSelector(local => local.isBioPopupOpen);
 
   const history = useHistory();
@@ -42,6 +43,28 @@ export const PopupBio: React.FC = () => {
 
   useOnClickOutside(popupRef, () => closePopup());
 
+  function renderMessageButton(): React.ReactNode {
+    if (bioId === userId) return;
+
+    return (
+      <button
+        onClick={async (): Promise<void> => {
+          if (!bio.id) return;
+
+          const dialog = await chickenhan.chats.getDialog(bio.id);
+
+          chickenhan.websocket.addDialog(bio.id, dialog.chatId);
+
+          history.push(`${dialog.chatId}`);
+          closePopup();
+        }}
+        className={styles.button}
+      >
+        Write the message
+      </button>
+    );
+  }
+
   if (!isPopupOpen) return null;
 
   return (
@@ -54,18 +77,7 @@ export const PopupBio: React.FC = () => {
 
         <Avatar url={bio?.avatar} width={96} />
         <span className={styles.login}>{bio?.login}</span>
-        <button
-          onClick={async (): Promise<void> => {
-            if (!bio.id) return;
-
-            const dialog = await chickenhan.chats.getDialog(bio?.id);
-            history.push(`${dialog.chatId}`);
-            closePopup();
-          }}
-          className={styles.button}
-        >
-          Write the message
-        </button>
+        {renderMessageButton()}
       </section>
     </main>
   );
