@@ -6,7 +6,7 @@ import { Context, isJsonString } from './utils';
 type EventType = 'message' | 'error' | 'closed';
 
 export class Socket {
-  private wss: websocket;
+  private wss: websocket | undefined;
   private timeout: number;
   private connectInterval: any;
   private isOpen: boolean;
@@ -30,7 +30,7 @@ export class Socket {
 
     this.listeners = {};
 
-    this.wss = new websocket(this.wwsUrl);
+    this.wss = undefined;
   }
 
   public addEventListener<T>(
@@ -62,6 +62,10 @@ export class Socket {
       throw Error('WS was not opened for message');
     }
 
+    if (!this.wss) {
+      throw Error('No wss connection');
+    }
+
     const type = message.type.replace(/([A-Z])/g, '_$1').toLowerCase();
     this.wss.send(
       JSON.stringify({
@@ -72,9 +76,13 @@ export class Socket {
     );
   }
 
-
   public listenToWebsocket(): void {
+    if (this.isOpen) {
+      this.closeWebsocket();
+    }
+
     this.wss = new websocket(this.wwsUrl);
+
     this.wss.onopen = (): void => {
       console.log('connected websocket main component');
 
@@ -108,6 +116,10 @@ export class Socket {
     };
 
     this.wss.onerror = (error): void => {
+      if (!this.wss) {
+        throw Error('No wss connection');
+      }
+
       console.error(
         'Socket encountered error: ',
         error.message,
@@ -142,6 +154,10 @@ export class Socket {
 
       this.emit('message', { ...data, type });
     };
+  }
+
+  public closeWebsocket(): void {
+    this.wss?.close();
   }
 
   public setOnline(): void {
