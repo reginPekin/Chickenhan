@@ -196,7 +196,7 @@ export const LoginPage: React.FC = ({}) => {
             isSignup={isSignup}
           />
         </GoogleButton>
-        <FacebookButton
+        {/* <FacebookButton
           openPopup={openPopup}
           setToken={setSocialToken}
           setSignupType={setSignupType}
@@ -209,7 +209,7 @@ export const LoginPage: React.FC = ({}) => {
             }}
             isSignup={isSignup}
           />
-        </FacebookButton>
+        </FacebookButton> */}
         <div
           className={styles.block}
           onClick={(): void => {
