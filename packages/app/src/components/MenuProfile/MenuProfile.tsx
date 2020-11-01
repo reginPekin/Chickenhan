@@ -20,6 +20,15 @@ export const MenuProfile: React.FC = () => {
     if (isProfileOpen) store.local.update({ isProfileOpen: false });
   }
 
+  function resetAll(): void {
+    store.chat.reset();
+    store.chats.reset();
+    store.local.reset();
+    store.messages.reset();
+    store.user.reset();
+    store.writeBox.reset();
+  }
+
   return (
     <section className={styles.profile}>
       <div className={styles.label}>
@@ -66,6 +75,8 @@ export const MenuProfile: React.FC = () => {
               chickenhan.websocket.setOffline();
               window.localStorage.removeItem(TOKEN_KEY);
               history.push('/login');
+
+              resetAll();
 
               closeProfilePopup();
             }}

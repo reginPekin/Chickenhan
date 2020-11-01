@@ -27,20 +27,24 @@ export function createWriteBoxStore() {
       updateGlobal({ [chatId]: { ...state[chatId]!, ...partialChatWriteBox } });
     }
 
-    function saveMessage(text: string) {
+    function saveMessage(text: string): void {
       update({ text });
     }
 
-    function clearMessage() {
+    function clearMessage(): void {
       update({ text: '' });
     }
 
-    function getMessage() {
+    function getMessage(): string {
       return state[chatId].text;
     }
 
     return { saveMessage, clearMessage, getMessage };
   }
 
-  return { useState, useSelector, updateGlobal, get };
+  function reset(): void {
+    setState(initialState);
+  }
+
+  return { useState, useSelector, updateGlobal, get, reset };
 }

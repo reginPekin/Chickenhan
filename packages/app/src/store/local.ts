@@ -28,5 +28,9 @@ export function createLocalStore() {
     setState({ ...state, ...partialState });
   }
 
-  return { useState, useSelector, update };
+  function reset(): void {
+    setState(initialState);
+  }
+
+  return { useState, useSelector, update, reset };
 }

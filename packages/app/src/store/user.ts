@@ -17,14 +17,28 @@ export function createUserStore() {
 
   const [state, setState, useState, useSelector] = createStore(initialState);
 
-  function update(partialState: Partial<User>): void {
+  async function update(partialState: Partial<User>): Promise<void> {
+    // ВАНЯ (3 просблемы)
+    /*
+      1. update вызывается без самого вызова
+    */
+    console.log('UPDATE');
     if (partialState.avatar) {
       const { avatar, ...wrappedUser } = partialState;
 
-      chickenhan.user.editMe(wrappedUser);
-      chickenhan.user.editAvatar(avatar);
+      const editedUser = chickenhan.user.editMe(wrappedUser);
+      const editedAvatar = chickenhan.user.editAvatar(avatar);
     } else {
-      chickenhan.user.editMe(partialState);
+      const editedUser = await chickenhan.user.editMe(partialState);
+
+      /*
+        2. странная типизация, для editedUser предлагает варианты сhickenhan.user
+      */
+
+      /*
+        3. как ловить ошибки и передавать их в компоненты, при этом ошибок нет в типизации
+      */
+      console.log(editedUser);
     }
     setState({ ...state, ...partialState });
   }
@@ -47,5 +61,9 @@ export function createUserStore() {
     return 'ok';
   }
 
-  return { useState, useSelector, update, fetchUser, auth };
+  function reset(): void {
+    setState(initialState);
+  }
+
+  return { useState, useSelector, update, fetchUser, auth, reset };
 }

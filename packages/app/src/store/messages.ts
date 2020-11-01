@@ -190,5 +190,9 @@ export function createMessageStore() {
     },
   );
 
-  return { useState, useSelector, get };
+  function reset(): void {
+    setState(initialState);
+  }
+
+  return { useState, useSelector, get, reset };
 }

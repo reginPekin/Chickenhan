@@ -20,7 +20,7 @@ export const PopupBio: React.FC = () => {
 
   const history = useHistory();
 
-  const bioId = useContext(BioContext).bioId;
+  const { bioId } = useContext(BioContext);
 
   const [bio, setBio] = useState<any>(null);
 
@@ -41,7 +41,7 @@ export const PopupBio: React.FC = () => {
     store.local.update({ isBioPopupOpen: false });
   }
 
-  useOnClickOutside(popupRef, () => closePopup());
+  useOnClickOutside(popupRef, closePopup);
 
   function renderMessageButton(): React.ReactNode {
     if (bioId === userId) return;
@@ -70,10 +70,7 @@ export const PopupBio: React.FC = () => {
   return (
     <main className={styles.popup}>
       <section ref={popupRef} className={styles.popupContent}>
-        <DeleteIcon
-          className={styles.deleteIcon}
-          onClick={(): void => closePopup()}
-        />
+        <DeleteIcon className={styles.deleteIcon} onClick={closePopup} />
 
         <Avatar url={bio?.avatar} width={96} />
         <span className={styles.login}>{bio?.login}</span>
