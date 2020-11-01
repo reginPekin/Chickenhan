@@ -197,4 +197,18 @@ export class Socket {
 
     this.encode(message);
   }
+
+  public joinChat(chatId: number): void {
+    if (!this.isOpen) return;
+
+    const message = { type: 'joinChat', chatId };
+    this.encode(message);
+  }
+
+  public leaveChat(chatId: number): void {
+    if (!this.isOpen) return;
+
+    const message = { type: 'leaveChat', chatId };
+    this.encode(message);
+  }
 }

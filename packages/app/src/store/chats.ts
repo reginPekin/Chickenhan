@@ -4,8 +4,6 @@ import { Chat, AddChat, Message } from '@chickenhan/sdk/lib/types';
 import { chickenhan } from './chickenhan';
 import { Opponent } from '@chickenhan/components/src/types';
 
-import { createUserStore } from './user';
-
 // too complex return type
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 interface Chats {
@@ -29,12 +27,18 @@ export function createChatsStore() {
     if (addedChat.hasOwnProperty('error')) {
       return;
     }
+
     chickenhan.userChats.addChatToUser(addedChat.chatId);
-    setState({ ...state, chats: [addedChat, ...state.chats] });
+
+    setState({
+      ...state,
+      chats: [{ ...addedChat, userCount: 1 }, ...state.chats],
+    });
   }
 
   async function joinChat(chatId: number): Promise<void> {
     await chickenhan.userChats.addChatToUser(chatId);
+    chickenhan.websocket.joinChat(chatId);
 
     const addedChat = await chickenhan.chats.getChatById(chatId);
     setState({ ...state, chats: [addedChat, ...state.chats] });
@@ -53,20 +57,35 @@ export function createChatsStore() {
 
   async function fetchUserChats(): Promise<void> {
     const chats = await chickenhan.userChats.getMyChats();
+
     if (chats.hasOwnProperty('error')) {
       setState({ ...state, chats: [] });
     } else {
+      // lastDateMessage is necessary
+      const dataChats: Chat[] = [];
+      const emptyChats: Chat[] = [];
+
+      chats.forEach(chat => {
+        if (!chat.lastDateMessage) {
+          emptyChats.push(chat);
+
+          return;
+        }
+        dataChats.push(chat);
+      });
+
       setState({
         ...state,
         chats: [
-          ...chats.sort((a, b) => {
+          ...dataChats.sort((a, b) => {
             if (a.lastDateMessage && b.lastDateMessage) {
               return (
                 Date.parse(b.lastDateMessage) - Date.parse(a.lastDateMessage)
               );
             }
-            return -1;
+            return 0;
           }),
+          ...emptyChats,
         ],
       });
     }
@@ -129,6 +148,45 @@ export function createChatsStore() {
     setState({ ...state, chats: [chosenChat, ...filteredChat] });
   }
 
+  function updateUserCount(chatId: number, isIncrease = true): void {
+    const discover = state.discover;
+    const chats = state.chats;
+
+    const updatedDiscover = discover.map(chat => {
+      if (chat.chatId === chatId) {
+        if (isIncrease) {
+          return {
+            ...chat,
+            userCount: chat.userCount ? chat.userCount + 1 : 1,
+          };
+        }
+        return {
+          ...chat,
+          userCount: chat.userCount ? chat.userCount - 1 : 0,
+        };
+      }
+      return chat;
+    });
+
+    const updatedChats = chats.map(chat => {
+      if (chat.chatId === chatId) {
+        if (isIncrease) {
+          return {
+            ...chat,
+            userCount: chat.userCount ? chat.userCount + 1 : 1,
+          };
+        }
+        return {
+          ...chat,
+          userCount: chat.userCount ? chat.userCount - 1 : 0,
+        };
+      }
+      return chat;
+    });
+
+    setState({ ...state, discover: updatedDiscover, chats: updatedChats });
+  }
+
   function isChat(chatId: number): boolean {
     const chats = state.chats;
 
@@ -141,6 +199,10 @@ export function createChatsStore() {
 
   function addDialog(dialog: Chat): void {
     setState({ ...state, chats: [dialog, ...state.chats] });
+  }
+
+  function reset(): void {
+    setState(initialState);
   }
 
   chickenhan.websocket.addEventListener(
@@ -174,6 +236,14 @@ export function createChatsStore() {
         );
         replaceChat(message.chatId);
       }
+
+      if (type === 'joinChat') {
+        updateUserCount(data.chatId);
+      }
+
+      if (type === 'leaveChat') {
+        updateUserCount(data.chatId, false);
+      }
     },
   );
 
@@ -189,5 +259,6 @@ export function createChatsStore() {
     updateChats,
     replaceChat,
     addDialog,
+    reset,
   };
 }

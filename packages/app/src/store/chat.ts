@@ -33,5 +33,32 @@ export function createChatStore() {
     update({ ...currentChat, isLoading: false, error: '' });
   }
 
-  return { useState, useSelector, update, fetchCurrentChat };
+  chickenhan.websocket.addEventListener(
+    'message',
+    (data: Record<string, any>) => {
+      if (!data.type) {
+        return;
+      }
+
+      const type = data.type;
+
+      if (type === 'joinChat') {
+        if (state.chatId === data.chatId) {
+          update({ userCount: state.userCount ? state.userCount + 1 : 1 });
+        }
+      }
+
+      if (type === 'leaveChat') {
+        if (state.chatId === data.chatId) {
+          update({ userCount: state.userCount ? state.userCount - 1 : 0 });
+        }
+      }
+    },
+  );
+
+  function reset(): void {
+    setState(initialState);
+  }
+
+  return { useState, useSelector, update, fetchCurrentChat, reset };
 }
