@@ -8,6 +8,7 @@ import { WriteBox } from '@chickenhan/components/src/WriteBox';
 import { useStore } from '../../store';
 
 import styles from './Chat.module.css';
+import { chickenhan } from '../../store/chickenhan';
 
 interface ChatProps {
   chatId: number;
@@ -70,7 +71,10 @@ export const Chat: React.FC<ChatProps> = ({ chatId }) => {
     <>
       <ChatHeader
         chat={currentChat}
-        leaveChat={(): Promise<void> => store.chats.leaveChat(chatId)}
+        leaveChat={(): Promise<void> => {
+          chickenhan.websocket.leaveChat(chatId);
+          return store.chats.leaveChat(chatId);
+        }}
         isOptionsOpen={checkTheChat() && currentChat.type !== 'dialog'}
       />
       <article className={styles.messagesSection} ref={messagesContainerRef}>
