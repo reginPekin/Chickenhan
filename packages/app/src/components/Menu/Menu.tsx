@@ -9,6 +9,7 @@ import { useStore } from '../../store';
 
 export const Menu: React.FC = () => {
   const store = useStore();
+  const userChats = store.chats.useSelector(allChats => allChats.chats);
   const currentMenuState = store.local.useSelector(
     state => state.currentMenuState,
   );
@@ -20,7 +21,9 @@ export const Menu: React.FC = () => {
           <MenuChatList
             key="discover"
             title="Discover"
-            fetchChats={(): Promise<void> => store.chats.fetchDiscoverChats()}
+            fetchChats={(): void => {
+              store.chats.fetchDiscoverChats();
+            }}
           />
         );
       case 'chats':
@@ -28,7 +31,12 @@ export const Menu: React.FC = () => {
           <MenuChatList
             key="chat"
             title="Chats"
-            // fetchChats={(): Promise<void> => store.chats.fetchUserChats()}
+            fetchChats={(): void => {
+              if (userChats.length) {
+                return;
+              }
+              store.chats.fetchUserChats();
+            }}
           />
         );
       case 'profile':
