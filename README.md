@@ -37,7 +37,7 @@ To check all the functions, go to the [CHICKENHAN](https://chickenhan.fail/) and
 Several features that are still at the development stage:
 
 - <img src="https://i.ibb.co/k89R3LR/image-2282302-960-720.png" alt='Pictures logo' height='16'> Pictures
-- <img src="https://i.ibb.co/1fSgs9c/lock-bubble-message-chat-private-512.png" alt='Private chat logo' height='16'> Secrete chats
+- <img src="https://i.ibb.co/JF2SD4y/lock.png" alt='Private chat logo' height='16'> Secrete chats
 - <img src="https://www.flaticon.com/svg/static/icons/svg/124/124021.svg" alt='Twitter logi' height='16'> Log in via twitter
 
 ## Contact
