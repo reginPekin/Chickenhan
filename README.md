@@ -15,6 +15,11 @@ The **store** is custom, the code of which you can find in this repository
 
 ## More about the project
 
+### Mobile version
+An example of adaptive design on iPhoneX
+
+<img src="https://i.ibb.co/5KjdFtS/Untitled-Project-Made-with-Clipchamp.gif" alt='Mobile version' height='400'>
+
 ### Log in
 You can log in through your Google account or through login and password.
 <img src="https://i.ibb.co/4FygRCK/2020-11-02-17-11-16.jpg" alt='Log in page' height='400'>
