@@ -175,3 +175,26 @@ export const MoreIcon: React.FC = React.memo(() => (
     <div className={styles.moreIcon} />
   </section>
 ));
+
+export const ArrowIcon: React.FC<IconProps> = React.memo(props => (
+  <svg width={15} height={25} viewBox="0 0 99 160" fill="none" {...props}>
+    <rect
+      x="79.9087"
+      y="0.0506592"
+      width="25.1899"
+      height="112.138"
+      rx="12.595"
+      transform="rotate(45 79.9087 0.0506592)"
+      fill="var(--main-yellow)"
+    />
+    <rect
+      x="1"
+      y="79.812"
+      width="25.1899"
+      height="112.138"
+      rx="12.595"
+      transform="rotate(-45 1 79.812)"
+      fill="var(--main-yellow)"
+    />
+  </svg>
+));
