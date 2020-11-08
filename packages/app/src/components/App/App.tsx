@@ -10,7 +10,9 @@ import styles from './App.module.css';
 
 import { LoginPage } from '../LoginPage';
 import { ChatContainer } from '../ChatContainer';
-import { Menu } from '../Menu';
+import { MenuProfile } from '../MenuProfile';
+import { MenuChatList } from '../MenuChatList';
+import { MenuSidebar } from '../MenuSidebar';
 import { PopupNewChat } from '../PopupNewChat';
 import { PopupImage } from '../PopupImage';
 import { PopupBio } from '../PopupBio';
@@ -70,6 +72,16 @@ export const App: React.FC = () => {
 const Home: React.FC = () => {
   const store = useStore();
   const userId = store.user.useSelector(user => user.id);
+  const userChats = store.chats.useSelector(allChats => allChats.chats);
+  const currentMenuState = store.local.useSelector(
+    state => state.currentMenuState,
+  );
+  const isChatOpen = store.local.useSelector(state => state.isChatOpen);
+
+  const [images64, setImages64] = useState<string[]>([]);
+  const [isMatches, setIsMatches] = useState<boolean>(
+    window.matchMedia('(max-width: 800px)').matches,
+  );
 
   const history = useHistory();
 
@@ -98,9 +110,11 @@ const Home: React.FC = () => {
     window.addEventListener('beforeunload', () => {
       chickenhan.websocket.setOffline();
     });
-  }, []);
 
-  const [images64, setImages64] = useState<string[]>([]);
+    window
+      .matchMedia('(max-width: 800px)')
+      .addListener((event: any) => setIsMatches(event.matches));
+  }, []);
 
   chickenhan.websocket.addEventListener(
     'message',
@@ -125,13 +139,50 @@ const Home: React.FC = () => {
     },
   );
 
+  function renderCurrentTab(): React.ReactNode {
+    switch (currentMenuState) {
+      case 'discover':
+        return (
+          <MenuChatList
+            key="discover"
+            title="Discover"
+            isClose={isChatOpen && isMatches}
+            isMatches={isMatches}
+            fetchChats={(): void => {
+              store.chats.fetchDiscoverChats();
+            }}
+          />
+        );
+      case 'chats':
+        return (
+          <MenuChatList
+            key="chat"
+            title="Chats"
+            isMatches={isMatches}
+            isClose={isChatOpen && isMatches}
+            fetchChats={(): void => {
+              if (userChats.length) {
+                return;
+              }
+              store.chats.fetchUserChats();
+            }}
+          />
+        );
+      case 'profile':
+        return <MenuProfile isClose={isChatOpen && isMatches} />;
+    }
+  }
+
   return (
     <main className={styles.app}>
       <Popups images64={images64} setImages64={setImages64} />
 
       <div className={styles.main}>
-        <Menu />
+        <MenuSidebar isMatches={isMatches} />
+        {renderCurrentTab()}
         <ChatContainer
+          isClose={!isChatOpen && isMatches}
+          isMatches={isMatches}
           setImages64={(paths: string[]): void => setImages64(paths)}
         />
       </div>
