@@ -11,3 +11,9 @@
   justify-items: stretch;
   height: 100%;
 }
+
+@media screen and (max-width: 800px) {
+  .main {
+    flex-direction: column;
+  }
+}

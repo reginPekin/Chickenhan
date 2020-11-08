@@ -12,9 +12,11 @@ import { chickenhan } from '../../store/chickenhan';
 
 interface ChatProps {
   chatId: number;
+
+  isChatOpen: boolean;
 }
 
-export const Chat: React.FC<ChatProps> = ({ chatId }) => {
+export const Chat: React.FC<ChatProps> = ({ chatId, isChatOpen }) => {
   const store = useStore();
   const chats = store.chats.useSelector(storeChats => storeChats.chats);
   const writeBoxStore = store.writeBox.get(chatId);
@@ -75,6 +77,7 @@ export const Chat: React.FC<ChatProps> = ({ chatId }) => {
           chickenhan.websocket.leaveChat(chatId);
           return store.chats.leaveChat(chatId);
         }}
+        setIsChatOpen={(): void => store.local.update({ isChatOpen: false })}
         isOptionsOpen={checkTheChat() && currentChat.type !== 'dialog'}
       />
       <article className={styles.messagesSection} ref={messagesContainerRef}>

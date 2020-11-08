@@ -25,6 +25,7 @@ interface MenuIconProps {
   setCurrentMenuState: (tab: MenuState) => void;
   openProfile: () => void;
   closeProfile: () => void;
+  onClick?: () => void;
 }
 
 export const MenuIcon: React.FC<MenuIconProps> = React.memo(
@@ -34,6 +35,7 @@ export const MenuIcon: React.FC<MenuIconProps> = React.memo(
     setCurrentMenuState = (): void => undefined,
     openProfile,
     closeProfile,
+    onClick,
   }) => {
     const Icon = menuElement.Icon;
 
@@ -53,6 +55,8 @@ export const MenuIcon: React.FC<MenuIconProps> = React.memo(
       <div
         className={styles.iconSection}
         onClick={(): void => {
+          onClick();
+
           setCurrentMenuState(menuElement.name);
           if (menuElement.name === 'profile') openProfile();
           else closeProfile();

@@ -24,3 +24,20 @@
   justify-content: center;
   cursor: pointer;
 }
+
+@media screen and (max-width: 800px) {
+  .menuSidebar {
+    width: 100%;
+    order: 3;
+  }
+
+  .logoSection, .leftSlider {
+    display: none;
+  }
+
+  .menuElements {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--white);
+  }
+}

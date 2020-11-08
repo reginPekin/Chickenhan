@@ -1,9 +1,34 @@
 .headerContent {
   width: 100%;
   min-height: 55px;
-  display: flex;
+  display: flex; 
   align-items: center;
   border-bottom: 1px solid var(--light-grey);
+  padding-left: 16px;
+}
+
+.arrowButton {
+  background-color: var(--white);
+}
+
+@media screen and (min-width: 800px) {
+  .arrowButton {
+    display: none;
+  }
+}
+
+.arrowIcon {
+  width: 40px;
+  height: 40px;
+  padding: 7px;
+  cursor: pointer;
+  border-radius: 50%;
+  margin-right: 16px;
+  transition: background-color .2s ease-in-out;
+}
+
+.arrowIcon:hover {
+  background-color: var(--light-grey);
 }
 
 .chatInfoSection {

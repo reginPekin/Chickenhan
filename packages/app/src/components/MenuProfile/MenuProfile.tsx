@@ -9,7 +9,11 @@ import { useStore } from '../../store';
 import { TOKEN_KEY } from '../../consts';
 import { chickenhan } from '../../store/chickenhan';
 
-export const MenuProfile: React.FC = () => {
+interface MenuProfileProps {
+  isClose: boolean;
+}
+
+export const MenuProfile: React.FC<MenuProfileProps> = ({ isClose }) => {
   const store = useStore();
   const history = useHistory();
 
@@ -30,7 +34,10 @@ export const MenuProfile: React.FC = () => {
   }
 
   return (
-    <section className={styles.profile}>
+    <section
+      className={styles.profile}
+      style={{ display: isClose ? 'none' : 'flex' }}
+    >
       <div className={styles.label}>
         <span>Profile</span>
       </div>
@@ -45,6 +52,7 @@ export const MenuProfile: React.FC = () => {
             className={styles.menuItem}
             onClick={(): void => {
               if (!isProfileOpen) store.local.update({ isProfileOpen: true });
+              store.local.update({ isChatOpen: true });
             }}
           >
             Edit profile
@@ -54,7 +62,7 @@ export const MenuProfile: React.FC = () => {
         <section className={styles.navSection}>
           <div className={styles.menuLabel}>The main</div>
           <Link
-            to={`/chat/00000000000`}
+            to={`/chat/1`}
             style={{
               textDecoration: 'none',
               color: 'var(--black)',
@@ -64,6 +72,7 @@ export const MenuProfile: React.FC = () => {
               className={styles.menuItem}
               onClick={(): void => {
                 closeProfilePopup();
+                store.local.update({ isChatOpen: true });
               }}
             >
               Write to developer

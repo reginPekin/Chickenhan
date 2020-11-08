@@ -2,7 +2,9 @@
   height: 100%;
   width: 300px;
   padding: 0 8px;
-}
+  display: flex;
+  flex-direction: column;
+} 
 
 .label {
   height: 60px;
@@ -51,4 +53,11 @@
   
 .menuItem:hover {
     background-color: var(--light-grey);
+}
+
+
+@media screen and (max-width: 800px) {
+  .profile {
+    width: 100%;
+  }
 }

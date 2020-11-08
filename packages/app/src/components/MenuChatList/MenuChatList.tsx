@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // import { MenuInputSearch } from '../MenuInputSearch';
@@ -12,11 +12,20 @@ import styles from './MenuChatList.module.css';
 
 interface MenuChatListProps {
   title: 'Chats' | 'Discover';
+  isClose: boolean;
+  isMatches?: boolean;
+
   fetchChats?: () => void;
 }
 
 export const MenuChatList: React.FC<MenuChatListProps> = React.memo(
-  ({ title, fetchChats = (): void => undefined }) => {
+  ({
+    title,
+    isClose,
+    isMatches = false,
+
+    fetchChats = (): void => undefined,
+  }) => {
     const store = useStore();
     const chats =
       title === 'Chats'
@@ -29,7 +38,10 @@ export const MenuChatList: React.FC<MenuChatListProps> = React.memo(
     }, []);
 
     return (
-      <aside className={styles.mainSection}>
+      <aside
+        className={styles.mainSection}
+        style={{ display: isClose ? 'none' : 'flex' }}
+      >
         <header className={styles.header}>
           <div className={styles.label}>
             <span>{title}</span>
@@ -61,11 +73,13 @@ export const MenuChatList: React.FC<MenuChatListProps> = React.memo(
                     className={styles.link}
                     style={{
                       backgroundColor:
-                        currentChatId === chatId
+                        !isMatches && currentChatId === chatId
                           ? 'var(--light-grey)'
                           : 'var(--white)',
                     }}
                     onClick={(): void => {
+                      store.local.update({ isChatOpen: true });
+
                       if (currentChatId !== chatId) {
                         setCurrentChat({ ...chat, isLoading: true });
                       }

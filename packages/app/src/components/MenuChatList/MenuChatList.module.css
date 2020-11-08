@@ -4,20 +4,23 @@
 }
   
 .mainSection {
-  height: 100%;
-  width: 300px;
-
   display: flex;
   flex-direction: column;
+
+  height: 100vh;
+  width: 300px;
+
   overflow-y: scroll;
 }
 
+
+
 .menuContent {
   height: 100%;
-  max-width: 300px;
+  /* max-width: 300px; */
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 300px;
 }
 
 .scrolledChats {
@@ -49,4 +52,15 @@
 
 .addChatIcon:hover {
   background-color: var(--main-yellow);
+}
+
+@media screen and (max-width: 800px) {
+  .mainSection, .menuContent {
+    width: 100%;
+    height: calc(100% - 64px);
+  }
+
+  .label {
+    padding-left: 20px;
+  }
 }

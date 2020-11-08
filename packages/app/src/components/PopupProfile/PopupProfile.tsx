@@ -25,6 +25,7 @@ export const PopupProfile: React.FC = () => {
 
   function changeUsername(): void {
     if (newName && newName !== user.login) {
+      console.log(1);
       store.user.update({ login: newName });
       setLoginError('');
     } else {
@@ -37,7 +38,10 @@ export const PopupProfile: React.FC = () => {
   return (
     <main className={styles.profilePopup}>
       <DragAndDrop
-        onFilesDrop={(paths): void => store.user.update({ avatar: paths[0] })}
+        onFilesDrop={(paths): Promise<void> => {
+          console.log(2);
+          return store.user.update({ avatar: paths[0] });
+        }}
         options={{ filesLimit: 1 }}
       >
         <header className={styles.profilePopupModal}>Edit profile</header>
@@ -45,9 +49,10 @@ export const PopupProfile: React.FC = () => {
           <div className={styles.modalSection}>
             <AvatarLoader
               previewImage={user.avatar}
-              onFileLoaded={(avatar: string): void =>
-                store.user.update({ avatar })
-              }
+              onFileLoaded={(avatar: string): Promise<void> => {
+                console.log(3);
+                return store.user.update({ avatar });
+              }}
             />
           </div>
           <div className={styles.modalSection}>
@@ -72,7 +77,7 @@ export const PopupProfile: React.FC = () => {
                   }}
                   placeholder={user.login}
                   ref={inpuRef}
-                  onSubmit={(): void => changeUsername()}
+                  onSubmit={changeUsername}
                   onChange={(event): void => {
                     setNewName(event.target.value);
                   }}
@@ -82,7 +87,7 @@ export const PopupProfile: React.FC = () => {
           </div>
         </section>
         <footer className={cx(styles.profilePopupModal, styles.footer)}>
-          <PositionAwareButton onClick={(): void => changeUsername()}>
+          <PositionAwareButton onClick={changeUsername}>
             Save changes
           </PositionAwareButton>
         </footer>

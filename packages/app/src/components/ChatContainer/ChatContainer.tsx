@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import cx from 'classnames';
@@ -14,14 +14,22 @@ import { useStore } from '../../store';
 
 interface ChatContainerProps {
   setImages64: (paths: string[]) => void;
+
+  isClose: boolean;
+  isMatches: boolean;
 }
 interface ChatLayoutProps {
   chatId: number;
   setImages64: (paths: string[]) => void;
+
+  isClose: boolean;
+  isMatches: boolean;
 }
 
 export const ChatContainer: React.FC<ChatContainerProps> = ({
   setImages64,
+  isClose,
+  isMatches,
 }) => {
   const { chatId } = useParams();
 
@@ -34,10 +42,22 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
     );
   }
 
-  return <ChatLayout setImages64={setImages64} chatId={parseInt(chatId)} />;
+  return (
+    <ChatLayout
+      setImages64={setImages64}
+      chatId={parseInt(chatId)}
+      isClose={isClose}
+      isMatches={isMatches}
+    />
+  );
 };
 
-const ChatLayout: React.FC<ChatLayoutProps> = ({ setImages64, chatId }) => {
+const ChatLayout: React.FC<ChatLayoutProps> = ({
+  setImages64,
+  chatId,
+  isClose,
+  isMatches,
+}) => {
   const store = useStore();
 
   useEffect(() => {
@@ -45,7 +65,10 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({ setImages64, chatId }) => {
   }, [chatId]);
 
   return (
-    <main className={styles.contentContainer}>
+    <main
+      className={styles.contentContainer}
+      style={{ display: isClose ? 'none' : 'flex' }}
+    >
       <PopupProfile />
       <DragAndDrop
         onFilesDrop={(paths): void => {
@@ -54,7 +77,7 @@ const ChatLayout: React.FC<ChatLayoutProps> = ({ setImages64, chatId }) => {
         }}
         options={{ filesLimit: 10 }}
       >
-        <Chat chatId={chatId} />
+        <Chat chatId={chatId} isChatOpen={!isClose && isMatches} />
       </DragAndDrop>
     </main>
   );

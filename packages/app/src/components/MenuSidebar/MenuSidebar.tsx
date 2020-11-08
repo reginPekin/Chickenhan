@@ -9,7 +9,11 @@ import { menuElements } from './consts';
 
 import { useStore } from '../../store';
 
-export const MenuSidebar: React.FC = () => {
+interface MenuSidebarProps {
+  isMatches: boolean;
+}
+
+export const MenuSidebar: React.FC<MenuSidebarProps> = ({ isMatches }) => {
   const store = useStore();
   const currentMenuState = store.local.useSelector(
     state => state.currentMenuState,
@@ -30,7 +34,7 @@ export const MenuSidebar: React.FC = () => {
       >
         <LogoIcon />
       </div>
-      <section>
+      <section className={styles.menuElements}>
         <div
           className={styles.leftSlider}
           style={{ transform: `translateY(${index * 64}px)` }}
@@ -49,6 +53,11 @@ export const MenuSidebar: React.FC = () => {
             closeProfile={(): void =>
               store.local.update({ isProfileOpen: false })
             }
+            onClick={(): void => {
+              if (!isMatches) return;
+
+              store.local.update({ isChatOpen: false });
+            }}
           />
         ))}
       </section>

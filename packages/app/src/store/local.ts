@@ -7,6 +7,7 @@ interface Local {
   isImagePopupOpen: boolean;
   isPasswordPopupOpen: boolean;
   isBioPopupOpen: boolean;
+  isChatOpen: boolean;
   currentMenuState: MenuState;
 }
 
@@ -19,7 +20,8 @@ export function createLocalStore() {
     isImagePopupOpen: false,
     isPasswordPopupOpen: false,
     isBioPopupOpen: false,
-    currentMenuState: 'chats',
+    isChatOpen: false,
+    currentMenuState: 'discover',
   };
 
   const [state, setState, useState, useSelector] = createStore(initialState);

@@ -6,17 +6,24 @@ import styles from './ChatHeader.module.css';
 
 import { ChatState } from '../types';
 
-import { MoreIcon } from '../Icons';
+import { MoreIcon, ArrowIcon } from '../Icons';
 
 interface ChatHeader {
   chat: ChatState;
   isOptionsOpen?: boolean;
 
+  setIsChatOpen?: () => void;
   leaveChat?: () => Promise<void>;
 }
 
 export const ChatHeader: React.FC<ChatHeader> = React.memo(
-  ({ chat, isOptionsOpen = false, leaveChat = (): void => undefined }) => {
+  ({
+    chat,
+    isOptionsOpen = false,
+
+    setIsChatOpen = (): void => undefined,
+    leaveChat = (): void => undefined,
+  }) => {
     const [isMoreIconHover, setIsMoreIconHover] = useState<boolean>(false);
 
     const chatName = chat.name || '';
@@ -66,6 +73,9 @@ export const ChatHeader: React.FC<ChatHeader> = React.memo(
 
     return (
       <header className={styles.headerContent}>
+        <button onClick={setIsChatOpen} className={styles.arrowButton}>
+          <ArrowIcon className={styles.arrowIcon} />
+        </button>
         <section className={styles.chatInfoSection}>
           <Avatar
             chatType={chat.type}
